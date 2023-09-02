@@ -1,4 +1,4 @@
-# SpruceUI
+# ObsidianUI
 
 ![Java 17](https://img.shields.io/badge/language-Java%2017-9B599A.svg?style=flat-square)
 [![GitHub license](https://img.shields.io/github/license/LambdAurora/SpruceUI?style=flat-square)](https://raw.githubusercontent.com/LambdAurora/SpruceUI/master/LICENSE)
@@ -7,13 +7,21 @@
 
 A Minecraft mod API which adds some GUI utilities.
 
+<a href="https://modrinth.com/mod/architectury-api">
+<img alt="architectury-api" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/requires/architectury-api_vector.svg">
+</a>
+
+<a>
+<img alt="forge" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/forge_vector.svg">
+</a>
+
 ## Build
 
 Just do `./gradlew build` and everything should build just fine!
 
 ## Use inside a mod
 
-You can look at the [SpruceUI test mod](https://github.com/LambdAurora/SpruceUI/tree/1.19.4/src/testmod) for examples of use.
+You can look at the [SpruceUI test mod](src/main/java/dev/lambdaurora/spruceui/test) for examples of use.
 
 ### Import inside a project
 
