@@ -1,6 +1,9 @@
+<center><div align="center">
+
+<img height="100" src="src/main/resources/icon.png" width="100"/>
+
 # ObsidianUI
 
-![Java 17](https://img.shields.io/badge/language-Java%2017-9B599A.svg?style=flat-square)
 [![GitHub license](https://img.shields.io/github/license/LambdAurora/SpruceUI?style=flat-square)](https://raw.githubusercontent.com/LambdAurora/SpruceUI/master/LICENSE)
 ![Environment: Client](https://img.shields.io/badge/environment-client-1976d2?style=flat-square)
 
@@ -12,9 +15,10 @@ A Minecraft mod API which adds some GUI utilities.
 <img alt="architectury-api" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/requires/architectury-api_vector.svg">
 </a>
 
-<a>
 <img alt="forge" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/forge_vector.svg">
-</a>
+
+</div></center>
+
 
 ## Build
 
