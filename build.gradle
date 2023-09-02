@@ -40,10 +40,6 @@ repositories {
 	}
 }
 
-configurations {
-	api.extendsFrom libApi
-}
-
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "org.quiltmc:quilt-mappings:${project.quilt_mappings}:intermediary-v2"
@@ -53,8 +49,7 @@ dependencies {
 }
 
 java {
-	sourceCompatibility = JavaVersion.toVersion(targetJavaVersion)
-	targetCompatibility = JavaVersion.toVersion(targetJavaVersion)
+	sourceCompatibility = targetCompatibility = JavaVersion.toVersion(targetJavaVersion)
 
 	withSourcesJar()
 }
@@ -69,7 +64,7 @@ tasks.withType(JavaCompile).configureEach {
 processResources {
 	inputs.property 'version', project.version
 
-	filesMatching('fabric.mod.json') {
+	filesMatching('META-INF/mods.toml') {
 		expand 'version': project.version
 	}
 }

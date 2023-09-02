@@ -35,23 +35,20 @@ Add this to your `build.gradle` in addition of the base Forge mod `build.gradle`
 ```groovy
 repositories {
     mavenLocal()
-    maven {
-        name 'Gegy'
-        url 'https://maven.gegy.dev'
-    }
+    maven { url 'https://www.jitpack.io' }
 }
 
 dependencies {
-    /* Fabric definitions */
+    /* ArchLoom definitions */
 
-    include modImplementation("dev.lambdaurora:spruceui:${project.spruceui_version}")
+    include modImplementation("com.github.ThinkingStudios:SpruceUI-Forged:${project.spruceui_version}")
 }
 ```
 
 And this to your `gradle.properties`:
 
 ```properties
-spruceui_version=5.0.0+1.20
+spruceui_version=0.1.0+1.20.1
 ```
 
 It will JAR-in-JAR SpruceUI so users of your mod don't need to download it separately!
