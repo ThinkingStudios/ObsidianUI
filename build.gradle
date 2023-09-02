@@ -1,7 +1,6 @@
 plugins {
 	id 'dev.architectury.loom' version '1.2-SNAPSHOT'
 	id 'io.github.juuxel.loom-vineflower' version '1.+'
-	id 'org.quiltmc.gradle.licenser' version '2.0.+'
 	id 'java-library'
 	id 'maven-publish'
 }
@@ -79,11 +78,6 @@ jar {
 	from('LICENSE') {
 		rename { "${it}_${project.archivesBaseName}" }
 	}
-}
-
-license {
-	rule file('HEADER')
-	include '**/*.java'
 }
 
 // configure the maven publication
