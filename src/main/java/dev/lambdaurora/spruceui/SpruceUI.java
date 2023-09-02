@@ -3,13 +3,10 @@ package dev.lambdaurora.spruceui;
 import dev.architectury.platform.forge.EventBuses;
 import dev.architectury.utils.EnvExecutor;
 import dev.lambdaurora.spruceui.hud.HudManager;
-import dev.lambdaurora.spruceui.test.SpruceUITest;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.NetworkConstants;
 
@@ -25,6 +22,5 @@ public class SpruceUI {
 
     public void onInitializeClient() {
         HudManager.initialize();
-        //SpruceUITest.INSTANCE = new SpruceUITest();
     }
 }
