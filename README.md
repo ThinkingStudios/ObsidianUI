@@ -35,13 +35,13 @@ Add this to your `build.gradle` in addition of the base Forge mod `build.gradle`
 ```groovy
 repositories {
     mavenLocal()
-    maven { url 'https://www.jitpack.io' }
+    maven { url = "https://api.modrinth.com/maven" }
 }
 
 dependencies {
     /* ArchLoom definitions */
 
-    include modImplementation("com.github.ThinkingStudios:SpruceUI-Forged:${project.spruceui_version}")
+    include modImplementation("maven.modrinth:spruceui-forge:${project.spruceui_version}")
 }
 ```
 
