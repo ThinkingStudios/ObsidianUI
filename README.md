@@ -26,7 +26,7 @@ Just do `./gradlew build` and everything should build just fine!
 
 ## Use inside a mod
 
-You can look at the [SpruceUI test mod](src/main/java/dev/lambdaurora/spruceui/test) for examples of use.
+You can look at the [SpruceUI test](src/main/java/dev/lambdaurora/spruceui/test) for examples of use.
 
 ### Import inside a project
 
