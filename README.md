@@ -39,8 +39,6 @@ repositories {
 }
 
 dependencies {
-    /* ArchLoom definitions */
-
     include modImplementation("maven.modrinth:spruceui-forge:${project.spruceui_version}")
 }
 ```
