@@ -27,14 +27,6 @@ loom {
 repositories {
 	mavenLocal()
 	maven {
-		name 'Quilt'
-		url 'https://maven.quiltmc.org/repository/release'
-	}
-	maven {
-		name 'TerraformersMC'
-		url 'https://maven.terraformersmc.com/releases'
-	}
-	maven {
 		name = "QuiltMC"
 		url = "https://maven.quiltmc.org/repository/release"
 	}
@@ -64,7 +56,7 @@ tasks.withType(JavaCompile).configureEach {
 processResources {
 	inputs.property 'version', project.version
 
-	filesMatching('fabric.mod.json') {
+	filesMatching('META-INF/mods.toml') {
 		expand 'version': project.version
 	}
 }
