@@ -11,8 +11,8 @@ package me.lambdaurora.spruceui.hud;
 
 import me.lambdaurora.spruceui.event.OpenScreenCallback;
 import me.lambdaurora.spruceui.event.ResolutionChangeCallback;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import me.shedaniel.architectury.event.events.GuiEvent;
+import me.shedaniel.architectury.event.events.client.ClientTickEvent;
 import net.minecraft.client.MinecraftClient;
 import org.aperlambda.lambdacommon.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -31,12 +31,12 @@ import java.util.Optional;
 public class HudManager {
     private static final HashMap<Identifier, Hud> HUDS = new HashMap<>();
 
-    public void initialize() {
-        HudRenderCallback.EVENT.register((matrices, tickDelta) -> HUDS.forEach((id, hud) -> {
+    public static void initialize() {
+        GuiEvent.RENDER_HUD.register((matrices, tickDelta) -> HUDS.forEach((id, hud) -> {
             if (hud.isEnabled() && hud.isVisible())
                 hud.render(matrices, tickDelta);
         }));
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+        ClientTickEvent.CLIENT_POST.register(client -> {
             if (!canRenderHuds(client))
                 return;
             HUDS.forEach((id, hud) -> {

@@ -9,8 +9,8 @@
 
 package me.lambdaurora.spruceui.event;
 
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
+import me.shedaniel.architectury.event.Event;
+import me.shedaniel.architectury.event.EventFactory;
 import net.minecraft.client.MinecraftClient;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,11 +23,7 @@ import org.jetbrains.annotations.NotNull;
  */
 @FunctionalInterface
 public interface ResolutionChangeCallback {
-    Event<ResolutionChangeCallback> EVENT = EventFactory.createArrayBacked(ResolutionChangeCallback.class, listeners -> client -> {
-        for (ResolutionChangeCallback event : listeners) {
-            event.apply(client);
-        }
-    });
+    Event<ResolutionChangeCallback> EVENT = EventFactory.createEventResult();
 
     void apply(@NotNull MinecraftClient client);
 }

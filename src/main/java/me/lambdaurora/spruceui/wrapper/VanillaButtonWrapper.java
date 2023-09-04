@@ -12,10 +12,10 @@ package me.lambdaurora.spruceui.wrapper;
 import me.lambdaurora.spruceui.navigation.NavigationDirection;
 import me.lambdaurora.spruceui.widget.AbstractSpruceButtonWidget;
 import me.lambdaurora.spruceui.widget.SpruceElement;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -25,8 +25,8 @@ import org.jetbrains.annotations.NotNull;
  * @version 2.0.0
  * @since 2.0.0
  */
-@Environment(EnvType.CLIENT)
-public class VanillaButtonWrapper extends AbstractButtonWidget implements SpruceElement {
+@OnlyIn(Dist.CLIENT)
+public class VanillaButtonWrapper extends ClickableWidget implements SpruceElement {
     private final AbstractSpruceButtonWidget widget;
 
     public VanillaButtonWrapper(@NotNull AbstractSpruceButtonWidget widget) {

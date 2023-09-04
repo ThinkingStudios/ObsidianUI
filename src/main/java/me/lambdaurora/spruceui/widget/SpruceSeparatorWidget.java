@@ -16,7 +16,7 @@ import me.lambdaurora.spruceui.navigation.NavigationDirection;
 import me.lambdaurora.spruceui.util.ColorUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
@@ -126,7 +126,7 @@ public class SpruceSeparatorWidget extends AbstractSpruceWidget implements Toolt
      * @version 1.5.0
      * @since 1.0.1
      */
-    public static class ButtonWrapper extends AbstractButtonWidget {
+    public static class ButtonWrapper extends ClickableWidget {
         private final SpruceSeparatorWidget widget;
 
         public ButtonWrapper(@NotNull SpruceSeparatorWidget separator, int height) {

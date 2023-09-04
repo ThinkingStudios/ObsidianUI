@@ -11,22 +11,18 @@ package me.lambdaurora.spruceui.test.gui;
 
 import me.lambdaurora.spruceui.Position;
 import me.lambdaurora.spruceui.SpruceTexts;
-import me.lambdaurora.spruceui.Tooltip;
-import me.lambdaurora.spruceui.option.*;
+import me.lambdaurora.spruceui.option.SpruceOption;
 import me.lambdaurora.spruceui.screen.SpruceScreen;
 import me.lambdaurora.spruceui.test.SpruceUITest;
-import me.lambdaurora.spruceui.test.TestEnum;
 import me.lambdaurora.spruceui.widget.SpruceButtonWidget;
 import me.lambdaurora.spruceui.widget.container.SpruceOptionListWidget;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.toast.SystemToast;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents a screen to test the different {@link me.lambdaurora.spruceui.option.SpruceOption} classes.
+ * Represents a screen to test the different {@link SpruceOption} classes.
  *
  * @author LambdAurora
  */

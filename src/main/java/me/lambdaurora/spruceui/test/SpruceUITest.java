@@ -16,10 +16,11 @@ import me.lambdaurora.spruceui.widget.SpruceButtonWidget;
 import me.lambdaurora.spruceui.widget.container.SpruceContainerWidget;
 import me.lambdaurora.spruceui.widget.container.SpruceOptionListWidget;
 import me.lambdaurora.spruceui.widget.text.SpruceTextAreaWidget;
-import net.fabricmc.api.ClientModInitializer;
+import me.shedaniel.architectury.utils.EnvExecutor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.text.LiteralText;
+import net.minecraftforge.api.distmarker.Dist;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
@@ -30,7 +31,7 @@ import java.util.function.Consumer;
  *
  * @author LambdAurora
  */
-public class SpruceUITest implements ClientModInitializer {
+public class SpruceUITest {
     private static SpruceUITest INSTANCE;
 
     private final SpruceOption booleanOption;
@@ -56,6 +57,8 @@ public class SpruceUITest implements ClientModInitializer {
     public Consumer<SpruceButtonWidget> resetConsumer;
 
     public SpruceUITest() {
+        EnvExecutor.runInEnv(Dist.CLIENT, () -> this::onInitializeClient);
+
         this.booleanOption = new SpruceBooleanOption("spruceui_test.option.boolean",
                 () -> this.aBoolean,
                 newValue -> this.aBoolean = newValue,
@@ -130,7 +133,6 @@ public class SpruceUITest implements ClientModInitializer {
                 + "You have to manage screen re-initialization and reset logic yourself."));
     }
 
-    @Override
     public void onInitializeClient() {
         INSTANCE = this;
     }

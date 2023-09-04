@@ -22,13 +22,13 @@ import me.lambdaurora.spruceui.util.ScissorManager;
 import me.lambdaurora.spruceui.widget.AbstractSpruceWidget;
 import me.lambdaurora.spruceui.widget.WithBackground;
 import me.lambdaurora.spruceui.widget.WithBorder;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
@@ -378,7 +378,7 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
         tessellator.draw();
     }
 
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     class Entries extends AbstractList<E> {
         private final List<E> entries;
 

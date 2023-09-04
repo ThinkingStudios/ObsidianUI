@@ -1,8 +1,8 @@
 plugins {
-    id 'fabric-loom' version '0.6-SNAPSHOT'
+    id 'dev.architectury.loom' version '1.2-SNAPSHOT'
+    id 'io.github.juuxel.loom-vineflower' version '1.+'
     id 'java-library'
     id 'maven-publish'
-    id 'org.cadixdev.licenser' version '0.5.0'
 }
 
 group = project.maven_group
@@ -10,33 +10,18 @@ version = "${project.mod_version}+${getMCVersionString()}"
 archivesBaseName = project.archives_base_name
 
 // This field defines the Java version your mod target.
-// The Minecraft launcher currently installs Java 8 for users, so your mod probably wants to target Java 8 too.
 def targetJavaVersion = 8
 
-Set<String> modules = [
-        'fabric-api-base',
-        'fabric-lifecycle-events-v1',
-        'fabric-rendering-v1',
-        'fabric-resource-loader-v0',
-        'fabric-screen-api-v1'
-]
-
 def getMCVersionString() {
-    if (project.minecraft_version.matches("\\d\\dw\\d\\d[a-z]")) {
-        return project.minecraft_version
-    }
-    int lastDot = project.minecraft_version.lastIndexOf('.')
-    return project.minecraft_version.substring(0, lastDot);
+    return project.minecraft_version
 }
 
-sourceSets {
-    testmod {
-        compileClasspath += main.compileClasspath
-        runtimeClasspath += main.runtimeClasspath
+loom {
+    forge {
+        mixinConfigs = [
+                "spruceui.mixins.json","spruceui.test.mixins.json"
+        ]
     }
-}
-
-minecraft {
 }
 
 repositories {
@@ -45,10 +30,7 @@ repositories {
         name = "AperLambda"
         url = 'https://aperlambda.github.io/maven'
     }
-    maven {
-        name = 'TerraformersMC'
-        url = 'https://maven.terraformersmc.com/releases'
-    }
+    maven { url "https://maven.architectury.dev/" }
 }
 
 configurations {
@@ -58,29 +40,19 @@ configurations {
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    forge "net.minecraftforge:forge:${project.forge_version}"
 
-    modules.stream().map { fabricApi.module(it, project.fabric_api_version) }.forEach {
-        modImplementation it
-    }
+    modImplementation("me.shedaniel:architectury-forge:${project.architectury_version}")
 
-    modRuntime("com.terraformersmc:modmenu:${project.modmenu_version}") {
-        transitive = false
-    }
-
-    libApi "org.jetbrains:annotations:20.1.0"
     libApi("org.aperlambda:lambdajcommon:1.8.1") {
         exclude group: 'com.google.code.gson'
         exclude group: 'com.google.guava'
     }
     include "org.aperlambda:lambdajcommon:1.8.1"
-
-    testmodImplementation project(":")
 }
 
 java {
-    sourceCompatibility = JavaVersion.toVersion(targetJavaVersion)
-    targetCompatibility = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = targetCompatibility = JavaVersion.toVersion(targetJavaVersion)
 
     withSourcesJar()
 }
@@ -98,7 +70,7 @@ tasks.withType(JavaCompile).configureEach {
 processResources {
     inputs.property "version", project.version
 
-    filesMatching("fabric.mod.json") {
+    filesMatching("META-INF/mods.toml") {
         expand "version": project.version
     }
 }
@@ -109,59 +81,16 @@ jar {
     }
 }
 
-runClient {
-    classpath(sourceSets.testmod.runtimeClasspath)
-}
-
-license {
-    header file('HEADER')
-    include '**/*.java'
-}
-
 // configure the maven publication
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact(remapJar) {
-                builtBy remapJar
-            }
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
-            }
-
-            pom {
-                name = "SpruceUI"
-                description = "A Fabric Minecraft API mod which adds some GUI utilities."
-            }
-
-            pom.withXml {
-                def dependenciesNode = asNode().appendNode('dependencies')
-
-                configurations.libApi.allDependencies.each {
-                    def dependencyNode = dependenciesNode.appendNode('dependency')
-
-                    dependencyNode.appendNode('groupId', it.group)
-                    dependencyNode.appendNode('artifactId', it.name)
-                    dependencyNode.appendNode('version', it.version)
-                    dependencyNode.appendNode('scope', 'compile')
-                }
-            }
+            from components.java
         }
     }
 
+    // select the repositories you want to publish to
     repositories {
-        mavenLocal()
-        maven {
-            name = "BuildDirLocal"
-            url = "$buildDir/repo"
-        }
-        maven {
-            name = "GithubPackages"
-            url = uri("https://maven.pkg.github.com/LambdAurora/SpruceUI")
-            credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
-            }
-        }
+
     }
 }
