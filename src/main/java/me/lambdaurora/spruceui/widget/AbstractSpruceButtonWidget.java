@@ -14,7 +14,7 @@ import me.lambdaurora.spruceui.Position;
 import me.lambdaurora.spruceui.Tooltip;
 import me.lambdaurora.spruceui.Tooltipable;
 import me.lambdaurora.spruceui.wrapper.VanillaButtonWrapper;
-import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -156,7 +156,7 @@ public abstract class AbstractSpruceButtonWidget extends AbstractSpruceWidget im
 
     @Override
     protected void renderBackground(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        this.client.getTextureManager().bindTexture(AbstractButtonWidget.WIDGETS_LOCATION);
+        this.client.getTextureManager().bindTexture(ClickableWidget.WIDGETS_TEXTURE);
         RenderSystem.color4f(1.f, 1.f, 1.f, this.getAlpha());
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
