@@ -1,7 +1,6 @@
 plugins {
-	id 'fabric-loom' version '1.+'
-	id 'io.github.juuxel.loom-quiltflower' version '1.8.+'
-	id 'org.quiltmc.gradle.licenser' version '1.1.+'
+	id 'dev.architectury.loom' version '1.2-SNAPSHOT'
+	id 'io.github.juuxel.loom-vineflower' version '1.+'
 	id 'java-library'
 	id 'maven-publish'
 }
@@ -13,23 +12,15 @@ archivesBaseName = project.archives_base_name
 // This field defines the Java version your mod target.
 def targetJavaVersion = 17
 
-Set<String> modules = [
-		'fabric-api-base',
-		'fabric-lifecycle-events-v1',
-		'fabric-rendering-v1',
-		'fabric-resource-loader-v0',
-		'fabric-screen-api-v1',
-		'fabric-key-binding-api-v1'
-]
-
 String getMCVersionString() {
 	return project.minecraft_version
 }
 
-sourceSets {
-	testmod {
-		compileClasspath += sourceSets.main.compileClasspath
-		runtimeClasspath += sourceSets.main.runtimeClasspath
+loom {
+	forge {
+		mixinConfigs = [
+				"spruceui.mixins.json","spruceui.test.mixins.json"
+		]
 	}
 }
 
@@ -49,32 +40,16 @@ repositories {
 	}
 }
 
-configurations {
-	api.extendsFrom libApi
-}
-
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "org.quiltmc:quilt-mappings:${minecraft_version}+build.${quilt_mappings}:intermediary-v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	mappings "org.quiltmc:quilt-mappings:${project.quilt_mappings}:intermediary-v2"
+	forge "net.minecraftforge:forge:${project.forge_version}"
 
-	modules.stream().map { fabricApi.module(it, project.fabric_api_version) }.forEach {
-		modImplementation it
-	}
-
-	modLocalRuntime("com.terraformersmc:modmenu:${project.modmenu_version}") {
-		transitive = false
-	}
-	modLocalRuntime fabricApi.module("fabric-key-binding-api-v1", project.fabric_api_version)
-
-	libApi 'org.jetbrains:annotations:23.0.0'
-
-	testmodImplementation sourceSets.main.output
+	modImplementation("dev.architectury:architectury-forge:${project.architectury_version}")
 }
 
 java {
-	sourceCompatibility = JavaVersion.toVersion(targetJavaVersion)
-	targetCompatibility = JavaVersion.toVersion(targetJavaVersion)
+	sourceCompatibility = targetCompatibility = JavaVersion.toVersion(targetJavaVersion)
 
 	withSourcesJar()
 }
@@ -100,58 +75,16 @@ jar {
 	}
 }
 
-loom {
-	runs {
-		testmodClient {
-			client()
-			source(sourceSets.testmod)
-		}
-	}
-}
-
-license {
-	rule file('HEADER')
-	include '**/*.java'
-}
-
 // configure the maven publication
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
 			from components.java
-
-			pom {
-				name = 'SpruceUI'
-				description = 'A Minecraft mod API which adds some GUI utilities.'
-			}
 		}
 	}
 
+	// select the repositories you want to publish to
 	repositories {
-		mavenLocal()
-		maven {
-			name 'BuildDirLocal'
-			url "$buildDir/repo"
-		}
-		maven {
-			name 'GithubPackages'
-			url 'https://maven.pkg.github.com/LambdAurora/SpruceUI'
-			credentials {
-				username = project.findProperty('gpr.user') ?: System.getenv('USERNAME')
-				password = project.findProperty('gpr.key') ?: System.getenv('TOKEN')
-			}
-		}
 
-		def spruceuiMaven = System.getenv('SPRUCEUI_MAVEN')
-		if (spruceuiMaven) {
-			maven {
-				name = 'SpruceUIMaven'
-				url = uri(spruceuiMaven)
-				credentials {
-					username = project.findProperty('gpr.user') ?: System.getenv('MAVEN_USERNAME')
-					password = project.findProperty('gpr.key') ?: System.getenv('MAVEN_PASSWORD')
-				}
-			}
-		}
 	}
 }
