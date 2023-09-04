@@ -1,0 +1,36 @@
+modLoader="javafml"
+loaderVersion="[41,)"
+license="MIT"
+
+[[mods]]
+modId="spruceui"
+version="${version}"
+displayName="ObsidianUI"
+displayURL="https://github.com/ThinkingStudios/SpruceUI-Forged"
+logoFile= "icon.png"
+credits="LambdAurora"
+authors="TexTrue, TexTrueStudio"
+description='''
+Just a GUI library.
+'''
+
+[[dependencies.spruceui]]
+modId = "forge"
+mandatory = true
+versionRange = "[41,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.spruceui]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19,1.19.2]"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.spruceui]]
+modId = "architectury"
+mandatory = true
+versionRange = "[5,)"
+ordering = "NONE"
+side = "CLIENT"
