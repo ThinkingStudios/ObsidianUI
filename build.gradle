@@ -5,8 +5,6 @@ plugins {
 	id 'maven-publish'
 }
 
-import net.fabricmc.loom.task.RemapJarTask
-
 group = project.maven_group
 version = "${project.mod_version}+${getMCVersionString()}"
 archivesBaseName = project.archives_base_name
@@ -28,14 +26,6 @@ loom {
 
 repositories {
 	mavenLocal()
-	maven {
-		name 'Quilt'
-		url 'https://maven.quiltmc.org/repository/release'
-	}
-	maven {
-		name 'TerraformersMC'
-		url 'https://maven.terraformersmc.com/releases'
-	}
 	maven {
 		name = "QuiltMC"
 		url = "https://maven.quiltmc.org/repository/release"
