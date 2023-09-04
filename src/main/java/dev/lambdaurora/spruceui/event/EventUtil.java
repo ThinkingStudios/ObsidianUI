@@ -9,8 +9,8 @@
 
 package dev.lambdaurora.spruceui.event;
 
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
+import dev.architectury.event.Event;
+import dev.architectury.event.EventFactory;
 
 /**
  * Represents a set of utilities for SpruceUI's events.
@@ -25,11 +25,7 @@ public final class EventUtil {
 	}
 
 	static Event<OpenScreenCallback> makeOpenScreenEvent() {
-		return EventFactory.createArrayBacked(OpenScreenCallback.class, listeners -> (client, screen) -> {
-			for (var event : listeners) {
-				event.apply(client, screen);
-			}
-		});
+		return EventFactory.createLoop();
 	}
 
 	/**
