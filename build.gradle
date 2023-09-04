@@ -18,6 +18,14 @@ String getMCVersionString() {
 	return project.minecraft_version
 }
 
+loom {
+	forge {
+		mixinConfigs = [
+				"spruceui.mixins.json","spruceui.test.mixins.json"
+		]
+	}
+}
+
 repositories {
 	mavenLocal()
 	maven {
