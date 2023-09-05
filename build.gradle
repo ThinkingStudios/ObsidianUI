@@ -19,13 +19,12 @@ def getMCVersionString() {
 loom {
     forge {
         mixinConfigs = [
-                "spruceui.mixins.json","spruceui.test.mixins.json"
+                "spruceui.mixins.json"
         ]
     }
 }
 
 repositories {
-    mavenLocal()
     maven {
         name = "AperLambda"
         url = 'https://aperlambda.github.io/maven'

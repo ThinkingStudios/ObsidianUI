@@ -11,6 +11,8 @@ logoFile= "icon.png"
 credits="LambdAurora"
 authors="TexTrue, TexTrueStudio"
 description='''
+SpruceUI unofficial forge port.
+
 Just a GUI library.
 '''
 

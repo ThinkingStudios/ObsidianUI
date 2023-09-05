@@ -11,11 +11,14 @@ package me.lambdaurora.spruceui.test;
 
 import me.lambdaurora.spruceui.Position;
 import me.lambdaurora.spruceui.SpruceTexts;
+import me.lambdaurora.spruceui.SpruceUI;
 import me.lambdaurora.spruceui.option.*;
+import me.lambdaurora.spruceui.test.gui.SpruceMainMenuScreen;
 import me.lambdaurora.spruceui.widget.SpruceButtonWidget;
 import me.lambdaurora.spruceui.widget.container.SpruceContainerWidget;
 import me.lambdaurora.spruceui.widget.container.SpruceOptionListWidget;
 import me.lambdaurora.spruceui.widget.text.SpruceTextAreaWidget;
+import me.shedaniel.architectury.platform.Platform;
 import me.shedaniel.architectury.utils.EnvExecutor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.SystemToast;
@@ -134,6 +137,7 @@ public class SpruceUITest {
     }
 
     public void onInitializeClient() {
+        Platform.getMod(SpruceUI.MODID).registerConfigurationScreen(SpruceMainMenuScreen::new);
         INSTANCE = this;
     }
 
