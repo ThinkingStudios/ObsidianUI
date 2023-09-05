@@ -19,13 +19,12 @@ String getMCVersionString() {
 loom {
 	forge {
 		mixinConfigs = [
-				"spruceui.mixins.json","spruceui.test.mixins.json"
+				"spruceui.mixins.json"
 		]
 	}
 }
 
 repositories {
-	mavenLocal()
 	maven {
 		name = 'Quilt'
 		url = 'https://maven.quiltmc.org/repository/release'
