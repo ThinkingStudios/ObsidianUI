@@ -7,6 +7,8 @@
 [![GitHub license](https://img.shields.io/github/license/LambdAurora/SpruceUI?style=flat-square)](https://raw.githubusercontent.com/LambdAurora/SpruceUI/master/LICENSE)
 ![Environment: Client](https://img.shields.io/badge/environment-client-1976d2?style=flat-square)
 
+SpruceUI unofficial forge port.
+
 A Minecraft mod API which adds some GUI utilities.
 
 <img alt="java17" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/built-with/java17_vector.svg">
@@ -34,7 +36,6 @@ Add this to your `build.gradle` in addition of the base Forge mod `build.gradle`
 
 ```groovy
 repositories {
-    mavenLocal()
     maven { url = "https://api.modrinth.com/maven" }
 }
 
@@ -49,4 +50,4 @@ And this to your `gradle.properties`:
 spruceui_version=0.1.1+1.20.1
 ```
 
-It will JAR-in-JAR SpruceUI so users of your mod don't need to download it separately!
+It will JAR-in-JAR ObsidianUI so users of your mod don't need to download it separately!
