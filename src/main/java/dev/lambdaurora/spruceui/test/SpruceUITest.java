@@ -9,8 +9,11 @@
 
 package dev.lambdaurora.spruceui.test;
 
+import dev.architectury.platform.Platform;
 import dev.architectury.utils.EnvExecutor;
+import dev.lambdaurora.spruceui.SpruceUI;
 import dev.lambdaurora.spruceui.option.*;
+import dev.lambdaurora.spruceui.test.gui.SpruceMainMenuScreen;
 import dev.lambdaurora.spruceui.widget.container.SpruceOptionListWidget;
 import dev.lambdaurora.spruceui.Position;
 import dev.lambdaurora.spruceui.SpruceTexts;
@@ -134,6 +137,7 @@ public class SpruceUITest {
     }
 
     public void onInitializeClient() {
+        Platform.getMod(SpruceUI.MODID).registerConfigurationScreen(SpruceMainMenuScreen::new);
         INSTANCE = this;
     }
 
