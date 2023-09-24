@@ -1,6 +1,7 @@
 plugins {
     id 'dev.architectury.loom' version '1.2-SNAPSHOT'
     id 'io.github.juuxel.loom-vineflower' version '1.+'
+    id 'com.github.johnrengelman.shadow' version "8.1.1"
     id 'java-library'
     id 'maven-publish'
 }
@@ -33,7 +34,8 @@ repositories {
 }
 
 configurations {
-    api.extendsFrom libApi
+    shadow
+    api.extendsFrom shadow
 }
 
 dependencies {
@@ -43,11 +45,10 @@ dependencies {
 
     modImplementation("me.shedaniel:architectury-forge:${project.architectury_version}")
 
-    libApi("org.aperlambda:lambdajcommon:1.8.1") {
+    shadow("org.aperlambda:lambdajcommon:1.8.1") {
         exclude group: 'com.google.code.gson'
         exclude group: 'com.google.guava'
     }
-    include "org.aperlambda:lambdajcommon:1.8.1"
 }
 
 java {
@@ -79,6 +80,14 @@ jar {
         rename { "${it}_${project.archivesBaseName}" }
     }
 }
+
+shadowJar {
+    dependsOn jar
+    configurations = [project.configurations.shadow]
+    destinationDirectory.set(file("${project.layout.buildDirectory.get()}/devlibs"))
+    archiveClassifier.set('dev')
+}
+remapJar.dependsOn(shadowJar)
 
 // configure the maven publication
 publishing {
