@@ -29,3 +29,10 @@ mandatory = true
 versionRange = "[1.20.2,)"
 ordering = "NONE"
 side = "BOTH"
+
+[[dependencies.spruceui]]
+modId = "architectury"
+mandatory = true
+versionRange = "[10,)"
+ordering = "NONE"
+side = "BOTH"

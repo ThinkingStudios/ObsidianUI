@@ -9,6 +9,8 @@
 
 package dev.lambdaurora.spruceui.test;
 
+import dev.architectury.platform.Platform;
+import dev.architectury.utils.EnvExecutor;
 import dev.lambdaurora.spruceui.Position;
 import dev.lambdaurora.spruceui.SpruceTexts;
 import dev.lambdaurora.spruceui.option.*;
@@ -63,7 +65,7 @@ public class SpruceUITest {
 	public Consumer<SpruceButtonWidget> resetConsumer;
 
 	public SpruceUITest() {
-		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> this::onInitializeClient);
+		EnvExecutor.runInEnv(Dist.CLIENT, () -> this::onInitializeClient);
 
 		this.booleanOption = new SpruceBooleanOption("spruceui_test.option.boolean",
 				() -> this.aBoolean,
@@ -141,7 +143,7 @@ public class SpruceUITest {
 
 	public void onInitializeClient() {
 		INSTANCE = this;
-		ModList.get().getModContainerById(MODID).orElseThrow(RuntimeException::new).registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory((client, screen) -> new SpruceMainMenuScreen(screen)));
+		Platform.getMod(MODID).registerConfigurationScreen(SpruceMainMenuScreen::new);
 	}
 
 	public SpruceOptionListWidget buildOptionList(Position position, int width, int height) {

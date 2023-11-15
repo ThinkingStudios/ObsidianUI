@@ -55,6 +55,8 @@ dependencies {
 	mappings "org.quiltmc:quilt-mappings:${project.quilt_mappings}:intermediary-v2"
 	forge "net.minecraftforge:forge:${project.forge_version}"
 
+	modImplementation "dev.architectury:architectury-forge:${project.architectury_version}"
+
 	testmodImplementation sourceSets.main.output
 }
 

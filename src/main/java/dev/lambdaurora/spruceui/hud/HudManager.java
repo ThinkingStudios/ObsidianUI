@@ -9,6 +9,8 @@
 
 package dev.lambdaurora.spruceui.hud;
 
+import dev.architectury.event.events.client.ClientGuiEvent;
+import dev.architectury.event.events.client.ClientTickEvent;
 import dev.lambdaurora.spruceui.event.OpenScreenCallback;
 import dev.lambdaurora.spruceui.event.ResolutionChangeCallback;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
@@ -34,28 +36,20 @@ public class HudManager {
 	private static final Map<Identifier, Hud> HUDS = new Object2ObjectOpenHashMap<>();
 
 	public static void initialize() {
-		OpenScreenCallback.EVENT.register((client, screen) -> initAll(client, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight()));
-		ResolutionChangeCallback.EVENT.register(client -> initAll(client, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight()));
-	}
-
-	@SubscribeEvent
-	public static void renderGameOverlayEvent(RenderGuiEvent.Post event) {
-		HUDS.forEach((id, hud) -> {
+		ClientGuiEvent.RENDER_HUD.register((graphics, tickDelta) -> HUDS.forEach((id, hud) -> {
 			if (hud.isEnabled() && hud.isVisible())
-				hud.render(event.getGuiGraphics(), event.getPartialTick());
-		});
-	}
-
-	@SubscribeEvent
-	public static void clientTickEvent(TickEvent.ClientTickEvent event) {
-		if (event.phase == TickEvent.Phase.END) {
-			if (!canRenderHuds(MinecraftClient.getInstance()))
+				hud.render(graphics, tickDelta);
+		}));
+		ClientTickEvent.CLIENT_POST.register(client -> {
+			if (!canRenderHuds(client))
 				return;
 			HUDS.forEach((id, hud) -> {
 				if (hud.isEnabled() && hud.isVisible() && hud.hasTicks())
 					hud.tick();
 			});
-		}
+		});
+		OpenScreenCallback.EVENT.register((client, screen) -> initAll(client, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight()));
+		ResolutionChangeCallback.EVENT.register(client -> initAll(client, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight()));
 	}
 
 	protected static void initAll(@NotNull MinecraftClient client, int screenWidth, int screenHeight) {
