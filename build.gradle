@@ -9,8 +9,8 @@ plugins {
 import net.fabricmc.loom.task.RemapJarTask
 
 group = project.maven_group
-version = "${project.mod_version}+${getMCVersionString()}"
-base.archivesName = "${project.archives_base_name}-lexforge"
+version = "lexforge-${project.mod_version}+${getMCVersionString()}"
+base.archivesName = "${project.archives_base_name}"
 
 // This field defines the Java version your mod target.
 def targetJavaVersion = 17
