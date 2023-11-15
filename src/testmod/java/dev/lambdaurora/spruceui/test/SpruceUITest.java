@@ -12,6 +12,7 @@ package dev.lambdaurora.spruceui.test;
 import dev.lambdaurora.spruceui.Position;
 import dev.lambdaurora.spruceui.SpruceTexts;
 import dev.lambdaurora.spruceui.option.*;
+import dev.lambdaurora.spruceui.test.gui.SpruceMainMenuScreen;
 import dev.lambdaurora.spruceui.widget.SpruceButtonWidget;
 import dev.lambdaurora.spruceui.widget.container.SpruceContainerWidget;
 import dev.lambdaurora.spruceui.widget.container.SpruceOptionListWidget;
@@ -20,7 +21,10 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.text.Text;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
@@ -31,7 +35,9 @@ import java.util.function.Consumer;
  *
  * @author LambdAurora
  */
+@Mod(SpruceUITest.MODID)
 public class SpruceUITest {
+	public static final String MODID = "spruceuitest";
 	private static SpruceUITest INSTANCE;
 
 	private final SpruceOption booleanOption;
@@ -135,6 +141,7 @@ public class SpruceUITest {
 
 	public void onInitializeClient() {
 		INSTANCE = this;
+		ModList.get().getModContainerById(MODID).orElseThrow(RuntimeException::new).registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory((client, screen) -> new SpruceMainMenuScreen(screen)));
 	}
 
 	public SpruceOptionListWidget buildOptionList(Position position, int width, int height) {
