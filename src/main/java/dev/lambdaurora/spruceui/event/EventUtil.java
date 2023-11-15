@@ -9,8 +9,9 @@
 
 package dev.lambdaurora.spruceui.event;
 
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
+
+import dev.lambdaurora.spruceui.event.forged.api.event.Event;
+import dev.lambdaurora.spruceui.event.forged.api.event.EventFactory;
 
 /**
  * Represents a set of utilities for SpruceUI's events.

@@ -1,8 +1,9 @@
 plugins {
-	id 'fabric-loom' version '1.4.+'
-	id 'dev.yumi.gradle.licenser' version '1.0.+'
+	id 'dev.architectury.loom' version '1.4-SNAPSHOT'
 	id 'java-library'
 	id 'maven-publish'
+	id 'com.modrinth.minotaur' version '2.+'
+	id 'net.darkhax.curseforgegradle' version '1.+'
 }
 
 import net.fabricmc.loom.task.RemapJarTask
@@ -14,14 +15,13 @@ base.archivesName = project.archives_base_name
 // This field defines the Java version your mod target.
 def targetJavaVersion = 17
 
-Set<String> modules = [
-		'fabric-api-base',
-		'fabric-lifecycle-events-v1',
-		'fabric-rendering-v1',
-		'fabric-resource-loader-v0',
-		'fabric-screen-api-v1',
-		'fabric-key-binding-api-v1'
-]
+loom {
+	forge {
+		mixinConfigs = [
+				"spruceui.mixins.json"
+		]
+	}
+}
 
 String getMCVersionString() {
 	return project.minecraft_version
@@ -50,23 +50,10 @@ repositories {
 	}
 }
 
-configurations {
-	api.extendsFrom libApi
-}
-
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "org.quiltmc:quilt-mappings:${minecraft_version}+build.${quilt_mappings}:intermediary-v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-	modules.stream().map { fabricApi.module(it, project.fabric_api_version) }.forEach {
-		modImplementation it
-	}
-
-	modLocalRuntime("com.terraformersmc:modmenu:${project.modmenu_version}") {
-		transitive = false
-	}
-	modLocalRuntime fabricApi.module("fabric-key-binding-api-v1", project.fabric_api_version)
+	mappings "org.quiltmc:quilt-mappings:${project.quilt_mappings}:intermediary-v2"
+	forge "net.minecraftforge:forge:${project.forge_version}"
 
 	testmodImplementation sourceSets.main.output
 }
@@ -88,7 +75,7 @@ tasks.withType(JavaCompile).configureEach {
 processResources {
 	inputs.property 'version', project.version
 
-	filesMatching('fabric.mod.json') {
+	filesMatching('META-INF/mods.toml') {
 		expand 'version': project.version
 	}
 }
@@ -123,48 +110,46 @@ task remapTestmodJar(type: RemapJarTask, dependsOn: testmodJar) {
 }
 build.dependsOn remapTestmodJar
 
-license {
-	rule file('HEADER')
-}
-
 // configure the maven publication
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
 			from components.java
-
-			pom {
-				name = 'SpruceUI'
-				description = 'A Minecraft mod API which adds some GUI utilities.'
-			}
 		}
 	}
 
 	repositories {
 		mavenLocal()
-		maven {
-			name 'BuildDirLocal'
-			url "${project.layout.buildDirectory.get()}/repo"
-		}
-		maven {
-			name 'GithubPackages'
-			url 'https://maven.pkg.github.com/LambdAurora/SpruceUI'
-			credentials {
-				username = project.findProperty('gpr.user') ?: System.getenv('USERNAME')
-				password = project.findProperty('gpr.key') ?: System.getenv('TOKEN')
-			}
-		}
-
-		def spruceuiMaven = System.getenv('SPRUCEUI_MAVEN')
-		if (spruceuiMaven) {
-			maven {
-				name = 'SpruceUIMaven'
-				url = uri(spruceuiMaven)
-				credentials {
-					username = project.findProperty('gpr.user') ?: System.getenv('MAVEN_USERNAME')
-					password = project.findProperty('gpr.key') ?: System.getenv('MAVEN_PASSWORD')
-				}
-			}
-		}
 	}
+}
+
+modrinth {
+	token = System.getenv("MODRINTH_TOKEN")
+
+	projectId = "${project.modrinth_id}"
+	versionNumber = "${project.version}"
+	versionType = "beta"
+	changelog = file("CHANGELOG.md").getText('UTF-8')
+	uploadFile = remapJar
+	additionalFiles = [sourcesJar]
+	gameVersions = ["1.20.2"]
+	loaders = ["forge"]
+}
+
+task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+	apiToken = System.getenv("CURSEFORGE_TOKEN")
+	disableVersionDetection()
+
+	def mainFile = upload(project.curseforge_id, remapJar)
+	mainFile.displayName = "${project.version}"
+	mainFile.releaseType = "beta"
+	mainFile.changelog = file("CHANGELOG.md")
+	mainFile.changelogType = "markdown"
+	mainFile.addModLoader("Forge")
+	mainFile.addJavaVersion("Java 17", "Java 18")
+	mainFile.addGameVersion("1.20.2")
+
+	def sourcesFile = mainFile.withAdditionalFile(sourcesJar)
+	sourcesFile.changelog = file("CHANGELOG.md")
+	sourcesFile.changelogType = "markdown"
 }

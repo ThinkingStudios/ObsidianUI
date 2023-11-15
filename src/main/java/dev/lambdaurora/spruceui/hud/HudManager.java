@@ -12,10 +12,11 @@ package dev.lambdaurora.spruceui.hud;
 import dev.lambdaurora.spruceui.event.OpenScreenCallback;
 import dev.lambdaurora.spruceui.event.ResolutionChangeCallback;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
+import net.minecraftforge.client.event.RenderGuiEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -32,21 +33,29 @@ import java.util.Optional;
 public class HudManager {
 	private static final Map<Identifier, Hud> HUDS = new Object2ObjectOpenHashMap<>();
 
-	public void initialize() {
-		HudRenderCallback.EVENT.register((graphics, tickDelta) -> HUDS.forEach((id, hud) -> {
+	public static void initialize() {
+		OpenScreenCallback.EVENT.register((client, screen) -> initAll(client, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight()));
+		ResolutionChangeCallback.EVENT.register(client -> initAll(client, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight()));
+	}
+
+	@SubscribeEvent
+	public static void renderGameOverlayEvent(RenderGuiEvent.Post event) {
+		HUDS.forEach((id, hud) -> {
 			if (hud.isEnabled() && hud.isVisible())
-				hud.render(graphics, tickDelta);
-		}));
-		ClientTickEvents.END_CLIENT_TICK.register(client -> {
-			if (!canRenderHuds(client))
+				hud.render(event.getGuiGraphics(), event.getPartialTick());
+		});
+	}
+
+	@SubscribeEvent
+	public static void clientTickEvent(TickEvent.ClientTickEvent event) {
+		if (event.phase == TickEvent.Phase.END) {
+			if (!canRenderHuds(MinecraftClient.getInstance()))
 				return;
 			HUDS.forEach((id, hud) -> {
 				if (hud.isEnabled() && hud.isVisible() && hud.hasTicks())
 					hud.tick();
 			});
-		});
-		OpenScreenCallback.EVENT.register((client, screen) -> initAll(client, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight()));
-		ResolutionChangeCallback.EVENT.register(client -> initAll(client, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight()));
+		}
 	}
 
 	protected static void initAll(@NotNull MinecraftClient client, int screenWidth, int screenHeight) {
