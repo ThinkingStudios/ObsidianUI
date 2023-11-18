@@ -3,7 +3,7 @@ loaderVersion="[46,)"
 license="MIT"
 
 [[mods]]
-modId="spruceuitest"
+modId="obsidianui_test"
 version="${version}"
 displayName="ObsidianUI-Test"
 displayURL="https://github.com/ThinkingStudios/SpruceUI-Forged"
@@ -14,14 +14,14 @@ description='''
 
 '''
 
-[[dependencies.spruceuitest]]
+[[dependencies.obsidianui_test]]
 modId = "forge"
 mandatory = true
 versionRange = "[46,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.spruceuitest]]
+[[dependencies.obsidianui_test]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.20.2,)"

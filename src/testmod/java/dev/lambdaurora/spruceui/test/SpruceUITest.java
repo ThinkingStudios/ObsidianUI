@@ -9,8 +9,6 @@
 
 package dev.lambdaurora.spruceui.test;
 
-import dev.architectury.platform.Platform;
-import dev.architectury.utils.EnvExecutor;
 import dev.lambdaurora.spruceui.Position;
 import dev.lambdaurora.spruceui.SpruceTexts;
 import dev.lambdaurora.spruceui.option.*;
@@ -22,11 +20,8 @@ import dev.lambdaurora.spruceui.widget.text.SpruceTextAreaWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.text.Text;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.ConfigScreenHandler;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.loading.FMLLoader;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
@@ -39,7 +34,7 @@ import java.util.function.Consumer;
  */
 @Mod(SpruceUITest.MODID)
 public class SpruceUITest {
-	public static final String MODID = "spruceuitest";
+	public static final String MODID = "obsidianui_test";
 	private static SpruceUITest INSTANCE;
 
 	private final SpruceOption booleanOption;
@@ -65,7 +60,9 @@ public class SpruceUITest {
 	public Consumer<SpruceButtonWidget> resetConsumer;
 
 	public SpruceUITest() {
-		EnvExecutor.runInEnv(Dist.CLIENT, () -> this::onInitializeClient);
+		if (FMLLoader.getDist().isClient()) {
+			this.onInitializeClient();
+		}
 
 		this.booleanOption = new SpruceBooleanOption("spruceui_test.option.boolean",
 				() -> this.aBoolean,
@@ -143,7 +140,6 @@ public class SpruceUITest {
 
 	public void onInitializeClient() {
 		INSTANCE = this;
-		Platform.getMod(MODID).registerConfigurationScreen(SpruceMainMenuScreen::new);
 	}
 
 	public SpruceOptionListWidget buildOptionList(Position position, int width, int height) {

@@ -9,15 +9,16 @@
 
 package dev.lambdaurora.spruceui.hud;
 
-import dev.architectury.event.events.client.ClientGuiEvent;
-import dev.architectury.event.events.client.ClientTickEvent;
-import dev.lambdaurora.spruceui.event.OpenScreenCallback;
-import dev.lambdaurora.spruceui.event.ResolutionChangeCallback;
+import dev.lambdaurora.spruceui.event.OpenScreenEvent;
+import dev.lambdaurora.spruceui.event.ResolutionChangeEvent;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.util.Identifier;
 import net.minecraftforge.client.event.RenderGuiEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,23 +34,13 @@ import java.util.Optional;
  * @since 1.2.0
  */
 public class HudManager {
-	private static final Map<Identifier, Hud> HUDS = new Object2ObjectOpenHashMap<>();
+	public static final Map<Identifier, Hud> HUDS = new Object2ObjectOpenHashMap<>();
 
 	public static void initialize() {
-		ClientGuiEvent.RENDER_HUD.register((graphics, tickDelta) -> HUDS.forEach((id, hud) -> {
-			if (hud.isEnabled() && hud.isVisible())
-				hud.render(graphics, tickDelta);
-		}));
-		ClientTickEvent.CLIENT_POST.register(client -> {
-			if (!canRenderHuds(client))
-				return;
-			HUDS.forEach((id, hud) -> {
-				if (hud.isEnabled() && hud.isVisible() && hud.hasTicks())
-					hud.tick();
-			});
-		});
-		OpenScreenCallback.EVENT.register((client, screen) -> initAll(client, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight()));
-		ResolutionChangeCallback.EVENT.register(client -> initAll(client, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight()));
+		MinecraftForge.EVENT_BUS.addListener(HudManager::clientTickEvent);
+		MinecraftForge.EVENT_BUS.addListener(HudManager::renderGuiEvent);
+		MinecraftForge.EVENT_BUS.addListener(HudManager::openScreenEvent);
+		MinecraftForge.EVENT_BUS.addListener(HudManager::resolutionChangeEvent);
 	}
 
 	protected static void initAll(@NotNull MinecraftClient client, int screenWidth, int screenHeight) {
@@ -117,5 +108,35 @@ public class HudManager {
 	 */
 	public static Collection<Hud> getHuds() {
 		return HUDS.values();
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public static void clientTickEvent(TickEvent.ClientTickEvent event) {
+		if (!canRenderHuds(MinecraftClient.getInstance()))
+			return;
+		HUDS.forEach((id, hud) -> {
+			if (hud.isEnabled() && hud.isVisible() && hud.hasTicks())
+				hud.tick();
+		});
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public static void renderGuiEvent(RenderGuiEvent.Post event) {
+		GuiGraphics graphics = event.getGuiGraphics();
+		float tickDelta = event.getPartialTick();
+		HUDS.forEach((id, hud) -> {
+			if (hud.isEnabled() && hud.isVisible())
+				hud.render(graphics, tickDelta);
+		});
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public static void openScreenEvent(OpenScreenEvent.Post event) {
+		initAll(event.getClient(), event.getClient().getWindow().getScaledWidth(), event.getClient().getWindow().getScaledHeight());
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public static void resolutionChangeEvent(ResolutionChangeEvent event) {
+		initAll(event.getClient(), event.getClient().getWindow().getScaledWidth(), event.getClient().getWindow().getScaledHeight());
 	}
 }

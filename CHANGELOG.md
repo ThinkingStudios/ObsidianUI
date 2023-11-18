@@ -1,2 +1,3 @@
 # Changelog
-- re-added `architectury-api` dependency
+- fix version number
+- use LexForge Events, not use `architectury-api`

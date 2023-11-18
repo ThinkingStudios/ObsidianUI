@@ -3,7 +3,7 @@ loaderVersion="[46,)"
 license="MIT"
 
 [[mods]]
-modId="spruceui"
+modId="obsidianui"
 version="${version}"
 displayName="ObsidianUI"
 displayURL="https://github.com/ThinkingStudios/SpruceUI-Forged"
@@ -16,23 +16,16 @@ SpruceUI unofficial forge port.
 Just a GUI library.
 '''
 
-[[dependencies.spruceui]]
+[[dependencies.obsidianui]]
 modId = "forge"
 mandatory = true
 versionRange = "[46,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.spruceui]]
+[[dependencies.obsidianui]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.20.2,)"
-ordering = "NONE"
-side = "BOTH"
-
-[[dependencies.spruceui]]
-modId = "architectury"
-mandatory = true
-versionRange = "[10,)"
 ordering = "NONE"
 side = "BOTH"
