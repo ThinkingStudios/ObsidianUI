@@ -9,8 +9,9 @@
 
 package dev.lambdaurora.spruceui.mixin;
 
-import dev.lambdaurora.spruceui.event.OpenScreenCallback;
-import dev.lambdaurora.spruceui.event.ResolutionChangeCallback;
+import dev.lambdaurora.spruceui.SpruceUI;
+import dev.lambdaurora.spruceui.event.OpenScreenEvent;
+import dev.lambdaurora.spruceui.event.ResolutionChangeEvent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Represents the injection point for the {@link OpenScreenCallback} and {@link ResolutionChangeCallback} events.
+ * Represents the injection point for the {@link OpenScreenEvent} and {@link ResolutionChangeEvent} events.
  *
  * @author LambdAurora
  * @version 3.2.1
@@ -29,16 +30,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MinecraftClientMixin {
 	@Inject(method = "setScreen", at = @At("HEAD"))
 	private void onScreenPre(Screen screen, CallbackInfo ci) {
-		OpenScreenCallback.PRE.invoker().apply((MinecraftClient) (Object) this, screen);
+		//OpenScreenCallback.PRE.invoker().apply((MinecraftClient) (Object) this, screen);
+		SpruceUI.modEventBus.post(new OpenScreenEvent.Pre((MinecraftClient) (Object) this, screen));
 	}
 
 	@Inject(method = "setScreen", at = @At("RETURN"))
 	private void onScreenChange(Screen screen, CallbackInfo ci) {
-		OpenScreenCallback.EVENT.invoker().apply((MinecraftClient) (Object) this, screen);
+		//OpenScreenCallback.EVENT.invoker().apply((MinecraftClient) (Object) this, screen);
+		SpruceUI.modEventBus.post(new OpenScreenEvent.Post((MinecraftClient) (Object) this, screen));
 	}
 
 	@Inject(method = "onResolutionChanged", at = @At("RETURN"))
 	private void onResolutionChanged(CallbackInfo ci) {
-		ResolutionChangeCallback.EVENT.invoker().apply((MinecraftClient) (Object) this);
+		//ResolutionChangeCallback.EVENT.invoker().apply((MinecraftClient) (Object) this);
+		SpruceUI.modEventBus.post(new ResolutionChangeEvent((MinecraftClient) (Object) this));
 	}
 }

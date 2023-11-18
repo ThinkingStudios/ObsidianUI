@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="MIT"
+
+[[mods]]
+modId="obsidianui"
+version="${version}"
+displayName="ObsidianUI"
+displayURL="https://github.com/ThinkingStudios/SpruceUI-Forged"
+logoFile= "icon.png"
+credits="LambdAurora"
+authors="TexTrue, TexTrueStudio"
+description='''
+SpruceUI unofficial forge port.
+
+Just a GUI library.
+'''
+
+[[mixins]]
+config = "spruceui.mixins.json"
+
+[[dependencies.obsidianui]]
+modId = "neoforge"
+mandatory = true
+versionRange = "[20,)"
+ordering = "NONE"
+side = "BOTH"
