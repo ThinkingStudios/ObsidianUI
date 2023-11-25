@@ -48,7 +48,7 @@ repositories {
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "org.quiltmc:quilt-mappings:${minecraft_version}+build.${quilt_mappings}:intermediary-v2"
+	mappings "org.quiltmc:quilt-mappings:${project.quilt_mappings}:intermediary-v2"
 	neoForge "net.neoforged:neoforge:${project.neoforge_version}"
 
 	testmodImplementation sourceSets.main.output

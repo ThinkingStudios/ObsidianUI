@@ -35,22 +35,6 @@ public class HudManager {
 	private static final Map<Identifier, Hud> HUDS = new Object2ObjectOpenHashMap<>();
 
 	public static void initialize() {
-		/*
-		HudRenderCallback.EVENT.register((graphics, tickDelta) -> HUDS.forEach((id, hud) -> {
-			if (hud.isEnabled() && hud.isVisible())
-				hud.render(graphics, tickDelta);
-		}));
-		ClientTickEvents.END_CLIENT_TICK.register(client -> {
-			if (!canRenderHuds(client))
-				return;
-			HUDS.forEach((id, hud) -> {
-				if (hud.isEnabled() && hud.isVisible() && hud.hasTicks())
-					hud.tick();
-			});
-		});
-		OpenScreenCallback.EVENT.register((client, screen) -> initAll(client, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight()));
-		ResolutionChangeCallback.EVENT.register(client -> initAll(client, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight()));
-		 */
 		NeoForge.EVENT_BUS.addListener(TickEvent.ClientTickEvent.class, event -> {
 			if (!canRenderHuds(MinecraftClient.getInstance()))
 				return;

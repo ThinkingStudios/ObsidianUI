@@ -7,6 +7,14 @@ import net.neoforged.bus.api.ICancellableEvent;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
+
+/**
+ * Represents an event callback which is fired when an {@link Screen} is opened.
+ *
+ * @author TexTrue
+ * @version 0.1.1
+ * @since 0.1.1
+ */
 public abstract class OpenScreenEvent extends Event {
     private final MinecraftClient client;
     private final Screen screen;
