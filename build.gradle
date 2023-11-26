@@ -1,156 +1,43 @@
 plugins {
-	id 'dev.architectury.loom' version '1.3-SNAPSHOT'
-	id 'io.github.juuxel.loom-vineflower' version '1.+'
-	id 'java-library'
-	id 'maven-publish'
-	id 'com.modrinth.minotaur' version '2.+'
-	id 'net.darkhax.curseforgegradle' version '1.+'
+    id "architectury-plugin" version "3.4-SNAPSHOT"
+    id "dev.architectury.loom" version "1.4-SNAPSHOT" apply false
 }
 
-import net.fabricmc.loom.task.RemapJarTask
-
-group = project.maven_group
-version = "${project.mod_version}+${getMCVersionString()}"
-base.archivesName = "${project.archives_base_name}-lexforge"
-
-// This field defines the Java version your mod target.
-def targetJavaVersion = 17
-
-loom {
-	forge {
-		mixinConfigs = [
-				"spruceui.mixins.json"
-		]
-	}
+architectury {
+    minecraft = rootProject.minecraft_version
 }
 
-String getMCVersionString() {
-	return project.minecraft_version
+subprojects {
+    apply plugin: "dev.architectury.loom"
+
+    dependencies {
+        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+        mappings "org.quiltmc:quilt-mappings:${project.quilt_mappings}:intermediary-v2"
+    }
 }
 
-sourceSets {
-	testmod {
-		compileClasspath += sourceSets.main.compileClasspath
-		runtimeClasspath += sourceSets.main.runtimeClasspath
-	}
-}
+allprojects {
+    apply plugin: "java"
+    apply plugin: "architectury-plugin"
+    apply plugin: "maven-publish"
 
-repositories {
-	mavenLocal()
-	maven {
-		name 'Quilt'
-		url 'https://maven.quiltmc.org/repository/release'
-	}
-	maven {
-		name 'TerraformersMC'
-		url 'https://maven.terraformersmc.com/releases'
-	}
-	maven {
-		name = "QuiltMC"
-		url = "https://maven.quiltmc.org/repository/release"
-	}
-}
+    archivesBaseName = rootProject.archives_base_name
+    version = "${rootProject.mod_version}-${rootProject.minecraft_version}"
+    group = rootProject.maven_group
 
-dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "org.quiltmc:quilt-mappings:${project.quilt_mappings}:intermediary-v2"
-	forge "net.minecraftforge:forge:${project.forge_version}"
+    repositories {
+        maven {
+            name = "QuiltMC"
+            url = "https://maven.quiltmc.org/repository/release"
+        }
+    }
 
-	testmodImplementation sourceSets.main.output
-}
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        options.release = 17
+    }
 
-java {
-	sourceCompatibility = JavaVersion.toVersion(targetJavaVersion)
-	targetCompatibility = JavaVersion.toVersion(targetJavaVersion)
-
-	withSourcesJar()
-}
-
-tasks.withType(JavaCompile).configureEach {
-	it.options.encoding = 'UTF-8'
-	it.options.deprecation(true)
-	it.options.incremental(true)
-	it.options.release.set(targetJavaVersion)
-}
-
-processResources {
-	inputs.property 'version', project.version
-
-	filesMatching('META-INF/mods.toml') {
-		expand 'version': project.version
-	}
-}
-
-jar {
-	from('LICENSE') {
-		rename { "${it}_${base.archivesName.get()}" }
-	}
-}
-
-loom {
-	runs {
-		testmodClient {
-			client()
-			source(sourceSets.testmod)
-		}
-	}
-}
-
-task testmodJar(type: Jar) {
-	group "build"
-	from sourceSets.testmod.output
-	archiveClassifier = "testmod-dev"
-	destinationDirectory = project.file("build/devlibs")
-}
-
-task remapTestmodJar(type: RemapJarTask, dependsOn: testmodJar) {
-	group "build"
-	inputFile = testmodJar.archiveFile
-	classpath.from sourceSets.testmod.compileClasspath
-	archiveClassifier = "testmod"
-}
-build.dependsOn remapTestmodJar
-
-// configure the maven publication
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
-		}
-	}
-
-	repositories {
-		mavenLocal()
-	}
-}
-
-modrinth {
-	token = System.getenv("MODRINTH_TOKEN")
-
-	projectId = "${project.modrinth_id}"
-	versionNumber = "lexforge-${project.version}"
-	versionType = "alpha"
-	changelog = file("CHANGELOG.md").getText('UTF-8')
-	uploadFile = remapJar
-	additionalFiles = [sourcesJar]
-	gameVersions = ["1.20.2"]
-	loaders = ["forge"]
-}
-
-task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
-	apiToken = System.getenv("CURSEFORGE_TOKEN")
-	disableVersionDetection()
-
-	def mainFile = upload(project.curseforge_id, remapJar)
-	mainFile.displayName = "lexforge-${project.version}"
-	mainFile.releaseType = "alpha"
-	mainFile.changelog = file("CHANGELOG.md")
-	mainFile.changelogType = "markdown"
-	mainFile.addModLoader("Forge")
-	mainFile.addJavaVersion("Java 17", "Java 18")
-	mainFile.addGameVersion("1.20.2")
-
-	def sourcesFile = mainFile.withAdditionalFile(sourcesJar)
-	sourcesFile.changelog = file("CHANGELOG.md")
-	sourcesFile.changelogType = "markdown"
+    java {
+        withSourcesJar()
+    }
 }
