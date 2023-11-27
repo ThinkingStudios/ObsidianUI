@@ -108,7 +108,6 @@ unifiedPublishing {
                 token = MODRINTH_TOKEN
                 id = rootProject.modrinth_id
                 version = "$rootProject.version-lexforge"
-                gameVersions.addAll project.minecraft_version
             }
         }
     }

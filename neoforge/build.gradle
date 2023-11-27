@@ -107,7 +107,6 @@ unifiedPublishing {
                 token = MODRINTH_TOKEN
                 id = rootProject.modrinth_id
                 version = "$rootProject.version-neoforge"
-                gameVersions.addAll project.minecraft_version
             }
         }
     }
