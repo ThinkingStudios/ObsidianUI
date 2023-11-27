@@ -4,6 +4,7 @@ on:
   release:
       types:
         - published
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -27,11 +28,14 @@ jobs:
             ~/.gradle/wrapper
             .gradle
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', 'build.gradle') }}
-      - uses: gradle/wrapper-validation-action@v1
-      - run: |
-          chmod +x gradlew
-          ./gradlew build publish publishUnified --stacktrace -Porg.gradle.parallel.threads=4
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Release to Modrinth & CurseForge
+        uses: gradle/gradle-build-action@v2
         env:
           CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        with:
+          arguments: publish publishUnified --stacktrace --no-daemon -Porg.gradle.parallel.threads=4
