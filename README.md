@@ -1,6 +1,6 @@
 <center><div align="center">
 
-<img height="100" src="src/main/resources/icon.png" width="100"/>
+<img height="100" src="common/src/main/resources/icon.png" width="100"/>
 
 # ObsidianUI
 
@@ -40,12 +40,12 @@ repositories {
 }
 
 dependencies {
-    include modImplementation("maven.modrinth:spruceui-forge:${project.spruceui_version}")
+    include modImplementation("maven.modrinth:obsidianui:${project.spruceui_version}")
 }
 ```
 
 And this to your `gradle.properties`:
 
 ```properties
-spruceui_version=0.1.0+1.20.2
+spruceui_version=0.1.3+1.20.2
 ```
