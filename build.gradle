@@ -1,6 +1,5 @@
 plugins {
 	id 'dev.architectury.loom' version '1.4.+'
-	id 'dev.yumi.gradle.licenser' version '1.0.+'
 	id 'net.darkhax.curseforgegradle' version '1.+'
 	id "com.modrinth.minotaur" version "2.+"
 	id 'java-library'
@@ -103,10 +102,6 @@ task remapTestmodJar(type: RemapJarTask, dependsOn: testmodJar) {
 	archiveClassifier = "testmod"
 }
 build.dependsOn remapTestmodJar
-
-license {
-	rule file('HEADER')
-}
 
 modrinth {
 	token = System.getenv("MODRINTH_TOKEN")
