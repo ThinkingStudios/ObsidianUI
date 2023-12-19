@@ -1,6 +1,8 @@
 plugins {
-	id 'fabric-loom' version '1.4.+'
+	id 'dev.architectury.loom' version '1.4.+'
 	id 'dev.yumi.gradle.licenser' version '1.0.+'
+	id 'net.darkhax.curseforgegradle' version '1.+'
+	id "com.modrinth.minotaur" version "2.+"
 	id 'java-library'
 	id 'maven-publish'
 }
@@ -13,15 +15,6 @@ base.archivesName = project.archives_base_name
 
 // This field defines the Java version your mod target.
 def targetJavaVersion = 17
-
-Set<String> modules = [
-		'fabric-api-base',
-		'fabric-lifecycle-events-v1',
-		'fabric-rendering-v1',
-		'fabric-resource-loader-v0',
-		'fabric-screen-api-v1',
-		'fabric-key-binding-api-v1'
-]
 
 String getMCVersionString() {
 	return project.minecraft_version
@@ -48,25 +41,13 @@ repositories {
 		name = "QuiltMC"
 		url = "https://maven.quiltmc.org/repository/release"
 	}
-}
-
-configurations {
-	api.extendsFrom libApi
+	maven { url "https://maven.neoforged.net/releases/" }
 }
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "org.quiltmc:quilt-mappings:${minecraft_version}+build.${quilt_mappings}:intermediary-v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-	modules.stream().map { fabricApi.module(it, project.fabric_api_version) }.forEach {
-		modImplementation it
-	}
-
-	modLocalRuntime("com.terraformersmc:modmenu:${project.modmenu_version}") {
-		transitive = false
-	}
-	modLocalRuntime fabricApi.module("fabric-key-binding-api-v1", project.fabric_api_version)
+	neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
 
 	testmodImplementation sourceSets.main.output
 }
@@ -88,7 +69,7 @@ tasks.withType(JavaCompile).configureEach {
 processResources {
 	inputs.property 'version', project.version
 
-	filesMatching('fabric.mod.json') {
+	filesMatching('META-INF/mods.toml') {
 		expand 'version': project.version
 	}
 }
@@ -125,6 +106,37 @@ build.dependsOn remapTestmodJar
 
 license {
 	rule file('HEADER')
+}
+
+modrinth {
+	token = System.getenv("MODRINTH_TOKEN")
+
+	projectId = "${project.modrinth_id}"
+	versionNumber = "${project.version}"
+	versionType = "alpha"
+	changelog = file("CHANGELOG.md").getText('UTF-8')
+	uploadFile = remapJar
+	additionalFiles = [sourcesJar]
+	gameVersions = ["1.20.3", "1.20.4"]
+	loaders = ["neoforge"]
+}
+
+task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+	apiToken = System.getenv("CURSEFORGE_TOKEN")
+	disableVersionDetection()
+
+	def mainFile = upload(project.curseforge_id, remapJar)
+	mainFile.displayName = "${project.version}"
+	mainFile.releaseType = "alpha"
+	mainFile.changelog = file("CHANGELOG.md")
+	mainFile.changelogType = "markdown"
+	mainFile.addModLoader("NeoForge")
+	mainFile.addJavaVersion("Java 17", "Java 18")
+	mainFile.addGameVersion("1.20.3", "1.20.4")
+
+	def sourcesFile = mainFile.withAdditionalFile(sourcesJar)
+	sourcesFile.changelog = file("CHANGELOG.md")
+	sourcesFile.changelogType = "markdown"
 }
 
 // configure the maven publication

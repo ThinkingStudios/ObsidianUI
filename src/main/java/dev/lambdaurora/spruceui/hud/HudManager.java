@@ -9,13 +9,15 @@
 
 package dev.lambdaurora.spruceui.hud;
 
-import dev.lambdaurora.spruceui.event.OpenScreenCallback;
-import dev.lambdaurora.spruceui.event.ResolutionChangeCallback;
+import dev.lambdaurora.spruceui.event.OpenScreenEvent;
+import dev.lambdaurora.spruceui.event.ResolutionChangeEvent;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.util.Identifier;
+import net.neoforged.neoforge.client.event.RenderGuiEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.TickEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -33,20 +35,28 @@ public class HudManager {
 	private static final Map<Identifier, Hud> HUDS = new Object2ObjectOpenHashMap<>();
 
 	public void initialize() {
-		HudRenderCallback.EVENT.register((graphics, tickDelta) -> HUDS.forEach((id, hud) -> {
-			if (hud.isEnabled() && hud.isVisible())
-				hud.render(graphics, tickDelta);
-		}));
-		ClientTickEvents.END_CLIENT_TICK.register(client -> {
-			if (!canRenderHuds(client))
+		NeoForge.EVENT_BUS.addListener(TickEvent.ClientTickEvent.class, event -> {
+			if (!canRenderHuds(MinecraftClient.getInstance()))
 				return;
 			HUDS.forEach((id, hud) -> {
 				if (hud.isEnabled() && hud.isVisible() && hud.hasTicks())
 					hud.tick();
 			});
 		});
-		OpenScreenCallback.EVENT.register((client, screen) -> initAll(client, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight()));
-		ResolutionChangeCallback.EVENT.register(client -> initAll(client, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight()));
+		NeoForge.EVENT_BUS.addListener(RenderGuiEvent.Post.class, event -> {
+			GuiGraphics graphics = event.getGuiGraphics();
+			float tickDelta = event.getPartialTick();
+			HUDS.forEach((id, hud) -> {
+				if (hud.isEnabled() && hud.isVisible())
+					hud.render(graphics, tickDelta);
+			});
+		});
+		NeoForge.EVENT_BUS.addListener(OpenScreenEvent.Post.class, event -> {
+			initAll(event.getClient(), event.getClient().getWindow().getScaledWidth(), event.getClient().getWindow().getScaledHeight());
+		});
+		NeoForge.EVENT_BUS.addListener(ResolutionChangeEvent.class, event -> {
+			initAll(event.getClient(), event.getClient().getWindow().getScaledWidth(), event.getClient().getWindow().getScaledHeight());
+		});
 	}
 
 	protected static void initAll(@NotNull MinecraftClient client, int screenWidth, int screenHeight) {
