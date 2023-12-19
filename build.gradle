@@ -139,39 +139,10 @@ publishing {
 	publications {
 		mavenJava(MavenPublication) {
 			from components.java
-
-			pom {
-				name = 'SpruceUI'
-				description = 'A Minecraft mod API which adds some GUI utilities.'
-			}
 		}
 	}
 
 	repositories {
-		mavenLocal()
-		maven {
-			name 'BuildDirLocal'
-			url "${project.layout.buildDirectory.get()}/repo"
-		}
-		maven {
-			name 'GithubPackages'
-			url 'https://maven.pkg.github.com/LambdAurora/SpruceUI'
-			credentials {
-				username = project.findProperty('gpr.user') ?: System.getenv('USERNAME')
-				password = project.findProperty('gpr.key') ?: System.getenv('TOKEN')
-			}
-		}
 
-		def spruceuiMaven = System.getenv('SPRUCEUI_MAVEN')
-		if (spruceuiMaven) {
-			maven {
-				name = 'SpruceUIMaven'
-				url = uri(spruceuiMaven)
-				credentials {
-					username = project.findProperty('gpr.user') ?: System.getenv('MAVEN_USERNAME')
-					password = project.findProperty('gpr.key') ?: System.getenv('MAVEN_PASSWORD')
-				}
-			}
-		}
 	}
 }
