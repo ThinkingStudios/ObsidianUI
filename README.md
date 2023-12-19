@@ -13,10 +13,6 @@ A Minecraft mod API which adds some GUI utilities.
 
 <img alt="java17" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/built-with/java17_vector.svg">
 
-<a href="https://modrinth.com/mod/architectury-api">
-<img alt="architectury-api" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/requires/architectury-api_vector.svg">
-</a>
-
 <img alt="forge" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/forge_vector.svg">
 
 </div></center>
