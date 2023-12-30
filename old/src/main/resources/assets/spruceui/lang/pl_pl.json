@@ -1,0 +1,11 @@
+{
+  "spruceui.reset": "Resetuj",
+  "spruceui.gui.unbind": "Nieprzypisany",
+  "spruceui.narrator.separator": "separator %s",
+  "spruceui.options.generic": "%s: %s",
+  "spruceui.options.generic.fancy": "Dokładny",
+  "spruceui.options.generic.fast": "Szybky",
+  "spruceui.options.generic.fastest": "Najszybszy",
+  "spruceui.options.generic.simple": "Prosty",
+  "spruceui.widget.separator": "Separator"
+}

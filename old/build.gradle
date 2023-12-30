@@ -1,0 +1,148 @@
+plugins {
+	id 'dev.architectury.loom' version '1.4.+'
+	id 'net.darkhax.curseforgegradle' version '1.+'
+	id "com.modrinth.minotaur" version "2.+"
+	id 'java-library'
+	id 'maven-publish'
+}
+
+import net.fabricmc.loom.task.RemapJarTask
+
+group = project.maven_group
+version = "${project.mod_version}+${getMCVersionString()}"
+base.archivesName = project.archives_base_name
+
+// This field defines the Java version your mod target.
+def targetJavaVersion = 17
+
+String getMCVersionString() {
+	return project.minecraft_version
+}
+
+sourceSets {
+	testmod {
+		compileClasspath += sourceSets.main.compileClasspath
+		runtimeClasspath += sourceSets.main.runtimeClasspath
+	}
+}
+
+repositories {
+	mavenLocal()
+	maven {
+		name 'Quilt'
+		url 'https://maven.quiltmc.org/repository/release'
+	}
+	maven {
+		name 'TerraformersMC'
+		url 'https://maven.terraformersmc.com/releases'
+	}
+	maven {
+		name = "QuiltMC"
+		url = "https://maven.quiltmc.org/repository/release"
+	}
+	maven { url "https://maven.neoforged.net/releases/" }
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "org.quiltmc:quilt-mappings:${minecraft_version}+build.${quilt_mappings}:intermediary-v2"
+	neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
+
+	testmodImplementation sourceSets.main.output
+}
+
+java {
+	sourceCompatibility = JavaVersion.toVersion(targetJavaVersion)
+	targetCompatibility = JavaVersion.toVersion(targetJavaVersion)
+
+	withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.encoding = 'UTF-8'
+	it.options.deprecation(true)
+	it.options.incremental(true)
+	it.options.release.set(targetJavaVersion)
+}
+
+processResources {
+	inputs.property 'version', project.version
+
+	filesMatching('META-INF/mods.toml') {
+		expand 'version': project.version
+	}
+}
+
+jar {
+	from('LICENSE') {
+		rename { "${it}_${base.archivesName.get()}" }
+	}
+}
+
+loom {
+	runs {
+		testmodClient {
+			client()
+			source(sourceSets.testmod)
+		}
+	}
+}
+
+task testmodJar(type: Jar) {
+	group "build"
+	from sourceSets.testmod.output
+	archiveClassifier = "testmod-dev"
+	destinationDirectory = project.file("build/devlibs")
+}
+
+task remapTestmodJar(type: RemapJarTask, dependsOn: testmodJar) {
+	group "build"
+	inputFile = testmodJar.archiveFile
+	classpath.from sourceSets.testmod.compileClasspath
+	archiveClassifier = "testmod"
+}
+build.dependsOn remapTestmodJar
+
+modrinth {
+	token = System.getenv("MODRINTH_TOKEN")
+
+	projectId = "${project.modrinth_id}"
+	versionNumber = "${project.version}"
+	versionType = "alpha"
+	changelog = file("CHANGELOG.md").getText('UTF-8')
+	uploadFile = remapJar
+	additionalFiles = [sourcesJar]
+	gameVersions = ["1.20.3", "1.20.4"]
+	loaders = ["neoforge"]
+}
+
+task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+	apiToken = System.getenv("CURSEFORGE_TOKEN")
+	disableVersionDetection()
+
+	def mainFile = upload(project.curseforge_id, remapJar)
+	mainFile.displayName = "${project.version}"
+	mainFile.releaseType = "alpha"
+	mainFile.changelog = file("CHANGELOG.md")
+	mainFile.changelogType = "markdown"
+	mainFile.addModLoader("NeoForge")
+	mainFile.addJavaVersion("Java 17", "Java 18")
+	mainFile.addGameVersion("1.20.3", "1.20.4")
+
+	def sourcesFile = mainFile.withAdditionalFile(sourcesJar)
+	sourcesFile.changelog = file("CHANGELOG.md")
+	sourcesFile.changelogType = "markdown"
+}
+
+// configure the maven publication
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
+
+	repositories {
+
+	}
+}
