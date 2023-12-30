@@ -1,18 +1,14 @@
 pluginManagement {
-	repositories {
-		maven {
-			name 'Quilt'
-			url 'https://maven.quiltmc.org/repository/release'
-		}
-		maven {
-			name 'Fabric'
-			url 'https://maven.fabricmc.net/'
-		}
-		maven { url "https://maven.architectury.dev/" }
-		maven { url "https://maven.neoforged.net/releases/" }
-		maven { url "https://maven.minecraftforge.net/" }
-		gradlePluginPortal()
-	}
+    repositories {
+        maven { url "https://maven.fabricmc.net/" }
+        maven { url "https://maven.architectury.dev/" }
+        maven { url "https://maven.minecraftforge.net/" }
+        gradlePluginPortal()
+    }
 }
 
-rootProject.name = 'obsidianui'
+include("common")
+include("fabric")
+include("neoforge")
+
+rootProject.name = "HO-Architectury-Mod-Template"

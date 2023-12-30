@@ -7,7 +7,7 @@
 [![GitHub license](https://img.shields.io/github/license/LambdAurora/SpruceUI?style=flat-square)](https://raw.githubusercontent.com/LambdAurora/SpruceUI/master/LICENSE)
 ![Environment: Client](https://img.shields.io/badge/environment-client-1976d2?style=flat-square)
 
-SpruceUI unofficial forge port.
+SpruceUI unofficial architectury port.
 
 A Minecraft mod API which adds some GUI utilities.
 
