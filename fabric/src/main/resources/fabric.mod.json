@@ -1,24 +1,27 @@
 {
   "schemaVersion": 1,
-  "id": "examplemod",
+  "id": "obsidianui",
   "version": "${version}",
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "ObsidianUI",
+  "description": "SpruceUI unofficial architectury port.\n\nJust a GUI library.",
   "authors": [
-    "Me!"
+    "TexTrue, ThinkingStudio, LambdAurora"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/ThinkingStudios/SpruceUI-Forged",
+    "sources": "https://github.com/ThinkingStudios/SpruceUI-Forged"
   },
-  "license": "Insert License Here",
-  "icon": "assets/examplemod/icon.png",
+  "license": "MIT",
+  "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "ho.artisan.examplemod.fabric.ExampleModFabric"
+      "org.thinkingstudio.obsidianui.fabric.ObsidianUIFabric"
     ]
   },
+  "mixins": [
+    "obsidianui.mixins.json"
+  ],
   "depends": {
     "fabric": "*",
     "minecraft": ">=1.20.2",

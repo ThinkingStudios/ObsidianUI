@@ -1,39 +1,39 @@
 modLoader = "javafml"
 loaderVersion = "[1,)"
-#issueTrackerURL = ""
-license = "Insert License Here"
+license = "MIT"
 
 [[mods]]
-modId = "examplemod"
+modId = "obsidianui"
 version = "${version}"
-displayName = "Example Mod"
-authors = "Me!"
-description = '''
-This is an example description! Tell everyone what your mod is about!
+displayName = "ObsidianUI"
+displayURL = "https://github.com/ThinkingStudios/SpruceUI-Forged"
+credits="LambdAurora"
+authors="TexTrue, ThinkingStudio"
+description='''
+SpruceUI unofficial architectury port.
+
+Just a GUI library.
 '''
-#logoFile = ""
+logoFile = "icon.png"
 
 [[mixins]]
-config = "examplemod.mixins.json"
+config = "obsidianui.mixins.json"
 
-[[mixins]]
-config = "examplemod-common.mixins.json"
-
-[[dependencies.examplemod]]
+[[dependencies.obsidianui]]
 modId = "neoforge"
 mandatory = true
 versionRange = "[20,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.examplemod]]
+[[dependencies.obsidianui]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.20.2,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.examplemod]]
+[[dependencies.obsidianui]]
 modId = "architectury"
 mandatory = true
 versionRange = "*"
