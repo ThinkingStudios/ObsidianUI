@@ -13,9 +13,9 @@
   },
   "license": "MIT",
   "icon": "icon.png",
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
-    "main": [
+    "client": [
       "org.thinkingstudio.obsidianui.fabric.ObsidianUIFabric"
     ]
   },

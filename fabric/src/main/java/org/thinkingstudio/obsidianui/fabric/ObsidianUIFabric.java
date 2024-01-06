@@ -1,11 +1,11 @@
 package org.thinkingstudio.obsidianui.fabric;
 
-import net.fabricmc.api.ModInitializer;
+import net.fabricmc.api.ClientModInitializer;
 import org.thinkingstudio.obsidianui.ObsidianUI;
 
-public class ObsidianUIFabric implements ModInitializer {
+public class ObsidianUIFabric implements ClientModInitializer {
     @Override
-    public void onInitialize() {
+    public void onInitializeClient() {
         ObsidianUI.clientInit();
     }
 }

@@ -11,4 +11,4 @@ include("common")
 include("fabric")
 include("neoforge")
 
-rootProject.name = "HO-Architectury-Mod-Template"
+rootProject.name = "ObsidianUI"

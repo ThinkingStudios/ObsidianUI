@@ -1,2 +1,2 @@
-## Change
+## Changelog
 - Move to Architectury toolchain
