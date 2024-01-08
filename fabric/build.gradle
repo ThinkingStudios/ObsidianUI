@@ -81,7 +81,7 @@ publishing {
 unifiedPublishing {
     project {
         displayName = "[Fabric] $rootProject.version"
-        releaseType = "release"
+        releaseType = "alpha"
         changelog = file("CHANGELOG.md").getText('UTF-8')
         gameVersions = ["1.20.3", "1.20.4"]
         gameLoaders = ["fabric"]
