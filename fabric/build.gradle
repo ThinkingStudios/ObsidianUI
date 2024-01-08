@@ -8,7 +8,7 @@ architectury {
     fabric()
 }
 
-project.archivesBaseName = rootProject.archivesBaseName + "-neoforge"
+project.archivesBaseName = rootProject.archivesBaseName + "-fabric"
 
 configurations {
     common
