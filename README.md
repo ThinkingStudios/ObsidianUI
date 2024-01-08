@@ -11,7 +11,7 @@ SpruceUI unofficial architectury port.
 
 A Minecraft mod API which adds some GUI utilities.
 
-<img alt="java17" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/built-with/java17_vector.svg">
+<img alt="fabric" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_vector.svg">
 
 <img alt="forge" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/forge_vector.svg">
 
@@ -28,7 +28,7 @@ You can look at the [SpruceUI test](src/testmod) for examples of use.
 
 ### Import inside a project
 
-Add this to your `build.gradle` in addition of the base Forge mod `build.gradle`:
+Add this to your `build.gradle` in addition of the base mod `build.gradle`:
 
 ```groovy
 repositories {
