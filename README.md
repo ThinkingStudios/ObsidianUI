@@ -1,6 +1,6 @@
 <center><div align="center">
 
-<img height="100" src="src/main/resources/icon.png" width="100"/>
+<img height="100" src="common/src/main/resources/icon.png" width="100"/>
 
 # ObsidianUI
 
@@ -24,7 +24,7 @@ Just do `./gradlew build` and everything should build just fine!
 
 ## Use inside a mod
 
-You can look at the [SpruceUI test](src/testmod) for examples of use.
+You can look at the [SpruceUI testmod](https://github.com/LambdAurora/SpruceUI/tree/1.20.4/src/testmod) for examples of use.
 
 ### Import inside a project
 
