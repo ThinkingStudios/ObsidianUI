@@ -4,7 +4,7 @@
 
 # ObsidianUI
 
-[![GitHub license](https://img.shields.io/github/license/LambdAurora/SpruceUI?style=flat-square)](https://raw.githubusercontent.com/LambdAurora/SpruceUI/master/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/ThinkingStudios/ObsidianUI?style=flat-square)](https://raw.githubusercontent.com/ThinkingStudios/ObsidianUI/master/LICENSE)
 ![Environment: Client](https://img.shields.io/badge/environment-client-1976d2?style=flat-square)
 
 SpruceUI unofficial architectury port.
@@ -12,8 +12,8 @@ SpruceUI unofficial architectury port.
 A Minecraft mod API which adds some GUI utilities.
 
 <img alt="fabric" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_vector.svg">
-
 <img alt="forge" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/forge_vector.svg">
+<img alt="architectury-api" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/requires/architectury-api_vector.svg">
 
 </div></center>
 

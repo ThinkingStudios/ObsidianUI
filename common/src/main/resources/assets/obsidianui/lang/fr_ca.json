@@ -1,0 +1,12 @@
+{
+  "obsidianui.reset": "Réinitialiser",
+  "obsidianui.gui.unbind": "Délier",
+  "obsidianui.narrator.separator": "Séparateur %s",
+  "obsidianui.narration.toggle_switch": "Interrupteur à bascule: %s, avec état %s",
+  "obsidianui.options.generic": "%s: %s",
+  "obsidianui.options.generic.fancy": "Détaillé",
+  "obsidianui.options.generic.fast": "Rapide",
+  "obsidianui.options.generic.fastest": "Très rapide",
+  "obsidianui.options.generic.simple": "Simple",
+  "obsidianui.widget.separator": "Séparateur"
+}

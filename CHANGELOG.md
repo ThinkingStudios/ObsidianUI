@@ -1,2 +1,3 @@
 ## Changelog
-- Move to Architectury toolchain
+- `spruceui` -> `obsidianui`
+- new icon

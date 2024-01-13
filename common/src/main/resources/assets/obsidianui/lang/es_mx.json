@@ -1,0 +1,11 @@
+{
+  "obsidianui.reset": "Resetear",
+  "obsidianui.gui.unbind": "Desenlazar",
+  "obsidianui.narrator.separator": "%s separador",
+  "obsidianui.options.generic": "%s: %s",
+  "obsidianui.options.generic.fancy": "Detalladas",
+  "obsidianui.options.generic.fast": "Rápidas",
+  "obsidianui.options.generic.fastest": "Más rápidas",
+  "obsidianui.options.generic.simple": "Simple",
+  "obsidianui.widget.separator": "Separador"
+}

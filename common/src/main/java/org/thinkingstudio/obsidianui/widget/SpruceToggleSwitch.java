@@ -1,7 +1,8 @@
 /*
- * Copyright © 2020 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2020~2024 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2024 ThinkingStudio
  *
- * This file is part of SpruceUI.
+ * This file is part of ObsidianUI.
  *
  * Licensed under the MIT license. For more information,
  * see the LICENSE file.
@@ -28,7 +29,7 @@ import org.thinkingstudio.obsidianui.SpruceTexts;
  * @since 1.0.0
  */
 public class SpruceToggleSwitch extends AbstractSpruceBooleanButtonWidget {
-	private static final Identifier TEXTURE = new Identifier("spruceui", "textures/gui/toggle_switch.png");
+	private static final Identifier TEXTURE = new Identifier("obsidianui", "textures/gui/toggle_switch.png");
 
 	public SpruceToggleSwitch(Position position, int width, int height, Text message, boolean value) {
 		super(position, width, height, message, value);
@@ -86,7 +87,7 @@ public class SpruceToggleSwitch extends AbstractSpruceBooleanButtonWidget {
 
 	@Override
 	protected @Nullable Text getNarrationMessage() {
-		return Text.translatable("spruceui.narration.toggle_switch", this.getMessage(),
+		return Text.translatable("obsidianui.narration.toggle_switch", this.getMessage(),
 				SpruceTexts.getToggleText(this.getValue()));
 	}
 }

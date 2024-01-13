@@ -1,7 +1,8 @@
 /*
- * Copyright © 2020 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2020~2024 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2024 ThinkingStudio
  *
- * This file is part of SpruceUI.
+ * This file is part of ObsidianUI.
  *
  * Licensed under the MIT license. For more information,
  * see the LICENSE file.
@@ -64,7 +65,7 @@ public abstract class SpruceOption implements Nameable {
 	 * @return the display text
 	 */
 	public Text getDisplayText(Text value) {
-		return Text.translatable("spruceui.options.generic", this.getPrefix(), value);
+		return Text.translatable("obsidianui.options.generic", this.getPrefix(), value);
 	}
 
 	public abstract SpruceWidget createWidget(Position position, int width);

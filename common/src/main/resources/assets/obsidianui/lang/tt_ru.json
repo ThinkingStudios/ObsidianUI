@@ -1,0 +1,13 @@
+{
+  "modmenu.descriptionTranslation.obsidianui": "Тик GUI китапханәсе.",
+  "obsidianui.reset": "Ташлау",
+  "obsidianui.gui.unbind": "Бәйләгечне аеру",
+  "obsidianui.narrator.separator": "%s аергычы",
+  "obsidianui.narration.toggle_switch": "%s күчергече, %s кыяммәте",
+  "obsidianui.options.generic": "%s: %s",
+  "obsidianui.options.generic.fancy": "Җентекле",
+  "obsidianui.options.generic.fast": "Тиз",
+  "obsidianui.options.generic.fastest": "Иң тиз",
+  "obsidianui.options.generic.simple": "Гади",
+  "obsidianui.widget.separator": "Аергыч"
+}

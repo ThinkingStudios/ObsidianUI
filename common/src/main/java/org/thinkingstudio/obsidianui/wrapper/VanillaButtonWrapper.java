@@ -1,7 +1,8 @@
 /*
- * Copyright © 2020 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2020~2024 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2024 ThinkingStudio
  *
- * This file is part of SpruceUI.
+ * This file is part of ObsidianUI.
  *
  * Licensed under the MIT license. For more information,
  * see the LICENSE file.
@@ -19,7 +20,7 @@ import org.thinkingstudio.obsidianui.widget.AbstractSpruceButtonWidget;
 import org.thinkingstudio.obsidianui.widget.SpruceElement;
 
 /**
- * Represents a vanilla button wrapper for SpruceUI's own button widgets.
+ * Represents a vanilla button wrapper for ObsidianUI's own button widgets.
  *
  * @author LambdAurora
  * @version 5.0.0

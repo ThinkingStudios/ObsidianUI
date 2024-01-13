@@ -1,7 +1,8 @@
 /*
- * Copyright © 2020 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2020~2024 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2024 ThinkingStudio
  *
- * This file is part of SpruceUI.
+ * This file is part of ObsidianUI.
  *
  * Licensed under the MIT license. For more information,
  * see the LICENSE file.
@@ -13,7 +14,7 @@ import dev.architectury.event.Event;
 import dev.architectury.event.EventFactory;
 
 /**
- * Represents a set of utilities for SpruceUI's events.
+ * Represents a set of utilities for ObsidianUI's events.
  *
  * @author LambdAurora
  * @version 3.0.0

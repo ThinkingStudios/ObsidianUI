@@ -1,0 +1,11 @@
+{
+  "obsidianui.reset": "Lähtesta",
+  "obsidianui.gui.unbind": "Vabasta",
+  "obsidianui.narrator.separator": "%s eraldaja",
+  "obsidianui.options.generic": "%s: %s",
+  "obsidianui.options.generic.fancy": "Uhke",
+  "obsidianui.options.generic.fast": "Kiire",
+  "obsidianui.options.generic.fastest": "Kiireim",
+  "obsidianui.options.generic.simple": "Lihtne",
+  "obsidianui.widget.separator": "Eraldaja"
+}

@@ -1,7 +1,8 @@
 /*
- * Copyright © 2020 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2020~2024 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2024 ThinkingStudio
  *
- * This file is part of SpruceUI.
+ * This file is part of ObsidianUI.
  *
  * Licensed under the MIT license. For more information,
  * see the LICENSE file.
@@ -28,7 +29,7 @@ import org.thinkingstudio.obsidianui.Position;
  * @since 1.0.0
  */
 public class SpruceCheckboxWidget extends AbstractSpruceBooleanButtonWidget {
-	private static final Identifier TEXTURE = new Identifier("spruceui", "textures/gui/checkbox.png");
+	private static final Identifier TEXTURE = new Identifier("obsidianui", "textures/gui/checkbox.png");
 	private boolean showCross = false;
 	private boolean colored = false;
 

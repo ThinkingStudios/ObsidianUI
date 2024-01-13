@@ -1,0 +1,11 @@
+{
+  "obsidianui.reset": "重置",
+  "obsidianui.gui.unbind": "未绑定",
+  "obsidianui.narrator.separator": "%s 分割线",
+  "obsidianui.options.generic": "%s: %s",
+  "obsidianui.options.generic.fancy": "华丽",
+  "obsidianui.options.generic.fast": "快速",
+  "obsidianui.options.generic.fastest": "最快",
+  "obsidianui.options.generic.simple": "简约",
+  "obsidianui.widget.separator": "分割线"
+}

@@ -1,7 +1,8 @@
 /*
- * Copyright © 2020 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2020~2024 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2024 ThinkingStudio
  *
- * This file is part of SpruceUI.
+ * This file is part of ObsidianUI.
  *
  * Licensed under the MIT license. For more information,
  * see the LICENSE file.
@@ -106,7 +107,7 @@ public class SpruceSeparatorWidget extends AbstractSpruceWidget implements Toolt
 	protected Text getNarrationMessage() {
 		return this.getTitle().map(Text::getString)
 				.filter(title -> !title.isEmpty())
-				.map(title -> Text.translatable("spruceui.narrator.separator", title))
+				.map(title -> Text.translatable("obsidianui.narrator.separator", title))
 				.orElse(null);
 	}
 }

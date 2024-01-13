@@ -1,0 +1,12 @@
+{
+  "obsidianui.reset": "Сброс",
+  "obsidianui.gui.unbind": "Отвязать",
+  "obsidianui.narrator.separator": "Разделитель %s",
+  "obsidianui.narration.toggle_switch": "Переключатель: %s, положение: %s",
+  "obsidianui.options.generic": "%s: %s",
+  "obsidianui.options.generic.fancy": "Детально",
+  "obsidianui.options.generic.fast": "Быстро",
+  "obsidianui.options.generic.fastest": "Быстрейше",
+  "obsidianui.options.generic.simple": "Упрощённо",
+  "obsidianui.widget.separator": "Разделитель"
+}
