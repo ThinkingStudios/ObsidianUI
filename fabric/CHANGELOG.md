@@ -1,3 +1,2 @@
 ## Changelog
-- `spruceui` -> `obsidianui`
-- new icon
+- backport to 1.20.2
