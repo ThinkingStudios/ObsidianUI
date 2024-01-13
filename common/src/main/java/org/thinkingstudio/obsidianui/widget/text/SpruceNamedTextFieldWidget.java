@@ -200,8 +200,8 @@ public class SpruceNamedTextFieldWidget extends AbstractSpruceWidget implements 
 	}
 
 	@Override
-	protected boolean onMouseScroll(double mouseX, double mouseY, double scrollX, double scrollY) {
-		return this.getTextFieldWidget().mouseScrolled(mouseX, mouseY, scrollX, scrollY);
+	protected boolean onMouseScroll(double mouseX, double mouseY, double amount) {
+		return this.getTextFieldWidget().mouseScrolled(mouseX, mouseY, amount);
 	}
 
 	@Override

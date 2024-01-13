@@ -430,12 +430,12 @@ public class SpruceTextAreaWidget extends AbstractSpruceTextInputWidget {
 	}
 
 	@Override
-	protected boolean onMouseScroll(double mouseX, double mouseY, double scrollX, double scrollY) {
+	protected boolean onMouseScroll(double mouseX, double mouseY, double amount) {
 		if (!this.isEditorActive()) {
 			return false;
 		}
 
-		if (scrollY > 0.) {
+		if (amount > 0.) {
 			this.cursor.moveUp();
 		} else {
 			this.cursor.moveDown();

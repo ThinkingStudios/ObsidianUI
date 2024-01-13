@@ -12,6 +12,7 @@ package org.thinkingstudio.obsidianui.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -165,16 +166,17 @@ public class SpruceSliderWidget extends AbstractSpruceButtonWidget implements To
 	/* Rendering */
 
 	@Override
-	protected Identifier getTexture() {
-		return SLIDER;
+	protected int getVOffset() {
+		return 0;
 	}
 
 	@Override
 	protected void renderButton(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
 		RenderSystem.setShaderColor(1.f, 1.f, 1.f, 1.f);
-
-		final Identifier texture = this.isFocusedOrHovered() ? SLIDER_HANDLE_HIGHLIGHTED : SLIDER_HANDLE;
-		graphics.drawGuiTexture(texture, this.getX() + (int) (this.value * (double) (this.getWidth() - 8)), this.getY(), 8, 20);
+		RenderSystem.setShaderTexture(0, ClickableWidget.WIDGETS_TEXTURE);
+		int vOffset = (this.isFocusedOrHovered() ? 2 : 1) * 20;
+		graphics.drawTexture(ClickableWidget.WIDGETS_TEXTURE, this.getX() + (int) (this.value * (double) (this.getWidth() - 8)), this.getY(), 0, 46 + vOffset, 4, 20);
+		graphics.drawTexture(ClickableWidget.WIDGETS_TEXTURE, this.getX() + (int) (this.value * (double) (this.getWidth() - 8)) + 4, this.getY(), 196, 46 + vOffset, 4, 20);
 
 		if (!this.isMouseHovered() && this.inUse) {
 			this.inUse = false;

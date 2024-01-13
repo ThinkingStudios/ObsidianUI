@@ -171,14 +171,14 @@ public abstract class AbstractSpruceWidget implements SpruceWidget {
 		return false;
 	}
 
-	public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+	public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
 		if (this.isActive() && this.isVisible() && this.isMouseOver(mouseX, mouseY)) {
-			return this.onMouseScroll(mouseX, mouseY, scrollX, scrollY);
+			return this.onMouseScroll(mouseX, mouseY, amount);
 		}
 		return false;
 	}
 
-	protected boolean onMouseScroll(double mouseX, double mouseY, double scrollX, double scrollY) {
+	protected boolean onMouseScroll(double mouseX, double mouseY, double amount) {
 		return false;
 	}
 
