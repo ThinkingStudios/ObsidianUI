@@ -5,13 +5,15 @@ plugins {
 
 architectury {
     platformSetupLoomIde()
-    neoForge()
+    forge()
 }
 
-project.archivesBaseName = rootProject.archivesBaseName + "-neoforge"
+project.archivesBaseName = rootProject.archivesBaseName + "-forge"
 
-repositories {
-    maven { url "https://maven.neoforged.net/releases/" }
+loom {
+    forge {
+        mixinConfig "obsidianui.mixins.json"
+    }
 }
 
 configurations {
@@ -23,9 +25,9 @@ configurations {
 }
 
 dependencies {
-    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
+    forge "net.minecraftforge:forge:${rootProject.forge_version}"
     // Remove the next line if you don't want to depend on the API
-    modApi "dev.architectury:architectury-neoforge:${rootProject.architectury_version}"
+    modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
@@ -85,11 +87,11 @@ publishing {
 
 unifiedPublishing {
     project {
-        displayName = "[NeoForge] $rootProject.version"
+        displayName = "[Forge] $rootProject.version"
         releaseType = "alpha"
         changelog = file("CHANGELOG.md").getText('UTF-8')
-        gameVersions = ["1.20.3", "1.20.4"]
-        gameLoaders = ["neoforge"]
+        gameVersions = ["1.20", "1.20.1"]
+        gameLoaders = ["forge"]
 
         mainPublication remapJar
         secondaryPublications.builtBy(sourcesJar)
@@ -114,7 +116,7 @@ unifiedPublishing {
             modrinth {
                 token = MODRINTH_TOKEN
                 id = rootProject.modrinth_id
-                version = "$rootProject.version-neoforge"
+                version = "$rootProject.version-forge"
             }
         }
     }

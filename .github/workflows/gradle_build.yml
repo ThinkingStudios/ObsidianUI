@@ -32,8 +32,8 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: Artifacts-neoforge
-          path: ./neoforge/build/libs/
+          name: Artifacts-forge
+          path: ./forge/build/libs/
 
       - uses: actions/upload-artifact@v2
         with:
