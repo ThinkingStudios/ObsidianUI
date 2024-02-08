@@ -26,7 +26,6 @@ configurations {
 
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
-    // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
@@ -90,7 +89,7 @@ unifiedPublishing {
         displayName = "[Forge] $rootProject.version"
         releaseType = "alpha"
         changelog = file("CHANGELOG.md").getText('UTF-8')
-        gameVersions = ["1.20", "1.20.1"]
+        gameVersions = ["1.19", "1.19.1", "1.19.2"]
         gameLoaders = ["forge"]
 
         mainPublication remapJar
