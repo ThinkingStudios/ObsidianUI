@@ -12,8 +12,8 @@ package org.thinkingstudio.obsidianui;
 
 import com.google.common.collect.Queues;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.tooltip.DefaultTooltipPositioner;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
 import org.jetbrains.annotations.ApiStatus;
@@ -86,10 +86,11 @@ public class Tooltip implements SprucePositioned {
 	/**
 	 * Renders the tooltip.
 	 *
-	 * @param graphics The GuiGraphics instance used to render.
+	 * @param screen the screen on which the tooltip is rendered
+	 * @param matrices the matrices
 	 */
-	public void render(GuiGraphics graphics) {
-		graphics.drawTooltip(MinecraftClient.getInstance().textRenderer, this.tooltip, DefaultTooltipPositioner.INSTANCE, this.x, this.y);
+	public void render(Screen screen, MatrixStack matrices) {
+		screen.renderOrderedTooltip(matrices, this.tooltip, this.x, this.y);
 	}
 
 	/**
@@ -152,16 +153,17 @@ public class Tooltip implements SprucePositioned {
 	/**
 	 * Renders all the tooltips.
 	 *
-	 * @param graphics the GUI graphics to render from
+	 * @param screen the screen on which the tooltips are rendered
+	 * @param matrices the matrices
 	 */
-	public static void renderAll(GuiGraphics graphics) {
+	public static void renderAll(Screen screen, MatrixStack matrices) {
 		if (delayed)
 			return;
 		synchronized (TOOLTIPS) {
 			Tooltip tooltip;
 
 			while ((tooltip = TOOLTIPS.poll()) != null)
-				tooltip.render(graphics);
+				tooltip.render(screen, matrices);
 		}
 	}
 }

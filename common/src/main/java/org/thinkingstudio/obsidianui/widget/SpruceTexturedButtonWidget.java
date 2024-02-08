@@ -11,7 +11,7 @@
 package org.thinkingstudio.obsidianui.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.thinkingstudio.obsidianui.Position;
@@ -62,13 +62,13 @@ public class SpruceTexturedButtonWidget extends SpruceButtonWidget {
 	/* Rendering */
 
 	@Override
-	protected void renderButton(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+	protected void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
 		if (this.showMessage)
-			super.renderButton(graphics, mouseX, mouseY, delta);
+			super.renderButton(matrices, mouseX, mouseY, delta);
 	}
 
 	@Override
-	protected void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+	protected void renderBackground(MatrixStack matrices, int mouseX, int mouseY, float delta) {
 		int v = this.v;
 		if (this.isFocusedOrHovered()) {
 			v += this.hoveredVOffset;
@@ -77,7 +77,7 @@ public class SpruceTexturedButtonWidget extends SpruceButtonWidget {
 		RenderSystem.setShaderColor(1.f, 1.f, 1.f, this.getAlpha());
 		RenderSystem.setShaderTexture(0, this.texture);
 		RenderSystem.enableDepthTest();
-		graphics.drawTexture(this.texture,
+		drawTexture(matrices,
 				this.getX(), this.getY(),
 				this.u, v,
 				this.getWidth(), this.getHeight(),

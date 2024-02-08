@@ -11,7 +11,8 @@
 package org.thinkingstudio.obsidianui.hud.component;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.thinkingstudio.obsidianui.hud.HudComponent;
@@ -76,7 +77,7 @@ public class TextHudComponent extends HudComponent {
 	}
 
 	@Override
-	public void render(GuiGraphics graphics, float tickDelta) {
-		graphics.drawShadowedText(this.client.textRenderer, this.text, this.x, this.y, this.color);
+	public void render(MatrixStack matrices, float tickDelta) {
+		DrawableHelper.drawTextWithShadow(matrices, this.client.textRenderer, this.text, this.x, this.y, this.color);
 	}
 }

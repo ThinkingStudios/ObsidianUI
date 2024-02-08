@@ -12,9 +12,9 @@ package org.thinkingstudio.obsidianui.wrapper;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
+import net.minecraft.client.util.math.MatrixStack;
 import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
 import org.thinkingstudio.obsidianui.widget.AbstractSpruceButtonWidget;
 import org.thinkingstudio.obsidianui.widget.SpruceElement;
@@ -36,9 +36,9 @@ public class VanillaButtonWrapper extends ClickableWidget implements SpruceEleme
 	}
 
 	@Override
-	public void drawWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-		this.widget.getPosition().setRelativeY(this.getY());
-		this.widget.render(graphics, mouseX, mouseY, delta);
+	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+		this.widget.getPosition().setRelativeY(this.y);
+		this.widget.render(matrices, mouseX, mouseY, delta);
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class VanillaButtonWrapper extends ClickableWidget implements SpruceEleme
 	}
 
 	@Override
-	public void updateNarration(NarrationMessageBuilder builder) {
+	public void appendNarrations(NarrationMessageBuilder builder) {
 		this.widget.appendNarrations(builder);
 	}
 }

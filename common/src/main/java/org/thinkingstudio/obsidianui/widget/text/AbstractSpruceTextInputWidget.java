@@ -10,7 +10,7 @@
 
 package org.thinkingstudio.obsidianui.widget.text;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.background.Background;
@@ -172,13 +172,13 @@ public abstract class AbstractSpruceTextInputWidget extends AbstractSpruceWidget
 	/* Rendering */
 
 	@Override
-	protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-		this.getBorder().render(graphics, this, mouseX, mouseY, delta);
+	protected void renderWidget(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+		this.getBorder().render(matrices, this, mouseX, mouseY, delta);
 	}
 
 	@Override
-	protected void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-		this.getBackground().render(graphics, this, 0, mouseX, mouseY, delta);
+	protected void renderBackground(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+		this.getBackground().render(matrices, this, 0, mouseX, mouseY, delta);
 	}
 
 	/* Narration */

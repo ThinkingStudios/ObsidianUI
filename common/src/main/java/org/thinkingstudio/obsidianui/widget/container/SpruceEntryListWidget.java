@@ -19,10 +19,10 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormats;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
@@ -324,12 +324,12 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 	/* Rendering */
 
 	@Override
-	protected void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-		this.getBackground().render(graphics, this, 0, mouseX, mouseY, delta);
+	protected void renderBackground(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+		this.getBackground().render(matrices, this, 0, mouseX, mouseY, delta);
 	}
 
 	@Override
-	protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+	protected void renderWidget(MatrixStack matrices, int mouseX, int mouseY, float delta) {
 		int scrollbarPositionX = this.getScrollbarPositionX();
 		int scrollBarEnd = scrollbarPositionX + 6;
 		int left = this.getX();
@@ -338,7 +338,7 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 		int bottom = top + this.getHeight();
 
 		ScissorManager.push(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-		this.entries.forEach(e -> e.render(graphics, mouseX, mouseY, delta));
+		this.entries.forEach(e -> e.render(matrices, mouseX, mouseY, delta));
 		ScissorManager.pop();
 
 		var tessellator = Tessellator.getInstance();
@@ -350,6 +350,7 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 					GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
 					GlStateManager.SourceFactor.ZERO, GlStateManager.DestFactor.ONE
 			);
+			RenderSystem.disableTexture();
 			RenderSystem.setShader(GameRenderer::getPositionColorShader);
 			buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
 			// TOP
@@ -378,6 +379,7 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 		// Scrollbar
 		int maxScroll = this.getMaxScroll();
 		if (maxScroll > 0) {
+			RenderSystem.disableTexture();
 			int scrollbarHeight = (int) ((float) ((this.getHeight()) * (this.getHeight())) / (float) this.getMaxPosition());
 			scrollbarHeight = MathHelper.clamp(scrollbarHeight, 32, this.getHeight() - 8);
 			int scrollbarY = (int) this.getScrollAmount() * (this.getHeight() - scrollbarHeight) / maxScroll + this.getY();
@@ -388,8 +390,9 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 			this.renderScrollbar(tessellator, buffer, scrollbarPositionX, scrollBarEnd, scrollbarY, scrollbarHeight);
 		}
 
-		this.getBorder().render(graphics, this, mouseX, mouseY, delta);
+		this.getBorder().render(matrices, this, mouseX, mouseY, delta);
 
+		RenderSystem.enableTexture();
 		RenderSystem.disableBlend();
 	}
 

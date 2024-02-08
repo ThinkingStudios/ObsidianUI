@@ -18,9 +18,9 @@ import com.mojang.blaze3d.vertex.VertexFormats;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
@@ -446,19 +446,19 @@ public class SpruceTextAreaWidget extends AbstractSpruceTextInputWidget {
 	/* Rendering */
 
 	@Override
-	protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-		super.renderWidget(graphics, mouseX, mouseY, delta);
+	protected void renderWidget(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+		super.renderWidget(matrices, mouseX, mouseY, delta);
 
-		this.drawText(graphics);
-		this.drawCursor(graphics);
+		this.drawText(matrices);
+		this.drawCursor(matrices);
 	}
 
 	/**
 	 * Draws the text of the text area.
 	 *
-	 * @param graphics the GUI graphics instance to render with
+	 * @param matrices the matrices
 	 */
-	protected void drawText(GuiGraphics graphics) {
+	protected void drawText(MatrixStack matrices) {
 		int length = Math.min(this.lines.size(), this.displayedLines);
 
 		int textColor = this.getTextColor();
@@ -471,8 +471,8 @@ public class SpruceTextAreaWidget extends AbstractSpruceTextInputWidget {
 				continue;
 			if (line.endsWith("\n")) line = line.substring(0, line.length() - 1);
 
-			graphics.drawShadowedText(this.textRenderer, Text.literal(line), textX, lineY, textColor);
-			this.drawSelection(graphics, line, lineY, row);
+			drawTextWithShadow(matrices, this.textRenderer, Text.literal(line), textX, lineY, textColor);
+			this.drawSelection(matrices, line, lineY, row);
 
 			lineY += this.textRenderer.fontHeight;
 		}
@@ -481,12 +481,12 @@ public class SpruceTextAreaWidget extends AbstractSpruceTextInputWidget {
 	/**
 	 * Draws the selection over the text.
 	 *
-	 * @param graphics the GUI graphics instance to render with
+	 * @param matrices the matrices
 	 * @param line the current line
 	 * @param lineY the line Y-coordinates
 	 * @param row the row number
 	 */
-	protected void drawSelection(GuiGraphics graphics, String line, int lineY, int row) {
+	protected void drawSelection(MatrixStack matrices, String line, int lineY, int row) {
 		if (!this.isFocused())
 			return;
 		if (!this.selection.isRowSelected(row))
@@ -514,30 +514,31 @@ public class SpruceTextAreaWidget extends AbstractSpruceTextInputWidget {
 
 		var tessellator = Tessellator.getInstance();
 		var buffer = tessellator.getBufferBuilder();
+		RenderSystem.disableTexture();
 		RenderSystem.enableColorLogicOp();
 		RenderSystem.logicOp(GlStateManager.LogicOp.OR_REVERSE);
 		RenderSystem.setShader(GameRenderer::getPositionShader);
-		RenderSystem.setShaderColor(0.0f, 0.0f, 1.0f, 1.0f);
+		RenderSystem.setShaderColor(0.f, 0.f, 255.f, 255.f);
 		buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
 		buffer.vertex(x, y2, 0.d).next();
 		buffer.vertex(x2, y2, 0.d).next();
 		buffer.vertex(x2, lineY, 0.d).next();
 		buffer.vertex(x, lineY, 0.d).next();
 		tessellator.draw();
-		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 		RenderSystem.disableColorLogicOp();
+		RenderSystem.enableTexture();
 	}
 
 	/**
 	 * Draws the cursor.
 	 *
-	 * @param graphics the GUI graphics instance to render with
+	 * @param matrices the matrices
 	 */
-	protected void drawCursor(GuiGraphics graphics) {
+	protected void drawCursor(MatrixStack matrices) {
 		if (!this.isFocused())
 			return;
 		if (this.lines.isEmpty()) {
-			graphics.drawShadowedText(this.textRenderer, Text.literal("_"), this.getX(), this.getY() + 4, ColorUtil.TEXT_COLOR);
+			drawTextWithShadow(matrices, this.textRenderer, Text.literal("_"), this.getX(), this.getY() + 4, ColorUtil.TEXT_COLOR);
 			return;
 		}
 
@@ -549,9 +550,9 @@ public class SpruceTextAreaWidget extends AbstractSpruceTextInputWidget {
 		int cursorY = this.getY() + 4 + actualRow * this.textRenderer.fontHeight;
 
 		if (this.cursor.row < this.lines.size() - 1 || this.cursor.column < cursorLine.length() || this.doesLineOccupyFullSpace(cursorLine))
-			graphics.fill(cursorX - 1, cursorY - 1, cursorX, cursorY + 9, ColorUtil.TEXT_COLOR);
+			fill(matrices, cursorX - 1, cursorY - 1, cursorX, cursorY + 9, ColorUtil.TEXT_COLOR);
 		else
-			graphics.drawShadowedText(this.textRenderer, "_", cursorX, cursorY, ColorUtil.TEXT_COLOR);
+			this.textRenderer.drawWithShadow(matrices, "_", cursorX, cursorY, ColorUtil.TEXT_COLOR);
 	}
 
 	/**

@@ -17,11 +17,11 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormats;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -416,11 +416,11 @@ public class SpruceTextFieldWidget extends AbstractSpruceTextInputWidget impleme
 	/* Rendering */
 
 	@Override
-	protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-		super.renderWidget(graphics, mouseX, mouseY, delta);
+	protected void renderWidget(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+		super.renderWidget(matrices, mouseX, mouseY, delta);
 
-		this.drawText(graphics);
-		this.drawCursor(graphics);
+		this.drawText(matrices);
+		this.drawCursor(matrices);
 
 		if (!this.dragging && this.editingTime == 0) {
 			Tooltip.queueFor(this, mouseX, mouseY, this.tooltipTicks,
@@ -433,9 +433,9 @@ public class SpruceTextFieldWidget extends AbstractSpruceTextInputWidget impleme
 	/**
 	 * Draws the text of the text area.
 	 *
-	 * @param graphics The GUI graphics instance to render with
+	 * @param matrices the matrices
 	 */
-	protected void drawText(GuiGraphics graphics) {
+	protected void drawText(MatrixStack matrices) {
 		int textColor = this.getTextColor();
 		int x = this.getX() + 4;
 		int y = this.getY() + this.getHeight() / 2 - 4;
@@ -443,7 +443,7 @@ public class SpruceTextFieldWidget extends AbstractSpruceTextInputWidget impleme
 		var displayedText = this.client.textRenderer.trimToWidth(this.text.substring(this.firstCharacterIndex),
 				this.getInnerWidth());
 
-		graphics.drawShadowedText(this.client.textRenderer, this.renderTextProvider.apply(displayedText, this.firstCharacterIndex),
+		this.client.textRenderer.drawWithShadow(matrices, this.renderTextProvider.apply(displayedText, this.firstCharacterIndex),
 				x, y, textColor);
 		this.drawSelection(displayedText, y);
 	}
@@ -472,6 +472,7 @@ public class SpruceTextFieldWidget extends AbstractSpruceTextInputWidget impleme
 
 		var tessellator = Tessellator.getInstance();
 		var buffer = tessellator.getBufferBuilder();
+		RenderSystem.disableTexture();
 		RenderSystem.enableColorLogicOp();
 		RenderSystem.logicOp(GlStateManager.LogicOp.OR_REVERSE);
 		RenderSystem.setShader(GameRenderer::getPositionShader);
@@ -483,21 +484,22 @@ public class SpruceTextFieldWidget extends AbstractSpruceTextInputWidget impleme
 		buffer.vertex(x, lineY, 0.d).next();
 		tessellator.draw();
 		RenderSystem.disableColorLogicOp();
+		RenderSystem.enableTexture();
 	}
 
 	/**
 	 * Draws the cursor.
 	 *
-	 * @param graphics The GUI graphics instance to render with
+	 * @param matrices the matrices
 	 */
-	protected void drawCursor(GuiGraphics graphics) {
+	protected void drawCursor(MatrixStack matrices) {
 		if (!this.isFocused())
 			return;
 
 		int cursorY = this.getY() + this.getHeight() / 2 - 4;
 
 		if (this.text.isEmpty()) {
-			graphics.drawShadowedText(this.client.textRenderer, Text.literal("_"),
+			drawTextWithShadow(matrices, this.client.textRenderer, Text.literal("_"),
 					this.getX() + 4, cursorY, ColorUtil.TEXT_COLOR);
 			return;
 		}
@@ -510,9 +512,9 @@ public class SpruceTextFieldWidget extends AbstractSpruceTextInputWidget impleme
 		);
 
 		if (this.cursor.column - this.firstCharacterIndex < cursorLine.length())
-			graphics.fill(cursorX - 1, cursorY - 1, cursorX, cursorY + 9, ColorUtil.TEXT_COLOR);
+			fill(matrices, cursorX - 1, cursorY - 1, cursorX, cursorY + 9, ColorUtil.TEXT_COLOR);
 		else
-			graphics.drawShadowedText(this.client.textRenderer, "_", cursorX, cursorY, ColorUtil.TEXT_COLOR);
+			this.client.textRenderer.drawWithShadow(matrices, "_", cursorX, cursorY, ColorUtil.TEXT_COLOR);
 	}
 
 	/* Narration */

@@ -10,7 +10,7 @@
 
 package org.thinkingstudio.obsidianui.background;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.util.math.MatrixStack;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 
 /**
@@ -27,7 +27,7 @@ public final class EmptyBackground implements Background {
 	}
 
 	@Override
-	public void render(GuiGraphics graphics, SpruceWidget widget, int vOffset, int mouseX, int mouseY, float delta) {
+	public void render(MatrixStack matrices, SpruceWidget widget, int vOffset, int mouseX, int mouseY, float delta) {
 	}
 
 	@Override
