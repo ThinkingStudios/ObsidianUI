@@ -11,13 +11,14 @@
 package org.thinkingstudio.obsidianui;
 
 import com.google.common.collect.Queues;
+import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
 import org.jetbrains.annotations.ApiStatus;
-import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 
 import java.util.List;
 import java.util.Queue;
@@ -28,10 +29,10 @@ import java.util.function.LongConsumer;
  * Represents a tooltip.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.3.0
  * @since 1.0.0
  */
-public class Tooltip implements SprucePositioned {
+public class Tooltip extends DrawableHelper implements SprucePositioned {
 	private static final Queue<Tooltip> TOOLTIPS = Queues.newConcurrentLinkedQueue();
 	private static boolean delayed = false;
 	private final int x;
@@ -110,9 +111,9 @@ public class Tooltip implements SprucePositioned {
 	 * @since 1.6.0
 	 */
 	public static <T extends Tooltipable & SpruceWidget> void queueFor(T widget, int mouseX, int mouseY, int tooltipTicks,
-                                                                       IntConsumer tooltipTicksSetter,
-                                                                       long lastTick,
-                                                                       LongConsumer lastTickSetter) {
+																	   IntConsumer tooltipTicksSetter,
+																	   long lastTick,
+																	   LongConsumer lastTickSetter) {
 		if (widget.isVisible()) {
 			widget.getTooltip().ifPresent(tooltip -> {
 				long currentRender = System.currentTimeMillis();

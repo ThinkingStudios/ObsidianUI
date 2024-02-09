@@ -11,11 +11,11 @@
 package org.thinkingstudio.obsidianui.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.Tessellator;
-import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.blaze3d.vertex.VertexFormats;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormat;
+import net.minecraft.client.render.VertexFormats;
 
 public final class RenderUtil {
 	private RenderUtil() {
@@ -52,7 +52,7 @@ public final class RenderUtil {
 	public static void renderBackgroundTexture(int x, int y, int width, int height, float vOffset,
 	                                           int red, int green, int blue, int alpha) {
 		var tessellator = Tessellator.getInstance();
-		var bufferBuilder = tessellator.getBufferBuilder();
+		var bufferBuilder = tessellator.getBuffer();
 		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 		RenderSystem.setShaderColor(1.f, 1.f, 1.f, 1.f);
 		RenderSystem.setShaderTexture(0, Screen.OPTIONS_BACKGROUND_TEXTURE);
@@ -62,16 +62,16 @@ public final class RenderUtil {
 
 		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
 		bufferBuilder.vertex(x, bottom, 0)
-				.uv(0, bottom / 32.f + vOffset)
+				.texture(0, bottom / 32.f + vOffset)
 				.color(red, green, blue, alpha).next();
 		bufferBuilder.vertex(right, bottom, 0)
-				.uv(right / 32.f, bottom / 32.f + vOffset)
+				.texture(right / 32.f, bottom / 32.f + vOffset)
 				.color(red, green, blue, alpha).next();
 		bufferBuilder.vertex(right, y, 0)
-				.uv(right / 32.f, y / 32.f + vOffset)
+				.texture(right / 32.f, y / 32.f + vOffset)
 				.color(red, green, blue, alpha).next();
 		bufferBuilder.vertex(x, y, 0)
-				.uv(0, y / 32.f + vOffset)
+				.texture(0, y / 32.f + vOffset)
 				.color(red, green, blue, alpha).next();
 		tessellator.draw();
 	}
@@ -90,7 +90,8 @@ public final class RenderUtil {
 	 */
 	public static void renderSelectionBox(int x, int y, int width, int height, int red, int green, int blue, int alpha) {
 		var tessellator = Tessellator.getInstance();
-		var bufferBuilder = tessellator.getBufferBuilder();
+		var bufferBuilder = tessellator.getBuffer();
+		RenderSystem.disableTexture();
 
 		int top = y + height;
 		int right = x + width;
@@ -110,5 +111,6 @@ public final class RenderUtil {
 		bufferBuilder.vertex(right - 1, y + 1, 0).next();
 		bufferBuilder.vertex(x + 1, y + 1, 0).next();
 		tessellator.draw();
+		RenderSystem.enableTexture();
 	}
 }

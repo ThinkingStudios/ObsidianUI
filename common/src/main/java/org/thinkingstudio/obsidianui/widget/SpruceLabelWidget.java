@@ -10,16 +10,16 @@
 
 package org.thinkingstudio.obsidianui.widget;
 
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.OrderedText;
-import net.minecraft.text.Text;
-import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.Tooltip;
 import org.thinkingstudio.obsidianui.Tooltipable;
 import org.thinkingstudio.obsidianui.border.Border;
 import org.thinkingstudio.obsidianui.border.EmptyBorder;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.OrderedText;
+import net.minecraft.text.Text;
+import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +29,7 @@ import java.util.function.Consumer;
  * Represents a label widget.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.3.0
  * @since 1.0.0
  */
 public class SpruceLabelWidget extends AbstractSpruceWidget implements Tooltipable, WithBorder {

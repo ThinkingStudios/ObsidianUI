@@ -10,18 +10,18 @@
 
 package org.thinkingstudio.obsidianui.widget.container;
 
-import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
-import net.minecraft.client.gui.screen.narration.NarrationPart;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.Text;
-import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
 import org.thinkingstudio.obsidianui.navigation.NavigationUtils;
 import org.thinkingstudio.obsidianui.option.SpruceOption;
 import org.thinkingstudio.obsidianui.widget.AbstractSpruceWidget;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
+import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
+import net.minecraft.client.gui.screen.narration.NarrationPart;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.TranslatableText;
+import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ import java.util.List;
  * A {@link SpruceOption} allows to have an easy control over the widgets present in the list.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.3.0
  * @since 2.0.0
  */
 public class SpruceOptionListWidget extends SpruceEntryListWidget<SpruceOptionListWidget.OptionEntry> {
@@ -101,10 +101,10 @@ public class SpruceOptionListWidget extends SpruceEntryListWidget<SpruceOptionLi
 						}
 				);
 
-		builder.put(NarrationPart.USAGE, Text.translatable("narration.component_list.usage"));
+		builder.put(NarrationPart.USAGE, new TranslatableText("narration.component_list.usage"));
 	}
 
-	public static class OptionEntry extends Entry implements SpruceParentWidget<SpruceWidget> {
+	public static class OptionEntry extends SpruceEntryListWidget.Entry implements SpruceParentWidget<SpruceWidget> {
 		private final List<SpruceWidget> children = new ArrayList<>();
 		private final SpruceOptionListWidget parent;
 		private @Nullable SpruceWidget focused;

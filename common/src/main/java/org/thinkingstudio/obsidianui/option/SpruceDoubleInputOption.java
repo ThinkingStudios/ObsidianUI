@@ -10,15 +10,15 @@
 
 package org.thinkingstudio.obsidianui.option;
 
+import org.thinkingstudio.obsidianui.Position;
+import org.thinkingstudio.obsidianui.widget.SpruceWidget;
+import org.thinkingstudio.obsidianui.widget.text.SpruceNamedTextFieldWidget;
+import org.thinkingstudio.obsidianui.widget.text.SpruceTextFieldWidget;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import org.jetbrains.annotations.Nullable;
-import org.thinkingstudio.obsidianui.Position;
-import org.thinkingstudio.obsidianui.widget.SpruceWidget;
-import org.thinkingstudio.obsidianui.widget.text.SpruceNamedTextFieldWidget;
-import org.thinkingstudio.obsidianui.widget.text.SpruceTextFieldWidget;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;

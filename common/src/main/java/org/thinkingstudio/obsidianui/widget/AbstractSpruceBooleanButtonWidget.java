@@ -10,8 +10,8 @@
 
 package org.thinkingstudio.obsidianui.widget;
 
-import net.minecraft.text.Text;
 import org.thinkingstudio.obsidianui.Position;
+import net.minecraft.text.Text;
 
 /**
  * Represents a pressable button that switches between two states which values are {@code true} and {@code false}.
@@ -33,18 +33,18 @@ public abstract class AbstractSpruceBooleanButtonWidget extends AbstractSprucePr
 	}
 
 	public AbstractSpruceBooleanButtonWidget(Position position, int width, int height, Text message, boolean value,
-                                             boolean showMessage) {
+	                                         boolean showMessage) {
 		this(position, width, height, message, DEFAULT_ACTION, value, showMessage);
 	}
 
 	public AbstractSpruceBooleanButtonWidget(Position position, int width, int height, Text message,
-                                             PressAction action, boolean value) {
+	                                         PressAction action, boolean value) {
 		this(position, width, height, message, action, value, true);
 	}
 
 	public AbstractSpruceBooleanButtonWidget(Position position, int width, int height, Text message,
-                                             PressAction action,
-                                             boolean value, boolean showMessage) {
+	                                         PressAction action,
+	                                         boolean value, boolean showMessage) {
 		super(position, width, height, message);
 		this.action = action;
 		this.value = value;

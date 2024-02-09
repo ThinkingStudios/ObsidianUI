@@ -11,14 +11,10 @@
 package org.thinkingstudio.obsidianui.border;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.Tessellator;
-import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.blaze3d.vertex.VertexFormats;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
 import org.thinkingstudio.obsidianui.util.ColorUtil;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
+import net.minecraft.client.render.*;
+import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.Arrays;
 
@@ -26,7 +22,7 @@ import java.util.Arrays;
  * Represents a simple solid border to draw around a widget.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.1.0
  * @since 2.0.0
  */
 public final class SimpleBorder implements Border {
@@ -58,8 +54,10 @@ public final class SimpleBorder implements Border {
 
 	@Override
 	public void render(MatrixStack matrices, SpruceWidget widget, int mouseX, int mouseY, float delta) {
+		RenderSystem.disableTexture();
+
 		var tessellator = Tessellator.getInstance();
-		var buffer = tessellator.getBufferBuilder();
+		var buffer = tessellator.getBuffer();
 		RenderSystem.setShader(GameRenderer::getPositionColorShader);
 		buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
 		int x = widget.getX();
@@ -89,6 +87,7 @@ public final class SimpleBorder implements Border {
 		this.vertex(buffer, x, y, focused);
 		tessellator.draw();
 
+		RenderSystem.enableTexture();
 	}
 
 	private void vertex(BufferBuilder buffer, int x, int y, boolean focused) {

@@ -10,18 +10,18 @@
 
 package org.thinkingstudio.obsidianui.hud.component;
 
+import org.thinkingstudio.obsidianui.hud.HudComponent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import org.thinkingstudio.obsidianui.hud.HudComponent;
 
 /**
  * Represents a text HUD component.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.2.1
  * @since 1.3.5
  */
 public class TextHudComponent extends HudComponent {
@@ -78,6 +78,6 @@ public class TextHudComponent extends HudComponent {
 
 	@Override
 	public void render(MatrixStack matrices, float tickDelta) {
-		DrawableHelper.drawTextWithShadow(matrices, this.client.textRenderer, this.text, this.x, this.y, this.color);
+		DrawableHelper.drawTextWithShadow(matrices, client.textRenderer, this.text, this.x, this.y, this.color);
 	}
 }

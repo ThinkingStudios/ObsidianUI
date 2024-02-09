@@ -10,7 +10,6 @@
 
 package org.thinkingstudio.obsidianui.widget.container;
 
-import net.minecraft.client.util.math.MatrixStack;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.background.Background;
 import org.thinkingstudio.obsidianui.background.EmptyBackground;
@@ -19,6 +18,7 @@ import org.thinkingstudio.obsidianui.border.EmptyBorder;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 import org.thinkingstudio.obsidianui.widget.WithBackground;
 import org.thinkingstudio.obsidianui.widget.WithBorder;
+import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ import java.util.function.Consumer;
  * Represents a container widget.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.3.0
  * @since 2.0.0
  */
 public class SpruceContainerWidget extends AbstractSpruceParentWidget<SpruceWidget> implements WithBackground, WithBorder {

@@ -10,8 +10,6 @@
 
 package org.thinkingstudio.obsidianui.widget.text;
 
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.Text;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.background.Background;
 import org.thinkingstudio.obsidianui.background.SimpleColorBackground;
@@ -21,12 +19,15 @@ import org.thinkingstudio.obsidianui.util.ColorUtil;
 import org.thinkingstudio.obsidianui.widget.AbstractSpruceWidget;
 import org.thinkingstudio.obsidianui.widget.WithBackground;
 import org.thinkingstudio.obsidianui.widget.WithBorder;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 
 /**
  * Represents a text input widget.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.3.0
  * @since 2.1.0
  */
 public abstract class AbstractSpruceTextInputWidget extends AbstractSpruceWidget implements WithBackground, WithBorder {
@@ -185,6 +186,6 @@ public abstract class AbstractSpruceTextInputWidget extends AbstractSpruceWidget
 
 	@Override
 	protected Text getNarrationMessage() {
-		return Text.translatable("gui.narrate.editBox", this.getTitle(), this.getText());
+		return new TranslatableText("gui.narrate.editBox", this.getTitle(), this.getText());
 	}
 }

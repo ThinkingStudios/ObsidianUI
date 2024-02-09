@@ -10,14 +10,14 @@
 
 package org.thinkingstudio.obsidianui.border;
 
-import net.minecraft.client.util.math.MatrixStack;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
+import net.minecraft.client.util.math.MatrixStack;
 
 /**
  * Represents an empty border.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.1.0
  * @since 2.0.0
  */
 public final class EmptyBorder implements Border {

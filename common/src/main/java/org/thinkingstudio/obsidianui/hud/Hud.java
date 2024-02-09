@@ -11,11 +11,12 @@
 package org.thinkingstudio.obsidianui.hud;
 
 import com.google.common.collect.ImmutableList;
+import org.thinkingstudio.obsidianui.util.Identifiable;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
-import org.thinkingstudio.obsidianui.util.Identifiable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +26,10 @@ import java.util.function.Predicate;
  * Represents a HUD.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.2.0
  * @since 1.2.0
  */
-public abstract class Hud implements Identifiable {
+public abstract class Hud extends DrawableHelper implements Identifiable {
 	protected final Identifier identifier;
 	protected final List<HudComponent> components = new ArrayList<>();
 	protected final String translationKey;

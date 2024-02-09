@@ -12,20 +12,21 @@ package org.thinkingstudio.obsidianui.widget;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import org.thinkingstudio.obsidianui.Position;
+import org.thinkingstudio.obsidianui.SpruceTexts;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Language;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
-import org.thinkingstudio.obsidianui.Position;
-import org.thinkingstudio.obsidianui.SpruceTexts;
 
 /**
  * Represents a checkbox widget.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.3.0
  * @since 1.0.0
  */
 public class SpruceToggleSwitch extends AbstractSpruceBooleanButtonWidget {
@@ -36,17 +37,17 @@ public class SpruceToggleSwitch extends AbstractSpruceBooleanButtonWidget {
 	}
 
 	public SpruceToggleSwitch(Position position, int width, int height, Text message, boolean value,
-                              boolean showMessage) {
+	                          boolean showMessage) {
 		super(position, width, height, message, value, showMessage);
 	}
 
 	public SpruceToggleSwitch(Position position, int width, int height, Text message, PressAction action,
-                              boolean value) {
+	                          boolean value) {
 		super(position, width, height, message, action, value);
 	}
 
 	public SpruceToggleSwitch(Position position, int width, int height, Text message, PressAction action,
-                              boolean value, boolean showMessage) {
+	                          boolean value, boolean showMessage) {
 		super(position, width, height, message, action, value, showMessage);
 	}
 
@@ -87,7 +88,7 @@ public class SpruceToggleSwitch extends AbstractSpruceBooleanButtonWidget {
 
 	@Override
 	protected @Nullable Text getNarrationMessage() {
-		return Text.translatable("obsidianui.narration.toggle_switch", this.getMessage(),
+		return new TranslatableText("obsidianui.narration.toggle_switch", this.getMessage(),
 				SpruceTexts.getToggleText(this.getValue()));
 	}
 }

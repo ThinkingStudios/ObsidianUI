@@ -10,10 +10,10 @@
 
 package org.thinkingstudio.obsidianui.widget.container;
 
-import org.jetbrains.annotations.Nullable;
 import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
 import org.thinkingstudio.obsidianui.navigation.NavigationUtils;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
 import java.util.List;

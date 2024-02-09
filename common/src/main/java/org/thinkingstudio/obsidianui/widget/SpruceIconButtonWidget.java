@@ -10,9 +10,9 @@
 
 package org.thinkingstudio.obsidianui.widget;
 
+import org.thinkingstudio.obsidianui.Position;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import org.thinkingstudio.obsidianui.Position;
 
 public class SpruceIconButtonWidget extends AbstractSpruceIconButtonWidget {
 	public SpruceIconButtonWidget(Position position, int width, int height, Text message, PressAction action) {

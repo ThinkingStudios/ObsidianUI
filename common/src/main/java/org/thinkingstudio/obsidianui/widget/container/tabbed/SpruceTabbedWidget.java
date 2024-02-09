@@ -10,10 +10,6 @@
 
 package org.thinkingstudio.obsidianui.widget.container.tabbed;
 
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.OrderedText;
-import net.minecraft.text.Text;
-import org.jetbrains.annotations.Nullable;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.background.Background;
 import org.thinkingstudio.obsidianui.background.EmptyBackground;
@@ -24,6 +20,10 @@ import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 import org.thinkingstudio.obsidianui.widget.WithBackground;
 import org.thinkingstudio.obsidianui.widget.container.AbstractSpruceParentWidget;
 import org.thinkingstudio.obsidianui.widget.container.SpruceEntryListWidget;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.OrderedText;
+import net.minecraft.text.Text;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ import java.util.List;
  * Represents a container widget with tabs.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.3.0
  * @since 2.0.0
  */
 public class SpruceTabbedWidget extends AbstractSpruceParentWidget<SpruceWidget> {
@@ -45,7 +45,7 @@ public class SpruceTabbedWidget extends AbstractSpruceParentWidget<SpruceWidget>
 	}
 
 	public SpruceTabbedWidget(Position position, int width, int height, @Nullable Text title, int sideWidth,
-                              int sideTopOffset) {
+	                          int sideTopOffset) {
 		super(position, SpruceWidget.class);
 		this.width = width;
 		this.height = height;

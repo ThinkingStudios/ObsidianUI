@@ -12,12 +12,12 @@ package org.thinkingstudio.obsidianui.hud;
 
 import dev.architectury.event.events.client.ClientGuiEvent;
 import dev.architectury.event.events.client.ClientTickEvent;
+import org.thinkingstudio.obsidianui.event.OpenScreenCallback;
+import org.thinkingstudio.obsidianui.event.ResolutionChangeCallback;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
-import org.thinkingstudio.obsidianui.event.OpenScreenCallback;
-import org.thinkingstudio.obsidianui.event.ResolutionChangeCallback;
 
 import java.util.Collection;
 import java.util.Map;
@@ -34,9 +34,9 @@ public class HudManager {
 	private static final Map<Identifier, Hud> HUDS = new Object2ObjectOpenHashMap<>();
 
 	public void initialize() {
-		ClientGuiEvent.RENDER_HUD.register((graphics, tickDelta) -> HUDS.forEach((id, hud) -> {
+		ClientGuiEvent.RENDER_HUD.register((matrices, tickDelta) -> HUDS.forEach((id, hud) -> {
 			if (hud.isEnabled() && hud.isVisible())
-				hud.render(graphics, tickDelta);
+				hud.render(matrices, tickDelta);
 		}));
 		ClientTickEvent.CLIENT_POST.register(client -> {
 			if (!canRenderHuds(client))

@@ -10,9 +10,9 @@
 
 package org.thinkingstudio.obsidianui.background;
 
-import net.minecraft.client.util.math.MatrixStack;
 import org.thinkingstudio.obsidianui.util.RenderUtil;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
+import net.minecraft.client.util.math.MatrixStack;
 
 public record DirtTexturedBackground(int red, int green, int blue, int alpha) implements Background {
 	public static final Background NORMAL = new DirtTexturedBackground(64, 64, 64, 255);

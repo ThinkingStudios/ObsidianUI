@@ -10,14 +10,15 @@
 
 package org.thinkingstudio.obsidianui.widget;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.Text;
-import org.jetbrains.annotations.Nullable;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.Tooltip;
 import org.thinkingstudio.obsidianui.Tooltipable;
 import org.thinkingstudio.obsidianui.util.ColorUtil;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ import java.util.Optional;
  * Represents a separator element.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.3.0
  * @since 1.0.1
  */
 public class SpruceSeparatorWidget extends AbstractSpruceWidget implements Tooltipable {
@@ -105,9 +106,9 @@ public class SpruceSeparatorWidget extends AbstractSpruceWidget implements Toolt
 
 	@Override
 	protected Text getNarrationMessage() {
-		return this.getTitle().map(Text::getString)
+		return this.getTitle().map(Text::asString)
 				.filter(title -> !title.isEmpty())
-				.map(title -> Text.translatable("obsidianui.narrator.separator", title))
+				.map(title -> new TranslatableText("obsidianui.narrator.separator", title))
 				.orElse(null);
 	}
 }

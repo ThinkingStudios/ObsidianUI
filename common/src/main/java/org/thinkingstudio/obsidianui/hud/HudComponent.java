@@ -10,17 +10,17 @@
 
 package org.thinkingstudio.obsidianui.hud;
 
+import org.thinkingstudio.obsidianui.util.Identifiable;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
-import org.thinkingstudio.obsidianui.util.Identifiable;
 
 /**
  * Represents a HUD component.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.2.1
  * @since 1.2.0
  */
 public abstract class HudComponent extends DrawableHelper implements Identifiable {

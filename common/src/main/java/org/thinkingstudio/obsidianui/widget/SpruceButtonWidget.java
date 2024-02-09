@@ -10,8 +10,8 @@
 
 package org.thinkingstudio.obsidianui.widget;
 
-import net.minecraft.text.Text;
 import org.thinkingstudio.obsidianui.Position;
+import net.minecraft.text.Text;
 
 /**
  * Represents a button widget.

@@ -10,10 +10,10 @@
 
 package org.thinkingstudio.obsidianui.widget;
 
-import net.minecraft.client.gui.Drawable;
-import net.minecraft.client.gui.Selectable;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.SprucePositioned;
+import net.minecraft.client.gui.Drawable;
+import net.minecraft.client.gui.Selectable;
 
 /**
  * Represents a widget.

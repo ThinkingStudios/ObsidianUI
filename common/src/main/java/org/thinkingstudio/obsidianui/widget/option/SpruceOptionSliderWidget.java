@@ -10,10 +10,10 @@
 
 package org.thinkingstudio.obsidianui.widget.option;
 
-import net.minecraft.text.Text;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.option.SpruceDoubleOption;
 import org.thinkingstudio.obsidianui.widget.SpruceSliderWidget;
+import net.minecraft.text.LiteralText;
 
 /**
  * Represents an option slider widget.
@@ -26,7 +26,7 @@ public class SpruceOptionSliderWidget extends SpruceSliderWidget {
 	private final SpruceDoubleOption option;
 
 	public SpruceOptionSliderWidget(Position position, int width, int height, SpruceDoubleOption option) {
-		super(position, width, height, Text.empty(), option.getRatio(option.get()), slider -> option.set(option.getValue(slider.getValue())));
+		super(position, width, height, LiteralText.EMPTY, option.getRatio(option.get()), slider -> option.set(option.getValue(slider.getValue())));
 		this.option = option;
 		this.updateMessage();
 	}

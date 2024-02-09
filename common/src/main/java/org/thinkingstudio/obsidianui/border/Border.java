@@ -1,8 +1,7 @@
 /*
- * Copyright © 2020~2024 LambdAurora <email@lambdaurora.dev>
- * Copyright © 2024 ThinkingStudio
+ * Copyright © 2020-2022 LambdAurora <email@lambdaurora.dev>
  *
- * This file is part of ObsidianUI.
+ * This file is part of SpruceUI.
  *
  * Licensed under the MIT license. For more information,
  * see the LICENSE file.
@@ -10,14 +9,14 @@
 
 package org.thinkingstudio.obsidianui.border;
 
-import net.minecraft.client.util.math.MatrixStack;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
+import net.minecraft.client.util.math.MatrixStack;
 
 /**
  * Represents a border to draw around a widget.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.1.0
  * @since 2.0.0
  */
 public interface Border {

@@ -12,19 +12,20 @@ package org.thinkingstudio.obsidianui.widget;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import org.thinkingstudio.obsidianui.Position;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Language;
 import net.minecraft.util.math.MathHelper;
-import org.thinkingstudio.obsidianui.Position;
 
 /**
  * Represents a checkbox widget.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.3.0
  * @since 1.0.0
  */
 public class SpruceCheckboxWidget extends AbstractSpruceBooleanButtonWidget {
@@ -92,9 +93,6 @@ public class SpruceCheckboxWidget extends AbstractSpruceBooleanButtonWidget {
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-		float[] oldColor = RenderSystem.getShaderColor();
-		float oldRed = oldColor[0], oldGreen = oldColor[1], oldBlue = oldColor[2], oldAlpha = oldColor[3];
-
 		if (this.getValue()) {
 			if (this.colored)
 				RenderSystem.setShaderColor(0.f, 1.f, 0.f, this.alpha);
@@ -103,10 +101,6 @@ public class SpruceCheckboxWidget extends AbstractSpruceBooleanButtonWidget {
 			if (this.colored)
 				RenderSystem.setShaderColor(1.f, 0.f, 0.f, this.alpha);
 			drawTexture(matrices, this.getX(), this.getY(), 0.f, 20.f, this.getHeight(), this.getHeight(), 64, 64);
-		}
-
-		if (this.colored) {
-			RenderSystem.setShaderColor(oldRed, oldGreen, oldBlue, oldAlpha);
 		}
 
 		if (this.showMessage) {
@@ -131,11 +125,11 @@ public class SpruceCheckboxWidget extends AbstractSpruceBooleanButtonWidget {
 
 	@Override
 	protected Text getNarrationFocusedUsageMessage() {
-		return Text.translatable("narration.checkbox.usage.focused");
+		return new TranslatableText("narration.checkbox.usage.focused");
 	}
 
 	@Override
 	protected Text getNarrationHoveredUsageMessage() {
-		return Text.translatable("narration.checkbox.usage.hovered");
+		return new TranslatableText("narration.checkbox.usage.hovered");
 	}
 }

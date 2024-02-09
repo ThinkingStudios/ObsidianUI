@@ -10,8 +10,6 @@
 
 package org.thinkingstudio.obsidianui.widget.text;
 
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.OrderedText;
 import org.thinkingstudio.obsidianui.background.Background;
 import org.thinkingstudio.obsidianui.border.Border;
 import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
@@ -19,6 +17,9 @@ import org.thinkingstudio.obsidianui.util.ColorUtil;
 import org.thinkingstudio.obsidianui.widget.AbstractSpruceWidget;
 import org.thinkingstudio.obsidianui.widget.WithBackground;
 import org.thinkingstudio.obsidianui.widget.WithBorder;
+import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.OrderedText;
 
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -28,7 +29,7 @@ import java.util.function.Predicate;
  * Represents a text field widget with a title on top.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.3.0
  * @since 2.1.0
  */
 public class SpruceNamedTextFieldWidget extends AbstractSpruceWidget implements WithBackground, WithBorder {
@@ -223,7 +224,7 @@ public class SpruceNamedTextFieldWidget extends AbstractSpruceWidget implements 
 
 	@Override
 	protected void renderWidget(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-		drawTextWithShadow(matrices, this.client.textRenderer, this.getTextFieldWidget().getTitle(), this.getX() + 2, this.getY() + 2, ColorUtil.TEXT_COLOR);
+		DrawableHelper.drawTextWithShadow(matrices, this.client.textRenderer, this.getTextFieldWidget().getTitle(), this.getX() + 2, this.getY() + 2, ColorUtil.TEXT_COLOR);
 
 		this.getTextFieldWidget().render(matrices, mouseX, mouseY, delta);
 	}

@@ -10,14 +10,14 @@
 
 package org.thinkingstudio.obsidianui.mixin;
 
+import org.thinkingstudio.obsidianui.event.OpenScreenCallback;
+import org.thinkingstudio.obsidianui.event.ResolutionChangeCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.thinkingstudio.obsidianui.event.OpenScreenCallback;
-import org.thinkingstudio.obsidianui.event.ResolutionChangeCallback;
 
 /**
  * Represents the injection point for the {@link OpenScreenCallback} and {@link ResolutionChangeCallback} events.

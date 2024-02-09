@@ -10,12 +10,13 @@
 
 package org.thinkingstudio.obsidianui.option;
 
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.text.Text;
-import org.jetbrains.annotations.Nullable;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.util.Nameable;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -55,7 +56,7 @@ public abstract class SpruceOption implements Nameable {
 	 * @return the display prefix
 	 */
 	public Text getPrefix() {
-		return Text.translatable(this.key);
+		return new TranslatableText(this.key);
 	}
 
 	/**
@@ -65,7 +66,7 @@ public abstract class SpruceOption implements Nameable {
 	 * @return the display text
 	 */
 	public Text getDisplayText(Text value) {
-		return Text.translatable("obsidianui.options.generic", this.getPrefix(), value);
+		return new TranslatableText("obsidianui.options.generic", this.getPrefix(), value);
 	}
 
 	public abstract SpruceWidget createWidget(Position position, int width);

@@ -11,14 +11,14 @@
 package org.thinkingstudio.obsidianui.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.Tooltipable;
 import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
+import net.minecraft.client.gui.widget.ClickableWidget;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
+import net.minecraft.util.math.MathHelper;
 
 import java.util.function.Consumer;
 
@@ -36,10 +36,6 @@ public class SpruceSliderWidget extends AbstractSpruceButtonWidget implements To
 	private double multiplier;
 	private String sign;
 	private boolean inUse = false;
-
-	private static final Identifier SLIDER = new Identifier("widget/slider");
-	private static final Identifier SLIDER_HANDLE = new Identifier("widget/slider_handle");
-	private static final Identifier SLIDER_HANDLE_HIGHLIGHTED = new Identifier("widget/slider_handle_highlighted");
 
 	public SpruceSliderWidget(Position position, int width, int height, Text message, double value, Consumer<SpruceSliderWidget> applyConsumer, double multiplier, String sign) {
 		super(position, width, height, message);
@@ -189,16 +185,16 @@ public class SpruceSliderWidget extends AbstractSpruceButtonWidget implements To
 
 	@Override
 	protected Text getNarrationMessage() {
-		return Text.translatable("gui.narrate.slider", this.getMessage());
+		return new TranslatableText("gui.narrate.slider", this.getMessage());
 	}
 
 	@Override
 	protected Text getNarrationFocusedUsageMessage() {
-		return Text.translatable("narration.slider.usage.focused");
+		return new TranslatableText("narration.slider.usage.focused");
 	}
 
 	@Override
 	protected Text getNarrationHoveredUsageMessage() {
-		return Text.translatable("narration.slider.usage.hovered");
+		return new TranslatableText("narration.slider.usage.hovered");
 	}
 }

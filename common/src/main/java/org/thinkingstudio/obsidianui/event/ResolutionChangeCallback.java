@@ -23,7 +23,7 @@ import net.minecraft.client.MinecraftClient;
  */
 @FunctionalInterface
 public interface ResolutionChangeCallback {
-    Event<ResolutionChangeCallback> EVENT = EventFactory.createEventResult();
+	Event<ResolutionChangeCallback> EVENT = EventFactory.createEventResult();
 
-    void apply(MinecraftClient client);
+	void apply(MinecraftClient client);
 }

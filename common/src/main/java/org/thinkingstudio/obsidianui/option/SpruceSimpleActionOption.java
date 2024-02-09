@@ -10,13 +10,14 @@
 
 package org.thinkingstudio.obsidianui.option;
 
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Nullable;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.widget.SpruceButtonWidget;
 import org.thinkingstudio.obsidianui.widget.SpruceTexturedButtonWidget;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents an option with a simple action.
@@ -42,7 +43,7 @@ public final class SpruceSimpleActionOption extends SpruceOption {
 
 	@Override
 	public SpruceWidget createWidget(Position position, int width) {
-		var button = this.buttonFactory.build(position, width, Text.translatable(this.key), this.action);
+		var button = this.buttonFactory.build(position, width, new TranslatableText(this.key), this.action);
 		this.getOptionTooltip().ifPresent(button::setTooltip);
 		return button;
 	}

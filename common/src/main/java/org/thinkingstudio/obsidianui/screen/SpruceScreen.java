@@ -10,18 +10,18 @@
 
 package org.thinkingstudio.obsidianui.screen;
 
-import net.minecraft.client.gui.Drawable;
-import net.minecraft.client.gui.Element;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.Text;
-import org.lwjgl.glfw.GLFW;
 import org.thinkingstudio.obsidianui.SprucePositioned;
 import org.thinkingstudio.obsidianui.Tooltip;
 import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
 import org.thinkingstudio.obsidianui.util.ScissorManager;
 import org.thinkingstudio.obsidianui.widget.SpruceElement;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
+import net.minecraft.client.gui.Drawable;
+import net.minecraft.client.gui.Element;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
@@ -103,7 +103,6 @@ public abstract class SpruceScreen extends Screen implements SprucePositioned, S
 		if (element instanceof SpruceElement) {
 			return ((SpruceElement) element).onNavigation(direction, tab);
 		}
-		;
 		return element.changeFocus(direction.isLookingForward());
 	}
 

@@ -10,8 +10,11 @@
 
 package org.thinkingstudio.obsidianui.widget;
 
+import org.thinkingstudio.obsidianui.Position;
+import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.sound.PositionedSoundInstance;
@@ -20,14 +23,12 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Util;
 import org.jetbrains.annotations.Nullable;
-import org.thinkingstudio.obsidianui.Position;
-import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
 
 /**
  * Represents a widget.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.3.0
  * @since 2.0.0
  */
 public abstract class AbstractSpruceWidget extends DrawableHelper implements SpruceWidget {
@@ -87,7 +88,7 @@ public abstract class AbstractSpruceWidget extends DrawableHelper implements Spr
 	public SelectionType getType() {
 		if (this.focused) return SelectionType.FOCUSED;
 		else if (this.hovered) return SelectionType.HOVERED;
-		else return SelectionType.NONE;
+		else return Selectable.SelectionType.NONE;
 	}
 
 	@Override
@@ -103,9 +104,7 @@ public abstract class AbstractSpruceWidget extends DrawableHelper implements Spr
 	@Override
 	public void setFocused(boolean focused) {
 		this.focused = focused;
-		if (!focused) {
-			this.dragging = false;
-		}
+		this.dragging = false;
 	}
 
 	@Override
@@ -119,6 +118,11 @@ public abstract class AbstractSpruceWidget extends DrawableHelper implements Spr
 	}
 
 	/* Navigation */
+
+	@Override
+	public boolean changeFocus(boolean lookForwards) {
+		return this.onNavigation(lookForwards ? NavigationDirection.DOWN : NavigationDirection.UP, true);
+	}
 
 	@Override
 	public boolean onNavigation(NavigationDirection direction, boolean tab) {

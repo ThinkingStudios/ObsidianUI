@@ -10,20 +10,20 @@
 
 package org.thinkingstudio.obsidianui.wrapper;
 
+import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
+import org.thinkingstudio.obsidianui.widget.AbstractSpruceButtonWidget;
+import org.thinkingstudio.obsidianui.widget.SpruceElement;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.util.math.MatrixStack;
-import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
-import org.thinkingstudio.obsidianui.widget.AbstractSpruceButtonWidget;
-import org.thinkingstudio.obsidianui.widget.SpruceElement;
 
 /**
- * Represents a vanilla button wrapper for ObsidianUI's own button widgets.
+ * Represents a vanilla button wrapper for SpruceUI's own button widgets.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.3.0
  * @since 2.0.0
  */
 @Environment(EnvType.CLIENT)
@@ -62,13 +62,8 @@ public class VanillaButtonWrapper extends ClickableWidget implements SpruceEleme
 	}
 
 	@Override
-	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-		return this.widget.keyPressed(keyCode, scanCode, modifiers);
-	}
-
-	@Override
-	public boolean keyReleased(final int keyCode, final int scanCode, final int modifiers) {
-		return this.widget.keyReleased(keyCode, scanCode, modifiers);
+	public boolean changeFocus(boolean down) {
+		return this.onNavigation(down ? NavigationDirection.DOWN : NavigationDirection.UP, true);
 	}
 
 	@Override

@@ -10,10 +10,10 @@
 
 package org.thinkingstudio.obsidianui.background;
 
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.util.math.MatrixStack;
 import org.thinkingstudio.obsidianui.util.ColorUtil;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
+import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.util.math.MatrixStack;
 
 public class SimpleColorBackground extends DrawableHelper implements Background {
 	private final int color;

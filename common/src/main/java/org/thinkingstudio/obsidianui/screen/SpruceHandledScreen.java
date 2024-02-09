@@ -10,6 +10,12 @@
 
 package org.thinkingstudio.obsidianui.screen;
 
+import org.thinkingstudio.obsidianui.SprucePositioned;
+import org.thinkingstudio.obsidianui.Tooltip;
+import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
+import org.thinkingstudio.obsidianui.util.ScissorManager;
+import org.thinkingstudio.obsidianui.widget.SpruceElement;
+import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
@@ -19,22 +25,16 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
-import org.thinkingstudio.obsidianui.SprucePositioned;
-import org.thinkingstudio.obsidianui.Tooltip;
-import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
-import org.thinkingstudio.obsidianui.util.ScissorManager;
-import org.thinkingstudio.obsidianui.widget.SpruceElement;
-import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 /**
- * Represents a handled screen.
+ * Represents an handled screen.
  *
  * @param <T> the type of the screen handler
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.3.0
  * @since 3.3.0
  */
 public abstract class SpruceHandledScreen<T extends ScreenHandler> extends HandledScreen<T> implements SprucePositioned, SpruceElement {

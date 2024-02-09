@@ -10,11 +10,12 @@
 
 package org.thinkingstudio.obsidianui.option;
 
-import net.minecraft.text.Text;
-import org.jetbrains.annotations.Nullable;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.widget.SpruceSeparatorWidget;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a separator option.
@@ -34,7 +35,7 @@ public class SpruceSeparatorOption extends SpruceOption {
 
 	@Override
 	public SpruceWidget createWidget(Position position, int width) {
-		var separator = new SpruceSeparatorWidget(position, width, this.showTitle ? Text.translatable(this.key) : null);
+		var separator = new SpruceSeparatorWidget(position, width, this.showTitle ? new TranslatableText(this.key) : null);
 		this.getOptionTooltip().ifPresent(separator::setTooltip);
 		return separator;
 	}

@@ -10,12 +10,12 @@
 
 package org.thinkingstudio.obsidianui.option;
 
-import net.minecraft.text.Text;
-import net.minecraft.util.math.MathHelper;
-import org.jetbrains.annotations.Nullable;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 import org.thinkingstudio.obsidianui.widget.option.SpruceOptionSliderWidget;
+import net.minecraft.text.Text;
+import net.minecraft.util.math.MathHelper;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 import java.util.function.Function;

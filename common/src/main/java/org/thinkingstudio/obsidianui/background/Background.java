@@ -10,14 +10,14 @@
 
 package org.thinkingstudio.obsidianui.background;
 
-import net.minecraft.client.util.math.MatrixStack;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
+import net.minecraft.client.util.math.MatrixStack;
 
 /**
  * Represents a background which can be rendered on a widget.
  *
  * @author LambdAurora
- * @version 5.0.0
+ * @version 3.0.0
  * @since 2.0.0
  */
 public interface Background {

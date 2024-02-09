@@ -10,8 +10,8 @@
 
 package org.thinkingstudio.obsidianui.widget;
 
-import net.minecraft.client.gui.Element;
 import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
+import net.minecraft.client.gui.Element;
 
 /**
  * Represents an element with navigation and controller input implementation.
