@@ -2,7 +2,7 @@
  * Copyright © 2020~2024 LambdAurora <email@lambdaurora.dev>
  * Copyright © 2024 ThinkingStudio
  *
- * This file is part of ObsidianUI.
+ * This file is part of SpruceUI.
  *
  * Licensed under the MIT license. For more information,
  * see the LICENSE file.
@@ -21,22 +21,22 @@ import org.jetbrains.annotations.Nullable;
  * Represents a separator option.
  *
  * @author LambdAurora
- * @version 3.0.0
+ * @version 2.1.0
  * @since 1.0.1
  */
 public class SpruceSeparatorOption extends SpruceOption {
-	private final boolean showTitle;
+    private final boolean showTitle;
 
-	public SpruceSeparatorOption(String key, boolean showTitle, @Nullable Text tooltip) {
-		super(key);
-		this.showTitle = showTitle;
-		this.setTooltip(tooltip);
-	}
+    public SpruceSeparatorOption(String key, boolean showTitle, @Nullable Text tooltip) {
+        super(key);
+        this.showTitle = showTitle;
+        this.setTooltip(tooltip);
+    }
 
-	@Override
-	public SpruceWidget createWidget(Position position, int width) {
-		var separator = new SpruceSeparatorWidget(position, width, this.showTitle ? new TranslatableText(this.key) : null);
-		this.getOptionTooltip().ifPresent(separator::setTooltip);
-		return separator;
-	}
+    @Override
+    public SpruceWidget createWidget(Position position, int width) {
+        SpruceSeparatorWidget separator = new SpruceSeparatorWidget(position, width, this.showTitle ? new TranslatableText(this.key) : null);
+        this.getOptionTooltip().ifPresent(separator::setTooltip);
+        return separator;
+    }
 }

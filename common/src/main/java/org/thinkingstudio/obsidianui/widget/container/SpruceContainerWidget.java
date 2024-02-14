@@ -2,7 +2,7 @@
  * Copyright © 2020~2024 LambdAurora <email@lambdaurora.dev>
  * Copyright © 2024 ThinkingStudio
  *
- * This file is part of ObsidianUI.
+ * This file is part of SpruceUI.
  *
  * Licensed under the MIT license. For more information,
  * see the LICENSE file.
@@ -19,6 +19,7 @@ import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 import org.thinkingstudio.obsidianui.widget.WithBackground;
 import org.thinkingstudio.obsidianui.widget.WithBorder;
 import net.minecraft.client.util.math.MatrixStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,68 +29,68 @@ import java.util.function.Consumer;
  * Represents a container widget.
  *
  * @author LambdAurora
- * @version 3.3.0
+ * @version 2.0.4
  * @since 2.0.0
  */
 public class SpruceContainerWidget extends AbstractSpruceParentWidget<SpruceWidget> implements WithBackground, WithBorder {
-	private final List<SpruceWidget> children = new ArrayList<>();
-	private Background background = EmptyBackground.EMPTY_BACKGROUND;
-	private Border border = EmptyBorder.EMPTY_BORDER;
+    private final List<SpruceWidget> children = new ArrayList<>();
+    private Background background = EmptyBackground.EMPTY_BACKGROUND;
+    private Border border = EmptyBorder.EMPTY_BORDER;
 
-	public SpruceContainerWidget(Position position, int width, int height) {
-		super(position, SpruceWidget.class);
-		this.width = width;
-		this.height = height;
-	}
+    public SpruceContainerWidget(Position position, int width, int height) {
+        super(position, SpruceWidget.class);
+        this.width = width;
+        this.height = height;
+    }
 
-	@Override
-	public Background getBackground() {
-		return this.background;
-	}
+    @Override
+    public @NotNull Background getBackground() {
+        return this.background;
+    }
 
-	@Override
-	public void setBackground(Background background) {
-		this.background = background;
-	}
+    @Override
+    public void setBackground(@NotNull Background background) {
+        this.background = background;
+    }
 
-	@Override
-	public Border getBorder() {
-		return this.border;
-	}
+    @Override
+    public @NotNull Border getBorder() {
+        return this.border;
+    }
 
-	@Override
-	public void setBorder(Border border) {
-		this.border = border;
-	}
+    @Override
+    public void setBorder(@NotNull Border border) {
+        this.border = border;
+    }
 
-	public void addChild(SpruceWidget child) {
-		this.setOwnerShip(child);
-		this.children.add(child);
-	}
+    public void addChild(@NotNull SpruceWidget child) {
+        this.setOwnerShip(child);
+        this.children.add(child);
+    }
 
-	public void addChildren(ChildrenFactory childrenFactory) {
-		childrenFactory.build(this.width, this.height, this::addChild);
-	}
+    public void addChildren(@NotNull ChildrenFactory childrenFactory) {
+        childrenFactory.build(this.width, this.height, this::addChild);
+    }
 
-	@Override
-	public List<SpruceWidget> children() {
-		return this.children;
-	}
+    @Override
+    public List<SpruceWidget> children() {
+        return this.children;
+    }
 
-	/* Rendering */
+    /* Rendering */
 
-	@Override
-	protected void renderWidget(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-		this.forEach(child -> child.render(matrices, mouseX, mouseY, delta));
-		this.getBorder().render(matrices, this, mouseX, mouseY, delta);
-	}
+    @Override
+    protected void renderWidget(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        this.children.forEach(child -> child.render(matrices, mouseX, mouseY, delta));
+        this.getBorder().render(matrices, this, mouseX, mouseY, delta);
+    }
 
-	@Override
-	protected void renderBackground(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-		this.getBackground().render(matrices, this, 0, mouseX, mouseY, delta);
-	}
+    @Override
+    protected void renderBackground(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        this.getBackground().render(matrices, this, 0, mouseX, mouseY, delta);
+    }
 
-	public interface ChildrenFactory {
-		void build(int containerWidth, int containerHeight, Consumer<SpruceWidget> widgetAdder);
-	}
+    public interface ChildrenFactory {
+        void build(int containerWidth, int containerHeight, Consumer<SpruceWidget> widgetAdder);
+    }
 }

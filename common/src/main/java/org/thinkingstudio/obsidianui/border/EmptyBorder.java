@@ -2,7 +2,7 @@
  * Copyright © 2020~2024 LambdAurora <email@lambdaurora.dev>
  * Copyright © 2024 ThinkingStudio
  *
- * This file is part of ObsidianUI.
+ * This file is part of SpruceUI.
  *
  * Licensed under the MIT license. For more information,
  * see the LICENSE file.
@@ -17,26 +17,26 @@ import net.minecraft.client.util.math.MatrixStack;
  * Represents an empty border.
  *
  * @author LambdAurora
- * @version 3.1.0
+ * @version 2.0.0
  * @since 2.0.0
  */
-public final class EmptyBorder implements Border {
-	public static final EmptyBorder EMPTY_BORDER = new EmptyBorder();
+public final class EmptyBorder extends Border {
+    public static final EmptyBorder EMPTY_BORDER = new EmptyBorder();
 
-	private EmptyBorder() {
-	}
+    private EmptyBorder() {
+    }
 
-	@Override
-	public void render(MatrixStack matrices, SpruceWidget widget, int mouseX, int mouseY, float delta) {
-	}
+    @Override
+    public void render(MatrixStack matrices, SpruceWidget widget, int mouseX, int mouseY, float delta) {
+    }
 
-	@Override
-	public int getThickness() {
-		return 0;
-	}
+    @Override
+    public int getThickness() {
+        return 0;
+    }
 
-	@Override
-	public String toString() {
-		return "EmptyBorder{}";
-	}
+    @Override
+    public String toString() {
+        return "EmptyBorder{}";
+    }
 }

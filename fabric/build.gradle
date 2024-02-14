@@ -21,7 +21,12 @@ configurations {
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
-    modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
+    modApi "me.shedaniel:architectury-fabric:${rootProject.architectury_version}"
+
+    shadowCommon("org.aperlambda:lambdajcommon:1.8.1") {
+        exclude group: 'com.google.code.gson'
+        exclude group: 'com.google.guava'
+    }
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
@@ -84,7 +89,7 @@ unifiedPublishing {
         displayName = "[Fabric] $rootProject.version"
         releaseType = "alpha"
         changelog = file("CHANGELOG.md").getText('UTF-8')
-        gameVersions = ["1.18", "1.18.1", "1.18.2"]
+        gameVersions = ["1.16.4", "1.16.5"]
         gameLoaders = ["fabric"]
 
         mainPublication remapJar
