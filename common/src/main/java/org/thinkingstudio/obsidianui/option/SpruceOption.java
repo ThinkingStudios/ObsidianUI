@@ -67,7 +67,7 @@ public abstract class SpruceOption implements Nameable {
      * @return the display text
      */
     public Text getDisplayText(Text value) {
-        return new TranslatableText("spruceui.options.generic", this.getPrefix(), value);
+        return new TranslatableText("obsidianui.options.generic", this.getPrefix(), value);
     }
 
     public abstract SpruceWidget createWidget(Position position, int width);

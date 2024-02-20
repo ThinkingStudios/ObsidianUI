@@ -117,7 +117,7 @@ public class SpruceSeparatorWidget extends AbstractSpruceWidget implements Toolt
     protected @NotNull Optional<Text> getNarrationMessage() {
         return this.getTitle().map(Text::asString)
                 .filter(title -> !title.isEmpty())
-                .map(title -> new TranslatableText("spruceui.narrator.separator", title));
+                .map(title -> new TranslatableText("obsidianui.narrator.separator", title));
     }
 
     /**

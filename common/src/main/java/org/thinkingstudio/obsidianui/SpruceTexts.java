@@ -58,7 +58,7 @@ public final class SpruceTexts {
      *
      * @since 2.0.0
      */
-    public static final Text GUI_UNBIND = new TranslatableText("spruceui.gui.unbind");
+    public static final Text GUI_UNBIND = new TranslatableText("obsidianui.gui.unbind");
 
     public static final Text MENU_OPTIONS = new TranslatableText("menu.options");
 
@@ -77,22 +77,22 @@ public final class SpruceTexts {
     /**
      * Represents the option value "fancy" as text.
      */
-    public static final Text OPTIONS_GENERIC_FANCY = new TranslatableText("spruceui.options.generic.fancy");
+    public static final Text OPTIONS_GENERIC_FANCY = new TranslatableText("obsidianui.options.generic.fancy");
 
     /**
      * Represents the option value "fast" as text.
      */
-    public static final Text OPTIONS_GENERIC_FAST = new TranslatableText("spruceui.options.generic.fast");
+    public static final Text OPTIONS_GENERIC_FAST = new TranslatableText("obsidianui.options.generic.fast");
 
     /**
      * Represents the option value "fastest" as text.
      */
-    public static final Text OPTIONS_GENERIC_FASTEST = new TranslatableText("spruceui.options.generic.fastest");
+    public static final Text OPTIONS_GENERIC_FASTEST = new TranslatableText("obsidianui.options.generic.fastest");
 
     /**
      * Represents the option value "simple" as text.
      */
-    public static final Text OPTIONS_GENERIC_SIMPLE = new TranslatableText("spruceui.options.generic.simple");
+    public static final Text OPTIONS_GENERIC_SIMPLE = new TranslatableText("obsidianui.options.generic.simple");
 
     /**
      * Represents the option value "on" as text.
@@ -127,7 +127,7 @@ public final class SpruceTexts {
     /**
      * Represents the "reset" text.
      */
-    public static final Text RESET_TEXT = new TranslatableText("spruceui.reset");
+    public static final Text RESET_TEXT = new TranslatableText("obsidianui.reset");
 
     /**
      * Returns the narrator text to describe the button which resets a keybinding.

@@ -66,7 +66,7 @@ public final class SpruceSimpleActionOption extends SpruceOption implements Name
     }
 
     public static SpruceSimpleActionOption reset(SpruceButtonWidget.PressAction action, @Nullable Text tooltip) {
-        return new SpruceSimpleActionOption("spruceui.reset",
+        return new SpruceSimpleActionOption("obsidianui.reset",
                 (position, width, message, action1) -> new SpruceButtonWidget(position, width, 20, message, action1),
                 action, tooltip);
     }

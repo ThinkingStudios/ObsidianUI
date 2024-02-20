@@ -29,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 1.0.0
  */
 public class SpruceToggleSwitch extends AbstractSpruceBooleanButtonWidget {
-    private static final Identifier TEXTURE = new Identifier("spruceui", "textures/gui/toggle_switch.png");
+    private static final Identifier TEXTURE = new Identifier("obsidianui", "textures/gui/toggle_switch.png");
 
     public SpruceToggleSwitch(@NotNull Position position, int width, int height, @NotNull Text message, boolean value) {
         super(position, width, height, message, value);
