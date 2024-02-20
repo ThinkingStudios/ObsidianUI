@@ -1,2 +1,2 @@
 ## Changelog
-- fix mixin config
+- fix
