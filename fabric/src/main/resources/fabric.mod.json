@@ -8,7 +8,7 @@
     "TexTrue, ThinkingStudio, LambdAurora"
   ],
   "contact": {
-    "homepage": "https://github.com/ThinkingStudios/ObsidianUI",
+    "homepage": "https://github.com/ThinkingStudios",
     "sources": "https://github.com/ThinkingStudios/ObsidianUI"
   },
   "license": "MIT",
@@ -24,7 +24,7 @@
   ],
   "depends": {
     "fabric": "*",
-    "minecraft": "1.19~1.19.2",
+    "minecraft": "1.19.x",
     "architectury": "*"
   }
 }

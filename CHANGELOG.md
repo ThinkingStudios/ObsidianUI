@@ -1,2 +1,3 @@
 ## Changelog
-- backport to 1.19.2
+- fix link
+- fix mc version depends (fabric)
