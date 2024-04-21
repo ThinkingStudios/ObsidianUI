@@ -11,11 +11,11 @@
 package org.thinkingstudio.obsidianui.fabric;
 
 import net.fabricmc.api.ClientModInitializer;
-import org.thinkingstudio.obsidianui.ObsidianUI;
+import org.thinkingstudio.obsidianui.fabric.event.FabricEventHandler;
 
 public class ObsidianUIFabric implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        ObsidianUI.clientInit();
+        FabricEventHandler.registerEvents();
     }
 }

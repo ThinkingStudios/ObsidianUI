@@ -13,7 +13,6 @@ A Minecraft mod API which adds some GUI utilities.
 
 <img alt="fabric" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_vector.svg">
 <img alt="forge" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/forge_vector.svg">
-<img alt="architectury-api" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/requires/architectury-api_vector.svg">
 
 </div></center>
 
@@ -43,5 +42,5 @@ dependencies {
 And this to your `gradle.properties`:
 
 ```properties
-obsidianui_version=0.1.0+1.20.4
+obsidianui_version=0.2.0+1.20.2
 ```
