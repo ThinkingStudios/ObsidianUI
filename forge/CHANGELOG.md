@@ -1,2 +1,2 @@
 ## Changelog
-- remove architectury dep
+- re-upload
