@@ -30,5 +30,5 @@ jobs:
         with:
           name: Artifacts
           path: |
-            ${{ github.workspace }}/neoforge/build/libs
+            ${{ github.workspace }}/forge/build/libs
             ${{ github.workspace }}/fabric/build/libs
