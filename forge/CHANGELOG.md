@@ -1,2 +1,2 @@
 ## Changelog
-- clean code
+- remove architectury dep

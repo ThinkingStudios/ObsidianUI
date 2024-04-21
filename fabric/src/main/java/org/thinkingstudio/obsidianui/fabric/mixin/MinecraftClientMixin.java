@@ -8,7 +8,7 @@
  * see the LICENSE file.
  */
 
-package org.thinkingstudio.obsidianui.mixin;
+package org.thinkingstudio.obsidianui.fabric.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -16,8 +16,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.thinkingstudio.obsidianui.event.OpenScreenCallback;
-import org.thinkingstudio.obsidianui.event.ResolutionChangeCallback;
+import org.thinkingstudio.obsidianui.fabric.event.OpenScreenCallback;
+import org.thinkingstudio.obsidianui.fabric.event.ResolutionChangeCallback;
 
 /**
  * Represents the injection point for the {@link OpenScreenCallback} and {@link ResolutionChangeCallback} events.
@@ -35,7 +35,7 @@ public class MinecraftClientMixin {
 
 	@Inject(method = "setScreen", at = @At("RETURN"))
 	private void onScreenChange(Screen screen, CallbackInfo ci) {
-		OpenScreenCallback.EVENT.invoker().apply((MinecraftClient) (Object) this, screen);
+		OpenScreenCallback.POST.invoker().apply((MinecraftClient) (Object) this, screen);
 	}
 
 	@Inject(method = "onResolutionChanged", at = @At("RETURN"))
