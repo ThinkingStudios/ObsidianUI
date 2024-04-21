@@ -8,9 +8,9 @@
  * see the LICENSE file.
  */
 
-package org.thinkingstudio.obsidianui.event;
+package org.thinkingstudio.obsidianui.fabric.event;
 
-import dev.architectury.event.Event;
+import net.fabricmc.fabric.api.event.Event;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import org.jetbrains.annotations.Nullable;
@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 @FunctionalInterface
 public interface OpenScreenCallback {
 	Event<OpenScreenCallback> PRE = EventUtil.makeOpenScreenEvent();
-	Event<OpenScreenCallback> EVENT = EventUtil.makeOpenScreenEvent();
+	Event<OpenScreenCallback> POST = EventUtil.makeOpenScreenEvent();
 
 	void apply(MinecraftClient client, @Nullable Screen screen);
 }

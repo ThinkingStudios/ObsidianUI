@@ -29,10 +29,3 @@ mandatory=true
 versionRange = "[1.18,1.18.2]"
 ordering = "NONE"
 side = "BOTH"
-
-[[dependencies.obsidianui]]
-modId = "architectury"
-mandatory=true
-versionRange = "*"
-ordering = "AFTER"
-side = "BOTH"

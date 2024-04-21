@@ -10,10 +10,6 @@
 
 package org.thinkingstudio.obsidianui.hud;
 
-import dev.architectury.event.events.client.ClientGuiEvent;
-import dev.architectury.event.events.client.ClientTickEvent;
-import org.thinkingstudio.obsidianui.event.OpenScreenCallback;
-import org.thinkingstudio.obsidianui.event.ResolutionChangeCallback;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
@@ -31,26 +27,9 @@ import java.util.Optional;
  * @since 1.2.0
  */
 public class HudManager {
-	private static final Map<Identifier, Hud> HUDS = new Object2ObjectOpenHashMap<>();
+	public static final Map<Identifier, Hud> HUDS = new Object2ObjectOpenHashMap<>();
 
-	public void initialize() {
-		ClientGuiEvent.RENDER_HUD.register((matrices, tickDelta) -> HUDS.forEach((id, hud) -> {
-			if (hud.isEnabled() && hud.isVisible())
-				hud.render(matrices, tickDelta);
-		}));
-		ClientTickEvent.CLIENT_POST.register(client -> {
-			if (!canRenderHuds(client))
-				return;
-			HUDS.forEach((id, hud) -> {
-				if (hud.isEnabled() && hud.isVisible() && hud.hasTicks())
-					hud.tick();
-			});
-		});
-		OpenScreenCallback.EVENT.register((client, screen) -> initAll(client, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight()));
-		ResolutionChangeCallback.EVENT.register(client -> initAll(client, client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight()));
-	}
-
-	protected static void initAll(@NotNull MinecraftClient client, int screenWidth, int screenHeight) {
+	public static void initAll(@NotNull MinecraftClient client, int screenWidth, int screenHeight) {
 		if (!canRenderHuds(client))
 			return;
 		HUDS.forEach((id, hud) -> {
