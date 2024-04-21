@@ -17,7 +17,7 @@ Just a GUI library.
 logoFile = "icon.png"
 
 [[mixins]]
-config = "obsidianui.mixins.json"
+config = "obsidianui.neoforge.mixins.json"
 
 [[dependencies.obsidianui]]
 modId = "neoforge"
@@ -31,11 +31,4 @@ modId = "minecraft"
 type = "required"
 versionRange = "[1.20.2,)"
 ordering = "NONE"
-side = "BOTH"
-
-[[dependencies.obsidianui]]
-modId = "architectury"
-type = "required"
-versionRange = "*"
-ordering = "AFTER"
 side = "BOTH"

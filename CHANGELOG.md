@@ -1,3 +1,2 @@
 ## Changelog
-- `spruceui` -> `obsidianui`
-- new icon
+- remove architectury dep

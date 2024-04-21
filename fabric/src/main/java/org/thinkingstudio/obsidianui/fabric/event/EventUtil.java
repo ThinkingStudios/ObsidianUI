@@ -8,10 +8,10 @@
  * see the LICENSE file.
  */
 
-package org.thinkingstudio.obsidianui.event;
+package org.thinkingstudio.obsidianui.fabric.event;
 
-import dev.architectury.event.Event;
-import dev.architectury.event.EventFactory;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
 
 /**
  * Represents a set of utilities for ObsidianUI's events.
@@ -26,7 +26,11 @@ public final class EventUtil {
     }
 
     static Event<OpenScreenCallback> makeOpenScreenEvent() {
-        return EventFactory.createLoop();
+        return EventFactory.createArrayBacked(OpenScreenCallback.class, listeners -> (client, screen) -> {
+            for (OpenScreenCallback event : listeners) {
+                event.apply(client, screen);
+            }
+        });
     }
 
     /**
@@ -37,6 +41,6 @@ public final class EventUtil {
      */
     public static void onOpenScreen(OpenScreenCallback pre, OpenScreenCallback post) {
         OpenScreenCallback.PRE.register(pre);
-        OpenScreenCallback.EVENT.register(post);
+        OpenScreenCallback.POST.register(post);
     }
 }
