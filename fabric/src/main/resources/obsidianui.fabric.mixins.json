@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "org.thinkingstudio.obsidianui.mixin",
+  "package": "org.thinkingstudio.obsidianui.fabric.mixin",
   "compatibilityLevel": "JAVA_8",
   "client": [
     "MinecraftClientMixin"

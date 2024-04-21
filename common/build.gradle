@@ -6,9 +6,11 @@ dependencies {
     // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
     // Do NOT use other classes from fabric loader
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-    modApi "me.shedaniel:architectury:${rootProject.architectury_version}"
 
-    implementation("org.aperlambda:lambdajcommon:1.8.1")
+    api("org.aperlambda:lambdajcommon:1.8.1") {
+        exclude group: 'com.google.code.gson'
+        exclude group: 'com.google.guava'
+    }
 }
 
 publishing {

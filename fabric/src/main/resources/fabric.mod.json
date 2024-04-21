@@ -20,11 +20,10 @@
     ]
   },
   "mixins": [
-    "obsidianui.mixins.json"
+    "obsidianui.fabric.mixins.json"
   ],
   "depends": {
     "fabric": "*",
-    "minecraft": "1.16.5",
-    "architectury": "*"
+    "minecraft": "1.16.x"
   }
 }

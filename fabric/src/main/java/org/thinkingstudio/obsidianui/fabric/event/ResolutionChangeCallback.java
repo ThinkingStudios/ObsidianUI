@@ -8,10 +8,10 @@
  * see the LICENSE file.
  */
 
-package org.thinkingstudio.obsidianui.event;
+package org.thinkingstudio.obsidianui.fabric.event;
 
-import me.shedaniel.architectury.event.Event;
-import me.shedaniel.architectury.event.EventFactory;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.client.MinecraftClient;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,7 +24,11 @@ import org.jetbrains.annotations.NotNull;
  */
 @FunctionalInterface
 public interface ResolutionChangeCallback {
-	Event<ResolutionChangeCallback> EVENT = EventFactory.createEventResult();
+    Event<ResolutionChangeCallback> EVENT = EventFactory.createArrayBacked(ResolutionChangeCallback.class, listeners -> client -> {
+        for (ResolutionChangeCallback event : listeners) {
+            event.apply(client);
+        }
+    });
 
     void apply(@NotNull MinecraftClient client);
 }

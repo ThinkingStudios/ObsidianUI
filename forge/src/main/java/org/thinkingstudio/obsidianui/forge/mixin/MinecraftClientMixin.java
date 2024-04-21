@@ -8,19 +8,20 @@
  * see the LICENSE file.
  */
 
-package org.thinkingstudio.obsidianui.mixin;
+package org.thinkingstudio.obsidianui.forge.mixin;
 
-import org.thinkingstudio.obsidianui.event.OpenScreenCallback;
-import org.thinkingstudio.obsidianui.event.ResolutionChangeCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraftforge.common.MinecraftForge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.thinkingstudio.obsidianui.forge.event.OpenScreenCallbackEvent;
+import org.thinkingstudio.obsidianui.forge.event.ResolutionChangeCallbackEvent;
 
 /**
- * Represents the injection point for the {@link OpenScreenCallback} and {@link ResolutionChangeCallback} events.
+ * Represents the injection point for the {@link OpenScreenCallbackEvent} and {@link ResolutionChangeCallbackEvent} events.
  *
  * @author LambdAurora
  * @version 1.4.0
@@ -30,16 +31,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MinecraftClientMixin {
     @Inject(method = "openScreen", at = @At("HEAD"))
     private void obsidianui_onScreenPre(Screen screen, CallbackInfo ci) {
-        OpenScreenCallback.PRE.invoker().apply((MinecraftClient) (Object) this, screen);
+        MinecraftForge.EVENT_BUS.post(new OpenScreenCallbackEvent.Pre((MinecraftClient) (Object) this, screen));
     }
 
     @Inject(method = "openScreen", at = @At("RETURN"))
     private void obsidianui_onScreenChange(Screen screen, CallbackInfo ci) {
-        OpenScreenCallback.EVENT.invoker().apply((MinecraftClient) (Object) this, screen);
+        MinecraftForge.EVENT_BUS.post(new OpenScreenCallbackEvent.Post((MinecraftClient) (Object) this, screen));
     }
 
     @Inject(method = "onResolutionChanged", at = @At("RETURN"))
     private void obsidianui_onResolutionChanged(CallbackInfo ci) {
-        ResolutionChangeCallback.EVENT.invoker().apply((MinecraftClient) (Object) this);
+        MinecraftForge.EVENT_BUS.post(new ResolutionChangeCallbackEvent((MinecraftClient) (Object) this));
     }
 }
