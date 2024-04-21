@@ -1,3 +1,2 @@
 ## Changelog
-- fix link
-- fix mc version depends (fabric)
+- remove architectury dep

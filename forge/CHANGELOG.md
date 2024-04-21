@@ -1,2 +1,2 @@
 ## Changelog
-- fix link
+- remove architectury dep
