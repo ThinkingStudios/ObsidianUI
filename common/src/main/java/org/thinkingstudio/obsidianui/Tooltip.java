@@ -12,8 +12,8 @@ package org.thinkingstudio.obsidianui;
 
 import com.google.common.collect.Queues;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.tooltip.DefaultTooltipPositioner;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.tooltip.HoveredTooltipPositioner;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
 import org.jetbrains.annotations.ApiStatus;
@@ -86,10 +86,10 @@ public class Tooltip implements SprucePositioned {
 	/**
 	 * Renders the tooltip.
 	 *
-	 * @param graphics The GuiGraphics instance used to render.
+	 * @param drawContext The GuiGraphics instance used to render.
 	 */
-	public void render(GuiGraphics graphics) {
-		graphics.drawTooltip(MinecraftClient.getInstance().textRenderer, this.tooltip, DefaultTooltipPositioner.INSTANCE, this.x, this.y);
+	public void render(DrawContext drawContext) {
+		drawContext.drawTooltip(MinecraftClient.getInstance().textRenderer, this.tooltip, HoveredTooltipPositioner.INSTANCE, this.x, this.y);
 	}
 
 	/**
@@ -152,16 +152,16 @@ public class Tooltip implements SprucePositioned {
 	/**
 	 * Renders all the tooltips.
 	 *
-	 * @param graphics the GUI graphics to render from
+	 * @param drawContext the GUI graphics to render from
 	 */
-	public static void renderAll(GuiGraphics graphics) {
+	public static void renderAll(DrawContext drawContext) {
 		if (delayed)
 			return;
 		synchronized (TOOLTIPS) {
 			Tooltip tooltip;
 
 			while ((tooltip = TOOLTIPS.poll()) != null)
-				tooltip.render(graphics);
+				tooltip.render(drawContext);
 		}
 	}
 }

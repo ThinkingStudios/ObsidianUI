@@ -85,7 +85,7 @@ publisher {
     setChangelog(file("CHANGELOG.md").getText("UTF-8"))
     setVersion("${rootProject.version}-neoforge")
     setDisplayName("[Fabric] ${rootProject.version}")
-    setGameVersions("1.20.3", "1.20.4")
+    setGameVersions("1.20.5", "1.20.6")
     setLoaders("fabric")
     setCurseEnvironment("client")
     setArtifact(remapJar)

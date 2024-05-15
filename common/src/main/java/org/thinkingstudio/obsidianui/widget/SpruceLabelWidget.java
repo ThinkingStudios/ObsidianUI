@@ -10,7 +10,7 @@
 
 package org.thinkingstudio.obsidianui.widget;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
@@ -20,7 +20,6 @@ import org.thinkingstudio.obsidianui.Tooltip;
 import org.thinkingstudio.obsidianui.Tooltipable;
 import org.thinkingstudio.obsidianui.border.Border;
 import org.thinkingstudio.obsidianui.border.EmptyBorder;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -171,16 +170,16 @@ public class SpruceLabelWidget extends AbstractSpruceWidget implements Tooltipab
 	/* Rendering */
 
 	@Override
-	protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+	protected void renderWidget(DrawContext drawContext, int mouseX, int mouseY, float delta) {
 		int y = this.getY() + 2;
 		for (var it = this.lines.iterator(); it.hasNext(); y += 9) {
 			var line = it.next();
 			int x = this.centered ? (this.getInnerX() + this.maxWidth / 2) - this.client.textRenderer.getWidth(line) / 2
 					: this.getInnerX();
-			graphics.drawText(this.client.textRenderer, line, x, y, 10526880, true);
+			drawContext.drawText(this.client.textRenderer, line, x, y, 10526880, true);
 		}
 
-		this.getBorder().render(graphics, this, mouseX, mouseY, delta);
+		this.getBorder().render(drawContext, this, mouseX, mouseY, delta);
 
 		if (this.tooltip != null) {
 			if (!this.tooltip.getString().isEmpty()) {

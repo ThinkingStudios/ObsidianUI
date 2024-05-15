@@ -10,7 +10,7 @@
 
 package org.thinkingstudio.obsidianui.border;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.DrawContext;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 
 /**
@@ -27,7 +27,7 @@ public final class EmptyBorder implements Border {
 	}
 
 	@Override
-	public void render(GuiGraphics graphics, SpruceWidget widget, int mouseX, int mouseY, float delta) {
+	public void render(DrawContext drawContext, SpruceWidget widget, int mouseX, int mouseY, float delta) {
 	}
 
 	@Override

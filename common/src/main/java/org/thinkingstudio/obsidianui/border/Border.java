@@ -10,7 +10,7 @@
 
 package org.thinkingstudio.obsidianui.border;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.DrawContext;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 
 /**
@@ -21,7 +21,7 @@ import org.thinkingstudio.obsidianui.widget.SpruceWidget;
  * @since 2.0.0
  */
 public interface Border {
-	void render(GuiGraphics graphics, SpruceWidget widget, int mouseX, int mouseY, float delta);
+	void render(DrawContext drawContext, SpruceWidget widget, int mouseX, int mouseY, float delta);
 
 	/**
 	 * Returns the thickness of the border.

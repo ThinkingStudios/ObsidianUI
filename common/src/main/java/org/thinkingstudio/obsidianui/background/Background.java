@@ -10,7 +10,7 @@
 
 package org.thinkingstudio.obsidianui.background;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.DrawContext;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 
 /**
@@ -21,5 +21,5 @@ import org.thinkingstudio.obsidianui.widget.SpruceWidget;
  * @since 2.0.0
  */
 public interface Background {
-	void render(GuiGraphics graphics, SpruceWidget widget, int vOffset, int mouseX, int mouseY, float delta);
+	void render(DrawContext drawContext, SpruceWidget widget, int vOffset, int mouseX, int mouseY, float delta);
 }

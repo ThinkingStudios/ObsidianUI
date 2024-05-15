@@ -27,7 +27,7 @@ dependencies {
 processResources {
     inputs.property "version", project.version
 
-    filesMatching("META-INF/mods.toml") {
+    filesMatching("META-INF/neoforge.mods.toml") {
         expand "version": project.version
     }
 }
@@ -88,7 +88,7 @@ publisher {
     setChangelog(file("CHANGELOG.md").getText("UTF-8"))
     setVersion("${rootProject.version}-neoforge")
     setDisplayName("[NeoForge] ${rootProject.version}")
-    setGameVersions("1.20.3", "1.20.4")
+    setGameVersions("1.20.5", "1.20.6")
     setLoaders("neoforge")
     setCurseEnvironment("client")
     setArtifact(remapJar)

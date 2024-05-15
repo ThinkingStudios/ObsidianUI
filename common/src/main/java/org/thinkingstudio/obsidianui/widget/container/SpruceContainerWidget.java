@@ -10,7 +10,6 @@
 
 package org.thinkingstudio.obsidianui.widget.container;
 
-import net.minecraft.client.gui.GuiGraphics;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.background.Background;
 import org.thinkingstudio.obsidianui.background.EmptyBackground;
@@ -23,6 +22,7 @@ import org.thinkingstudio.obsidianui.widget.WithBorder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import net.minecraft.client.gui.DrawContext;
 
 /**
  * Represents a container widget.
@@ -79,14 +79,14 @@ public class SpruceContainerWidget extends AbstractSpruceParentWidget<SpruceWidg
 	/* Rendering */
 
 	@Override
-	protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-		this.forEach(child -> child.render(graphics, mouseX, mouseY, delta));
-		this.getBorder().render(graphics, this, mouseX, mouseY, delta);
+	protected void renderWidget(DrawContext drawContext, int mouseX, int mouseY, float delta) {
+		this.forEach(child -> child.render(drawContext, mouseX, mouseY, delta));
+		this.getBorder().render(drawContext, this, mouseX, mouseY, delta);
 	}
 
 	@Override
-	protected void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-		this.getBackground().render(graphics, this, 0, mouseX, mouseY, delta);
+	protected void renderBackground(DrawContext drawContext, int mouseX, int mouseY, float delta) {
+		this.getBackground().render(drawContext, this, 0, mouseX, mouseY, delta);
 	}
 
 	public interface ChildrenFactory {

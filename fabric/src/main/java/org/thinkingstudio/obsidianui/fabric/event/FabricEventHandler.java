@@ -6,10 +6,10 @@ import org.thinkingstudio.obsidianui.hud.HudManager;
 
 public class FabricEventHandler {
     public static void registerEvents() {
-        HudRenderCallback.EVENT.register((matrixStack, tickDelta) -> {
+        HudRenderCallback.EVENT.register((drawContext, tickDelta) -> {
             HudManager.HUDS.forEach((id, hud) -> {
                 if (hud.isEnabled() && hud.isVisible())
-                    hud.render(matrixStack, tickDelta);
+                    hud.render(drawContext, tickDelta);
             });
         });
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
