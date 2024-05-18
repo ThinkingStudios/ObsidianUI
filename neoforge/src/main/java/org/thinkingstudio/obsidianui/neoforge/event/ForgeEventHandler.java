@@ -24,12 +24,12 @@ public class ForgeEventHandler {
         IEventBus forgeEventBus = NeoForge.EVENT_BUS;
 
         forgeEventBus.addListener(EventPriority.HIGHEST, RenderGuiEvent.Post.class, event -> {
-            DrawContext context = event.getGuiGraphics();
+            DrawContext drawContext = event.getGuiGraphics();
             float tickDelta = event.getPartialTick();
 
             HudManager.HUDS.forEach((id, hud) -> {
                 if (hud.isEnabled() && hud.isVisible())
-                    hud.render(context, tickDelta);
+                    hud.render(drawContext, tickDelta);
             });
         });
         forgeEventBus.addListener(EventPriority.HIGHEST, ClientTickEvent.class, event -> {
