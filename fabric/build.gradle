@@ -83,7 +83,7 @@ publisher {
     setModrinthID("${rootProject.modrinth_id}")
     setVersionType("beta")
     setChangelog(file("CHANGELOG.md").getText("UTF-8"))
-    setVersion("${rootProject.version}-neoforge")
+    setVersion("${rootProject.version}-fabric")
     setDisplayName("[Fabric] ${rootProject.version}")
     setGameVersions("1.20.5", "1.20.6")
     setLoaders("fabric")
