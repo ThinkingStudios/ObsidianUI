@@ -11,7 +11,7 @@
 package org.thinkingstudio.obsidianui.widget;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.sound.PositionedSoundInstance;
@@ -252,7 +252,7 @@ public abstract class AbstractSpruceWidget implements SpruceWidget {
 	/* Rendering */
 
 	@Override
-	public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+	public void render(DrawContext drawContext, int mouseX, int mouseY, float delta) {
 		if (this.isVisible()) {
 			this.hovered = mouseX >= this.getX() && mouseY >= this.getY()
 					&& mouseX < this.getX() + this.getWidth() && mouseY < this.getY() + this.getHeight();
@@ -263,8 +263,8 @@ public abstract class AbstractSpruceWidget implements SpruceWidget {
 				}
 			}
 
-			this.renderBackground(graphics, mouseX, mouseY, delta);
-			this.renderWidget(graphics, mouseX, mouseY, delta);
+			this.renderBackground(drawContext, mouseX, mouseY, delta);
+			this.renderWidget(drawContext, mouseX, mouseY, delta);
 
 			this.wasHovered = this.isMouseHovered();
 		} else {
@@ -275,22 +275,22 @@ public abstract class AbstractSpruceWidget implements SpruceWidget {
 	/**
 	 * Renders the widget.
 	 *
-	 * @param graphics the GUI graphics instance to render with
+	 * @param drawContext the GUI drawContext instance to render with
 	 * @param mouseX the mouse X-coordinate
 	 * @param mouseY the mouse Y-coordinate
 	 * @param delta the tick delta
 	 */
-	protected abstract void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta);
+	protected abstract void renderWidget(DrawContext drawContext, int mouseX, int mouseY, float delta);
 
 	/**
 	 * Renders the background of the widget.
 	 *
-	 * @param graphics the GUI graphics instance to render with
+	 * @param drawContext the GUI drawContext instance to render with
 	 * @param mouseX the mouse X-coordinate
 	 * @param mouseY the mouse Y-coordinate
 	 * @param delta the tick delta
 	 */
-	protected void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+	protected void renderBackground(DrawContext drawContext, int mouseX, int mouseY, float delta) {
 	}
 
 	/* Sound */

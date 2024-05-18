@@ -11,7 +11,7 @@
 package org.thinkingstudio.obsidianui.hud.component;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.thinkingstudio.obsidianui.hud.HudComponent;
@@ -76,7 +76,7 @@ public class TextHudComponent extends HudComponent {
 	}
 
 	@Override
-	public void render(GuiGraphics graphics, float tickDelta) {
-		graphics.drawShadowedText(this.client.textRenderer, this.text, this.x, this.y, this.color);
+	public void render(DrawContext drawContext, float tickDelta) {
+		drawContext.drawTextWithShadow(this.client.textRenderer, this.text, this.x, this.y, this.color);
 	}
 }

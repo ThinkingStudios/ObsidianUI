@@ -10,7 +10,7 @@
 
 package org.thinkingstudio.obsidianui.widget.container;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.text.Text;
@@ -219,8 +219,8 @@ public class SpruceOptionListWidget extends SpruceEntryListWidget<SpruceOptionLi
 		/* Rendering */
 
 		@Override
-		protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-			this.forEach(widget -> widget.render(graphics, mouseX, mouseY, delta));
+		protected void renderWidget(DrawContext drawContext, int mouseX, int mouseY, float delta) {
+			this.forEach(widget -> widget.render(drawContext, mouseX, mouseY, delta));
 		}
 
 		/* Narration */

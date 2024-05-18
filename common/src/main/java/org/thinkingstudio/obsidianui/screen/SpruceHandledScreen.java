@@ -10,9 +10,9 @@
 
 package org.thinkingstudio.obsidianui.screen;
 
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.Element;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -45,12 +45,12 @@ public abstract class SpruceHandledScreen<T extends ScreenHandler> extends Handl
 	}
 
 	@Override
-	public void setFocusedChild(Element focused) {
+	public void setFocused(Element focused) {
 		var old = this.getFocused();
 		if (old == focused) return;
 		if (old instanceof SpruceWidget)
 			((SpruceWidget) old).setFocused(false);
-		super.setFocusedChild(focused);
+		super.setFocused(focused);
 		if (focused instanceof SpruceWidget)
 			((SpruceWidget) focused).setFocused(true);
 	}
@@ -92,14 +92,14 @@ public abstract class SpruceHandledScreen<T extends ScreenHandler> extends Handl
 			Element nextElement;
 			do {
 				if (!hasNext.getAsBoolean()) {
-					this.setFocusedChild(null);
+					this.setFocused(null);
 					return false;
 				}
 
 				nextElement = nextGetter.get();
 			} while (!this.tryNavigating(nextElement, direction, tab));
 
-			this.setFocusedChild(nextElement);
+			this.setFocused(nextElement);
 		}
 		return true;
 	}
@@ -115,22 +115,22 @@ public abstract class SpruceHandledScreen<T extends ScreenHandler> extends Handl
 	/* Render */
 
 	@Override
-	public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+	public void render(DrawContext drawContext, int mouseX, int mouseY, float delta) {
 		ScissorManager.pushScaleFactor(this.scaleFactor);
-		super.render(graphics, mouseX, mouseY, delta);
-		this.renderWidgets(graphics, mouseX, mouseY, delta);
-		this.renderTitle(graphics, mouseX, mouseY, delta);
-		Tooltip.renderAll(graphics);
+		super.render(drawContext, mouseX, mouseY, delta);
+		this.renderWidgets(drawContext, mouseX, mouseY, delta);
+		this.renderTitle(drawContext, mouseX, mouseY, delta);
+		Tooltip.renderAll(drawContext);
 		ScissorManager.popScaleFactor();
 	}
 
-	public void renderTitle(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+	public void renderTitle(DrawContext drawContext, int mouseX, int mouseY, float delta) {
 	}
 
-	public void renderWidgets(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+	public void renderWidgets(DrawContext drawContext, int mouseX, int mouseY, float delta) {
 		for (var element : this.children()) {
 			if (element instanceof Drawable drawable)
-				drawable.render(graphics, mouseX, mouseY, delta);
+				drawable.render(drawContext, mouseX, mouseY, delta);
 		}
 	}
 }

@@ -11,12 +11,12 @@
 package org.thinkingstudio.obsidianui.border;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.Tessellator;
-import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.blaze3d.vertex.VertexFormats;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormat;
+import net.minecraft.client.render.VertexFormats;
 import org.thinkingstudio.obsidianui.util.ColorUtil;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 
@@ -57,10 +57,10 @@ public final class SimpleBorder implements Border {
 	}
 
 	@Override
-	public void render(GuiGraphics graphics, SpruceWidget widget, int mouseX, int mouseY, float delta) {
+	public void render(DrawContext drawContext, SpruceWidget widget, int mouseX, int mouseY, float delta) {
 		var tessellator = Tessellator.getInstance();
-		var buffer = tessellator.getBufferBuilder();
-		RenderSystem.setShader(GameRenderer::getPositionColorShader);
+		var buffer = tessellator.getBuffer();
+		RenderSystem.setShader(GameRenderer::getPositionColorProgram);
 		buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
 		int x = widget.getX();
 		int y = widget.getY();

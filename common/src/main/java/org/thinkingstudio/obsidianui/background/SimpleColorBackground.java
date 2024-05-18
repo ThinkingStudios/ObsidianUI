@@ -10,7 +10,7 @@
 
 package org.thinkingstudio.obsidianui.background;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.DrawContext;
 import org.thinkingstudio.obsidianui.util.ColorUtil;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 
@@ -26,10 +26,10 @@ public class SimpleColorBackground implements Background {
 	}
 
 	@Override
-	public void render(GuiGraphics graphics, SpruceWidget widget, int vOffset, int mouseX, int mouseY, float delta) {
+	public void render(DrawContext drawContext, SpruceWidget widget, int vOffset, int mouseX, int mouseY, float delta) {
 		int x = widget.getX();
 		int y = widget.getY();
-		graphics.fill(x, y, x + widget.getWidth(), y + widget.getHeight(), this.color);
+		drawContext.fill(x, y, x + widget.getWidth(), y + widget.getHeight(), this.color);
 	}
 
 	@Override

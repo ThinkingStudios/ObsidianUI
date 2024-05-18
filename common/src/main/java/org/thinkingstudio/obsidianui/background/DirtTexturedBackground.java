@@ -10,7 +10,7 @@
 
 package org.thinkingstudio.obsidianui.background;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.DrawContext;
 import org.thinkingstudio.obsidianui.util.RenderUtil;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 
@@ -19,7 +19,7 @@ public record DirtTexturedBackground(int red, int green, int blue, int alpha) im
 	public static final Background DARKENED = new DirtTexturedBackground(32, 32, 32, 255);
 
 	@Override
-	public void render(GuiGraphics graphics, SpruceWidget widget, int vOffset, int mouseX, int mouseY, float delta) {
+	public void render(DrawContext drawContext, SpruceWidget widget, int vOffset, int mouseX, int mouseY, float delta) {
 		RenderUtil.renderBackgroundTexture(widget.getX(), widget.getY(), widget.getWidth(), widget.getHeight(),
 				vOffset / 32.f, this.red, this.green, this.blue, this.alpha);
 	}

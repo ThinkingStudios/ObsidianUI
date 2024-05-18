@@ -14,7 +14,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import it.unimi.dsi.fastutil.doubles.DoubleArrayList;
 import it.unimi.dsi.fastutil.doubles.DoubleList;
 import net.minecraft.client.MinecraftClient;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 

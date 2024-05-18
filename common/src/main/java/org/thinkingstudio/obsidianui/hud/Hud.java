@@ -12,7 +12,7 @@ package org.thinkingstudio.obsidianui.hud;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.thinkingstudio.obsidianui.util.Identifiable;
@@ -100,8 +100,8 @@ public abstract class Hud implements Identifiable {
 	 * @param tickDelta Progress for linearly interpolating between the previous and current game state.
 	 * @see #isEnabled()
 	 */
-	public void render(GuiGraphics graphics, float tickDelta) {
-		this.components.stream().filter(HudComponent::isEnabled).forEach(component -> component.render(graphics, tickDelta));
+	public void render(DrawContext drawContext, float tickDelta) {
+		this.components.stream().filter(HudComponent::isEnabled).forEach(component -> component.render(drawContext, tickDelta));
 	}
 
 	/**

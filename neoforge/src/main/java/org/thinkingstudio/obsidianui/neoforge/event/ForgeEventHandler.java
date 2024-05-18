@@ -1,7 +1,7 @@
 package org.thinkingstudio.obsidianui.neoforge.event;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.DrawContext;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.RenderGuiOverlayEvent;
@@ -14,12 +14,12 @@ public class ForgeEventHandler {
         IEventBus forgeEventBus = NeoForge.EVENT_BUS;
 
         forgeEventBus.addListener(EventPriority.HIGHEST, RenderGuiOverlayEvent.Post.class,event -> {
-            GuiGraphics matrixStack = event.getGuiGraphics();
+            DrawContext drawContext = event.getGuiGraphics();
             float tickDelta = event.getPartialTick();
 
             HudManager.HUDS.forEach((id, hud) -> {
                 if (hud.isEnabled() && hud.isVisible())
-                    hud.render(matrixStack, tickDelta);
+                    hud.render(drawContext, tickDelta);
             });
         });
         forgeEventBus.addListener(EventPriority.HIGHEST, TickEvent.ClientTickEvent.class,event -> {
