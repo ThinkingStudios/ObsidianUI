@@ -16,10 +16,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.render.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.StringHelper;
 import net.minecraft.util.math.MathHelper;
@@ -513,17 +510,16 @@ public class SpruceTextAreaWidget extends AbstractSpruceTextInputWidget {
 		int y2 = lineY + this.textRenderer.fontHeight;
 
 		var tessellator = Tessellator.getInstance();
-		var buffer = tessellator.getBuffer();
+		var buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
 		RenderSystem.enableColorLogicOp();
 		RenderSystem.logicOp(GlStateManager.LogicOp.OR_REVERSE);
 		RenderSystem.setShader(GameRenderer::getPositionProgram);
 		RenderSystem.setShaderColor(0.0f, 0.0f, 1.0f, 1.0f);
-		buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
-		buffer.vertex(x, y2, 0.d).next();
-		buffer.vertex(x2, y2, 0.d).next();
-		buffer.vertex(x2, lineY, 0.d).next();
-		buffer.vertex(x, lineY, 0.d).next();
-		tessellator.draw();
+		buffer.vertex(x, y2, 0);
+		buffer.vertex(x2, y2, 0);
+		buffer.vertex(x2, lineY, 0);
+		buffer.vertex(x, lineY, 0);
+		BufferRenderer.drawWithGlobalProgram(buffer.end());
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 		RenderSystem.disableColorLogicOp();
 	}

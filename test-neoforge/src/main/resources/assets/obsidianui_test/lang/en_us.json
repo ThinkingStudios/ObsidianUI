@@ -1,0 +1,12 @@
+{
+  "obsidianui_test.option.action": "Simple Action Option",
+  "obsidianui_test.option.boolean": "Boolean Option",
+  "obsidianui_test.option.checkbox": "Checkbox Option",
+  "obsidianui_test.option.cycling": "Cycling Option",
+  "obsidianui_test.option.double": "Double Option",
+  "obsidianui_test.option.double_input": "Double Input Option",
+  "obsidianui_test.option.float_input": "Float Input Option",
+  "obsidianui_test.option.int_input": "Integer Input Option",
+  "obsidianui_test.option.separator": "Separator",
+  "obsidianui_test.option.toggle_switch": "Toggle Switch Option"
+}

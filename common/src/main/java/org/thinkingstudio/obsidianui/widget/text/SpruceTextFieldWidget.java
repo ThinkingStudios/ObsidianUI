@@ -17,10 +17,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.render.*;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -469,17 +466,16 @@ public class SpruceTextFieldWidget extends AbstractSpruceTextInputWidget impleme
 		int y2 = lineY + this.client.textRenderer.fontHeight;
 
 		var tessellator = Tessellator.getInstance();
-		var buffer = tessellator.getBuffer();
+		var buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
 		RenderSystem.enableColorLogicOp();
 		RenderSystem.logicOp(GlStateManager.LogicOp.OR_REVERSE);
 		RenderSystem.setShader(GameRenderer::getPositionProgram);
 		RenderSystem.setShaderColor(0.f, 0.f, 255.f, 255.f);
-		buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
-		buffer.vertex(x, y2, 0.d).next();
-		buffer.vertex(x2, y2, 0.d).next();
-		buffer.vertex(x2, lineY, 0.d).next();
-		buffer.vertex(x, lineY, 0.d).next();
-		tessellator.draw();
+		buffer.vertex(x, y2, 0);
+		buffer.vertex(x2, y2, 0);
+		buffer.vertex(x2, lineY, 0);
+		buffer.vertex(x, lineY, 0);
+		BufferRenderer.drawWithGlobalProgram(buffer.end());
 		RenderSystem.disableColorLogicOp();
 	}
 

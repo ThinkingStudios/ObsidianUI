@@ -12,17 +12,14 @@ package org.thinkingstudio.obsidianui.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.render.*;
 import net.minecraft.util.Identifier;
 
 public final class RenderUtil {
 	/**
 	 * The dirt background texture used in 1.20.5 and above versions.
 	 */
-	public static final Identifier DIRT_BACKGROUND_TEXTURE = new Identifier("obsidianui", "textures/gui/dirt_background.png");
+	public static final Identifier DIRT_BACKGROUND_TEXTURE = Identifier.of("obsidianui", "textures/gui/dirt_background.png");
 
 	private RenderUtil() {
 		throw new IllegalStateException("RenderUtil only contains static-definitions.");
@@ -58,7 +55,7 @@ public final class RenderUtil {
 	public static void renderTransparentBackgroundTexture(int x, int y, int width, int height, float vOffset,
 												   int red, int green, int blue, int alpha) {
 		var tessellator = Tessellator.getInstance();
-		var bufferBuilder = tessellator.getBuffer();
+		var bufferBuilder = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
 		RenderSystem.setShader(GameRenderer::getPositionTexColorProgram);
 		RenderSystem.setShaderColor(1.f, 1.f, 1.f, 1.f);
 		RenderSystem.setShaderTexture(0, Screen.MENU_BACKGROUND_TEXTURE);
@@ -66,20 +63,19 @@ public final class RenderUtil {
 		int right = x + width;
 		int bottom = y + height;
 
-		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
 		bufferBuilder.vertex(x, bottom, 0)
 				.texture(0, bottom / 32.f + vOffset)
-				.color(red, green, blue, alpha).next();
+				.color(red, green, blue, alpha);
 		bufferBuilder.vertex(right, bottom, 0)
 				.texture(right / 32.f, bottom / 32.f + vOffset)
-				.color(red, green, blue, alpha).next();
+				.color(red, green, blue, alpha);
 		bufferBuilder.vertex(right, y, 0)
 				.texture(right / 32.f, y / 32.f + vOffset)
-				.color(red, green, blue, alpha).next();
+				.color(red, green, blue, alpha);
 		bufferBuilder.vertex(x, y, 0)
 				.texture(0, y / 32.f + vOffset)
-				.color(red, green, blue, alpha).next();
-		tessellator.draw();
+				.color(red, green, blue, alpha);
+		BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
 	}
 
 	/**
@@ -112,7 +108,7 @@ public final class RenderUtil {
 	public static void renderDirtBackgroundTexture(int x, int y, int width, int height, float vOffset,
 	                                           int red, int green, int blue, int alpha) {
 		var tessellator = Tessellator.getInstance();
-		var bufferBuilder = tessellator.getBuffer();
+		var bufferBuilder = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
 		RenderSystem.setShader(GameRenderer::getPositionTexColorProgram);
 		RenderSystem.setShaderColor(1.f, 1.f, 1.f, 1.f);
 		RenderSystem.setShaderTexture(0, DIRT_BACKGROUND_TEXTURE);
@@ -120,20 +116,19 @@ public final class RenderUtil {
 		int right = x + width;
 		int bottom = y + height;
 
-		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
 		bufferBuilder.vertex(x, bottom, 0)
 				.texture(0, bottom / 32.f + vOffset)
-				.color(red, green, blue, alpha).next();
+				.color(red, green, blue, alpha);
 		bufferBuilder.vertex(right, bottom, 0)
 				.texture(right / 32.f, bottom / 32.f + vOffset)
-				.color(red, green, blue, alpha).next();
+				.color(red, green, blue, alpha);
 		bufferBuilder.vertex(right, y, 0)
 				.texture(right / 32.f, y / 32.f + vOffset)
-				.color(red, green, blue, alpha).next();
+				.color(red, green, blue, alpha);
 		bufferBuilder.vertex(x, y, 0)
 				.texture(0, y / 32.f + vOffset)
-				.color(red, green, blue, alpha).next();
-		tessellator.draw();
+				.color(red, green, blue, alpha);
+		BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
 	}
 
 	/**
@@ -150,25 +145,23 @@ public final class RenderUtil {
 	 */
 	public static void renderSelectionBox(int x, int y, int width, int height, int red, int green, int blue, int alpha) {
 		var tessellator = Tessellator.getInstance();
-		var bufferBuilder = tessellator.getBuffer();
+		var bufferBuilder = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
 
 		int top = y + height;
 		int right = x + width;
 
 		RenderSystem.setShader(GameRenderer::getPositionColorProgram);
 		RenderSystem.setShaderColor(red / 255.f, green / 255.f, blue / 255.f, alpha / 255.f);
-		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
-		bufferBuilder.vertex(x, top, 0).next();
-		bufferBuilder.vertex(right, top, 0).next();
-		bufferBuilder.vertex(right, y, 0).next();
-		bufferBuilder.vertex(x, y, 0).next();
-		tessellator.draw();
+		bufferBuilder.vertex(x, top, 0);
+		bufferBuilder.vertex(right, top, 0);
+		bufferBuilder.vertex(right, y, 0);
+		bufferBuilder.vertex(x, y, 0);
+		BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
 		RenderSystem.setShaderColor(0, 0, 0, 1.f);
-		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
-		bufferBuilder.vertex(x + 1, top - 1, 0).next();
-		bufferBuilder.vertex(right - 1, top - 1, 0).next();
-		bufferBuilder.vertex(right - 1, y + 1, 0).next();
-		bufferBuilder.vertex(x + 1, y + 1, 0).next();
-		tessellator.draw();
+		bufferBuilder.vertex(x + 1, top - 1, 0);
+		bufferBuilder.vertex(right - 1, top - 1, 0);
+		bufferBuilder.vertex(right - 1, y + 1, 0);
+		bufferBuilder.vertex(x + 1, y + 1, 0);
+		BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
 	}
 }

@@ -32,7 +32,7 @@ public class ObsidianUINeoForge {
         if (FMLLoader.getDist().isClient()) {
             forgeEventBus.addListener(EventPriority.HIGHEST, RenderGuiEvent.Post.class, event -> {
                 DrawContext drawContext = event.getGuiGraphics();
-                float tickDelta = event.getPartialTick();
+                float tickDelta = event.getPartialTick().getTickDelta(true);
 
                 HudManager.HUDS.forEach((id, hud) -> {
                     if (hud.isEnabled() && hud.isVisible())

@@ -18,18 +18,14 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.render.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.background.Background;
-import org.thinkingstudio.obsidianui.background.DirtTexturedBackground;
+import org.thinkingstudio.obsidianui.background.TransparentBackground;
 import org.thinkingstudio.obsidianui.border.Border;
 import org.thinkingstudio.obsidianui.border.EmptyBorder;
 import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
@@ -56,7 +52,7 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 	private final List<E> entries = new Entries();
 	private final int anchorYOffset;
 	private double scrollAmount;
-	private Background background = DirtTexturedBackground.DARKENED;
+	private Background background = TransparentBackground.NORMAL;
 	private boolean renderTransition = true;
 	private Border border = EmptyBorder.EMPTY_BORDER;
 	private boolean scrolling = false;
@@ -342,7 +338,7 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 		ScissorManager.pop();
 
 		var tessellator = Tessellator.getInstance();
-		var buffer = tessellator.getBuffer();
+		var buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
 		// Render the transition thingy.
 		if (this.shouldRenderTransition()) {
 			RenderSystem.enableBlend();
@@ -351,28 +347,27 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 					GlStateManager.SrcFactor.ZERO, GlStateManager.DstFactor.ONE
 			);
 			RenderSystem.setShader(GameRenderer::getPositionColorProgram);
-			buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
 			// TOP
-			buffer.vertex(left, top + 4, 0).color(0, 0, 0, 0).next();
-			buffer.vertex(right, top + 4, 0).color(0, 0, 0, 0).next();
-			buffer.vertex(right, top, 0).color(0, 0, 0, 255).next();
-			buffer.vertex(left, top, 0).color(0, 0, 0, 255).next();
+			buffer.vertex(left, top + 4, 0).color(0, 0, 0, 0);
+			buffer.vertex(right, top + 4, 0).color(0, 0, 0, 0);
+			buffer.vertex(right, top, 0).color(0, 0, 0, 255);
+			buffer.vertex(left, top, 0).color(0, 0, 0, 255);
 			// RIGHT
-			buffer.vertex(right - 4, bottom, 0).color(0, 0, 0, 0).next();
-			buffer.vertex(right, bottom, 0).color(0, 0, 0, 255).next();
-			buffer.vertex(right, top, 0).color(0, 0, 0, 255).next();
-			buffer.vertex(right - 4, top, 0).color(0, 0, 0, 0).next();
+			buffer.vertex(right - 4, bottom, 0).color(0, 0, 0, 0);
+			buffer.vertex(right, bottom, 0).color(0, 0, 0, 255);
+			buffer.vertex(right, top, 0).color(0, 0, 0, 255);
+			buffer.vertex(right - 4, top, 0).color(0, 0, 0, 0);
 			// BOTTOM
-			buffer.vertex(left, bottom, 0).color(0, 0, 0, 255).next();
-			buffer.vertex(right, bottom, 0).color(0, 0, 0, 255).next();
-			buffer.vertex(right, bottom - 4, 0).color(0, 0, 0, 0).next();
-			buffer.vertex(left, bottom - 4, 0).color(0, 0, 0, 0).next();
+			buffer.vertex(left, bottom, 0).color(0, 0, 0, 255);
+			buffer.vertex(right, bottom, 0).color(0, 0, 0, 255);
+			buffer.vertex(right, bottom - 4, 0).color(0, 0, 0, 0);
+			buffer.vertex(left, bottom - 4, 0).color(0, 0, 0, 0);
 			// LEFT
-			buffer.vertex(left, bottom, 0).color(0, 0, 0, 255).next();
-			buffer.vertex(left + 4, bottom, 0).color(0, 0, 0, 0).next();
-			buffer.vertex(left + 4, top, 0).color(0, 0, 0, 0).next();
-			buffer.vertex(left, top, 0).color(0, 0, 0, 255).next();
-			tessellator.draw();
+			buffer.vertex(left, bottom, 0).color(0, 0, 0, 255);
+			buffer.vertex(left + 4, bottom, 0).color(0, 0, 0, 0);
+			buffer.vertex(left + 4, top, 0).color(0, 0, 0, 0);
+			buffer.vertex(left, top, 0).color(0, 0, 0, 255);
+			BufferRenderer.drawWithGlobalProgram(buffer.end());
 		}
 
 		// Scrollbar
@@ -395,20 +390,21 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 
 	protected void renderScrollbar(Tessellator tessellator, BufferBuilder buffer, int scrollbarX, int scrollbarEndX, int scrollbarY, int scrollbarHeight) {
 		RenderSystem.setShader(GameRenderer::getPositionColorProgram);
-		buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-		buffer.vertex(scrollbarX, this.getY() + this.getHeight(), 0.0).color(0, 0, 0, 255).next();
-		buffer.vertex(scrollbarEndX, this.getY() + this.getHeight(), 0.0).color(0, 0, 0, 255).next();
-		buffer.vertex(scrollbarEndX, this.getY(), 0.0).color(0, 0, 0, 255).next();
-		buffer.vertex(scrollbarX, this.getY(), 0.0).color(0, 0, 0, 255).next();
-		buffer.vertex(scrollbarX, scrollbarY + scrollbarHeight, 0.0).color(128, 128, 128, 255).next();
-		buffer.vertex(scrollbarEndX, scrollbarY + scrollbarHeight, 0.0).color(128, 128, 128, 255).next();
-		buffer.vertex(scrollbarEndX, scrollbarY, 0.0).color(128, 128, 128, 255).next();
-		buffer.vertex(scrollbarX, scrollbarY, 0.0).color(128, 128, 128, 255).next();
-		buffer.vertex(scrollbarX, scrollbarY + scrollbarHeight - 1, 0.0).color(192, 192, 192, 255).next();
-		buffer.vertex(scrollbarEndX - 1, scrollbarY + scrollbarHeight - 1, 0.0).color(192, 192, 192, 255).next();
-		buffer.vertex(scrollbarEndX - 1, scrollbarY, 0.0).color(192, 192, 192, 255).next();
-		buffer.vertex(scrollbarX, scrollbarY, 0.0).color(192, 192, 192, 255).next();
-		tessellator.draw();
+
+		//tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+		buffer.vertex(scrollbarX, this.getY() + this.getHeight(), 0).color(0, 0, 0, 255);
+		buffer.vertex(scrollbarEndX, this.getY() + this.getHeight(), 0).color(0, 0, 0, 255);
+		buffer.vertex(scrollbarEndX, this.getY(), 0).color(0, 0, 0, 255);
+		buffer.vertex(scrollbarX, this.getY(), 0).color(0, 0, 0, 255);
+		buffer.vertex(scrollbarX, scrollbarY + scrollbarHeight, 0).color(128, 128, 128, 255);
+		buffer.vertex(scrollbarEndX, scrollbarY + scrollbarHeight, 0).color(128, 128, 128, 255);
+		buffer.vertex(scrollbarEndX, scrollbarY, 0).color(128, 128, 128, 255);
+		buffer.vertex(scrollbarX, scrollbarY, 0).color(128, 128, 128, 255);
+		buffer.vertex(scrollbarX, scrollbarY + scrollbarHeight - 1, 0).color(192, 192, 192, 255);
+		buffer.vertex(scrollbarEndX - 1, scrollbarY + scrollbarHeight - 1, 0).color(192, 192, 192, 255);
+		buffer.vertex(scrollbarEndX - 1, scrollbarY, 0).color(192, 192, 192, 255);
+		buffer.vertex(scrollbarX, scrollbarY, 0).color(192, 192, 192, 255);
+		BufferRenderer.drawWithGlobalProgram(buffer.end());
 	}
 
 	/* Narration */

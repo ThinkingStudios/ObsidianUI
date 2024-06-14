@@ -29,7 +29,7 @@ import org.thinkingstudio.obsidianui.Position;
  * @since 1.0.0
  */
 public class SpruceCheckboxWidget extends AbstractSpruceBooleanButtonWidget {
-	private static final Identifier TEXTURE = new Identifier("obsidianui", "textures/gui/checkbox.png");
+	private static final Identifier TEXTURE = Identifier.of("obsidianui", "textures/gui/checkbox.png");
 	private boolean showCross = false;
 	private boolean colored = false;
 

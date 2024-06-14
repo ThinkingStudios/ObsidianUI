@@ -1,0 +1,39 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+license = "MIT"
+
+[[mods]]
+modId = "obsidianui_test"
+version = "0.1.0"
+displayName = "ObsidianUI - Test mod"
+displayURL = "https://github.com/ThinkingStudios/ObsidianUI"
+credits="LambdAurora"
+authors="TexTrue, ThinkingStudio"
+description='''
+Test mod for ObsidianUI.
+'''
+logoFile = "assets/obsidianui_test/icon.png"
+
+[[mixins]]
+config = "obsidianui.test.neoforge.mixins.json"
+
+[[dependencies.obsidianui_test]]
+modId = "neoforge"
+type = "required"
+versionRange = "[20,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.obsidianui_test]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.20.5,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.obsidianui_test]]
+modId = "obsidianui"
+type = "required"
+versionRange = "*"
+ordering = "NONE"
+side = "BOTH"

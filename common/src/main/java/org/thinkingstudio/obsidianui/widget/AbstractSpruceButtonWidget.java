@@ -46,7 +46,7 @@ public abstract class AbstractSpruceButtonWidget extends AbstractSpruceWidget im
 	 */
 	protected static final ButtonTextures
 			BUTTON_TEXTURES = new ButtonTextures(
-			new Identifier("widget/button"), new Identifier("widget/button_disabled"), new Identifier("widget/button_highlighted")
+			Identifier.ofVanilla("widget/button"), Identifier.ofVanilla("widget/button_disabled"), Identifier.ofVanilla("widget/button_highlighted")
 	);
 
 	public AbstractSpruceButtonWidget(Position position, int width, int height, Text message) {

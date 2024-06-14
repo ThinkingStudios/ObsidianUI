@@ -23,7 +23,7 @@ public class ObsidianUIFabric implements ClientModInitializer {
         HudRenderCallback.EVENT.register((drawContext, tickDelta) -> {
             HudManager.HUDS.forEach((id, hud) -> {
                 if (hud.isEnabled() && hud.isVisible())
-                    hud.render(drawContext, tickDelta);
+                    hud.render(drawContext, tickDelta.getTickDelta(true));
             });
         });
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
