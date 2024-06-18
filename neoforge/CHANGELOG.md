@@ -1,2 +1,2 @@
 ## Changelog
-- port to 1.21
+- port to 1.21 (Thanks Motschen improved backgrounds and fix crash issues)

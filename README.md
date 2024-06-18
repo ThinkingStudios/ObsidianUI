@@ -23,7 +23,7 @@ Just do `./gradlew build` and everything should build just fine!
 
 ## Use inside a mod
 
-You can look at the [SpruceUI testmod](https://github.com/LambdAurora/SpruceUI/tree/1.20.4/src/testmod) for examples of use.
+You can look at the [fabric-testmod](https://github.com/ThinkingStudios/ObsidianUI/tree/1.21-architectury/test-fabric)/[neoforge-testmod](https://github.com/ThinkingStudios/ObsidianUI/tree/1.21-architectury/test-neoforge) for examples of use.
 
 ### Import inside a project
 
@@ -35,12 +35,12 @@ repositories {
 }
 
 dependencies {
-    include modImplementation("maven.modrinth:obsidianui:${project.obsidianui_version}")
+    include modImplementation("maven.modrinth:obsidianui:${project.obsidianui_version}-${modloader}")
 }
 ```
 
 And this to your `gradle.properties`:
 
 ```properties
-obsidianui_version=0.2.2+1.20.4
+obsidianui_version=0.2.6+1.21
 ```
