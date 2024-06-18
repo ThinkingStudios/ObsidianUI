@@ -63,6 +63,7 @@ public final class RenderUtil {
 		int right = x + width;
 		int bottom = y + height;
 
+		RenderSystem.enableBlend();
 		bufferBuilder.vertex(x, bottom, 0)
 				.texture(0, bottom / 32.f + vOffset)
 				.color(red, green, blue, alpha);
@@ -76,6 +77,7 @@ public final class RenderUtil {
 				.texture(0, y / 32.f + vOffset)
 				.color(red, green, blue, alpha);
 		BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
+		RenderSystem.disableBlend();
 	}
 
 	/**

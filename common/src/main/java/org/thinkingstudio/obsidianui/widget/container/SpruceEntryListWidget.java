@@ -380,7 +380,7 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 				scrollbarY = this.getY();
 			}
 
-			this.renderScrollbar(tessellator, buffer, scrollbarPositionX, scrollBarEnd, scrollbarY, scrollbarHeight);
+			this.renderScrollbar(tessellator, scrollbarPositionX, scrollBarEnd, scrollbarY, scrollbarHeight);
 		}
 
 		this.getBorder().render(drawContext, this, mouseX, mouseY, delta);
@@ -388,10 +388,10 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 		RenderSystem.disableBlend();
 	}
 
-	protected void renderScrollbar(Tessellator tessellator, BufferBuilder buffer, int scrollbarX, int scrollbarEndX, int scrollbarY, int scrollbarHeight) {
+	protected void renderScrollbar(Tessellator tessellator, int scrollbarX, int scrollbarEndX, int scrollbarY, int scrollbarHeight) {
 		RenderSystem.setShader(GameRenderer::getPositionColorProgram);
 
-		//tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+		BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
 		buffer.vertex(scrollbarX, this.getY() + this.getHeight(), 0).color(0, 0, 0, 255);
 		buffer.vertex(scrollbarEndX, this.getY() + this.getHeight(), 0).color(0, 0, 0, 255);
 		buffer.vertex(scrollbarEndX, this.getY(), 0).color(0, 0, 0, 255);
