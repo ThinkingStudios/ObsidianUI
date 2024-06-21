@@ -1,7 +1,8 @@
 /*
- * Copyright © 2020 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2020~2024 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2024 ThinkingStudio
  *
- * This file is part of SpruceUI.
+ * This file is part of ObsidianUI.
  *
  * Licensed under the MIT license. For more information,
  * see the LICENSE file.
@@ -12,7 +13,7 @@ package org.thinkingstudio.obsidianui.test.fabric.gui;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.SpruceTexts;
 import org.thinkingstudio.obsidianui.screen.SpruceScreen;
-import org.thinkingstudio.obsidianui.test.fabric.ObsidianUITest;
+import org.thinkingstudio.obsidianui.test.fabric.ObsidianUITestFabric;
 import org.thinkingstudio.obsidianui.widget.SpruceButtonWidget;
 import org.thinkingstudio.obsidianui.widget.SpruceLabelWidget;
 import org.thinkingstudio.obsidianui.widget.container.SpruceContainerWidget;
@@ -28,7 +29,7 @@ public class SpruceTabbedTestScreen extends SpruceScreen {
 	private SpruceTabbedWidget tabbedWidget;
 
 	protected SpruceTabbedTestScreen(@Nullable Screen parent) {
-		super(Text.literal("ObsidianUI Test Tabbed Screen"));
+		super(Text.literal("Test Tabbed Screen"));
 		this.parent = parent;
 	}
 
@@ -52,9 +53,9 @@ public class SpruceTabbedTestScreen extends SpruceScreen {
 		});
 		this.tabbedWidget.addSeparatorEntry(Text.literal("Separator"));
 		this.tabbedWidget.addTabEntry(Text.literal("Option Test"), Text.literal("useful for config stuff.").formatted(Formatting.GRAY),
-				(width, height) -> ObsidianUITest.get().buildOptionList(Position.origin(), width, height));
+				(width, height) -> ObsidianUITestFabric.get().buildOptionList(Position.origin(), width, height));
 		this.tabbedWidget.addTabEntry(Text.literal("Text Area"), Text.literal("to edit stuff on multiple lines.").formatted(Formatting.GRAY),
-				(width, height) -> ObsidianUITest.buildTextAreaContainer(Position.origin(), width, height,
+				(width, height) -> ObsidianUITestFabric.buildTextAreaContainer(Position.origin(), width, height,
 						textArea -> {
 						}, null));
 		this.addDrawableChild(this.tabbedWidget);

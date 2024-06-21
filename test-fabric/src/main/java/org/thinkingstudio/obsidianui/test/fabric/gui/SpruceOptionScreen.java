@@ -1,7 +1,8 @@
 /*
- * Copyright © 2020 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2020~2024 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2024 ThinkingStudio
  *
- * This file is part of SpruceUI.
+ * This file is part of ObsidianUI.
  *
  * Licensed under the MIT license. For more information,
  * see the LICENSE file.
@@ -13,7 +14,7 @@ import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.SpruceTexts;
 import org.thinkingstudio.obsidianui.option.SpruceOption;
 import org.thinkingstudio.obsidianui.screen.SpruceScreen;
-import org.thinkingstudio.obsidianui.test.fabric.ObsidianUITest;
+import org.thinkingstudio.obsidianui.test.fabric.ObsidianUITestFabric;
 import org.thinkingstudio.obsidianui.widget.SpruceButtonWidget;
 import org.thinkingstudio.obsidianui.widget.container.SpruceOptionListWidget;
 import net.minecraft.client.gui.DrawContext;
@@ -47,8 +48,8 @@ public class SpruceOptionScreen extends SpruceScreen {
 
 		// Button list.
 		//this.list = new ButtonListWidget(this.client, this.width, this.height, 43, this.height - 29 - this.getTextHeight(), 25);
-		this.list = ObsidianUITest.get().buildOptionList(Position.of(0, 22), this.width, this.height - 35 - 22);
-		ObsidianUITest.get().resetConsumer = btn -> {
+		this.list = ObsidianUITestFabric.get().buildOptionList(Position.of(0, 22), this.width, this.height - 35 - 22);
+		ObsidianUITestFabric.get().resetConsumer = btn -> {
 			// Re-initialize the screen to update all the values.
 			this.init(this.client, this.client.getWindow().getScaledWidth(), this.client.getWindow().getScaledHeight());
 		};

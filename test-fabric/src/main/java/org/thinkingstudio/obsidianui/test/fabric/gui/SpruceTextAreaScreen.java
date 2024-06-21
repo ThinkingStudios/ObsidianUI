@@ -1,7 +1,8 @@
 /*
- * Copyright © 2020 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2020~2024 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2024 ThinkingStudio
  *
- * This file is part of SpruceUI.
+ * This file is part of ObsidianUI.
  *
  * Licensed under the MIT license. For more information,
  * see the LICENSE file.
@@ -11,7 +12,7 @@ package org.thinkingstudio.obsidianui.test.fabric.gui;
 
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.screen.SpruceScreen;
-import org.thinkingstudio.obsidianui.test.fabric.ObsidianUITest;
+import org.thinkingstudio.obsidianui.test.fabric.ObsidianUITestFabric;
 import org.thinkingstudio.obsidianui.widget.text.SpruceTextAreaWidget;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -37,7 +38,7 @@ public class SpruceTextAreaScreen extends SpruceScreen {
 		super.init();
 
 		var containerWidget =
-				ObsidianUITest.buildTextAreaContainer(Position.of(this, 0, 50), this.width, this.height - 50,
+				ObsidianUITestFabric.buildTextAreaContainer(Position.of(this, 0, 50), this.width, this.height - 50,
 						textArea -> {
 							if (this.textArea != null) {
 								textArea.setText(this.textArea.getText());

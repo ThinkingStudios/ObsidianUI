@@ -1,7 +1,8 @@
 /*
- * Copyright © 2020 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2020~2024 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2024 ThinkingStudio
  *
- * This file is part of SpruceUI.
+ * This file is part of ObsidianUI.
  *
  * Licensed under the MIT license. For more information,
  * see the LICENSE file.
@@ -19,7 +20,7 @@ import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Represents a screen to navigate to the different SpruceUI test screens.
+ * Represents a screen to navigate to the different ObsidianUI test screens.
  *
  * @author LambdAurora
  */

@@ -1,14 +1,17 @@
 /*
- * Copyright © 2020 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2020~2024 LambdAurora <email@lambdaurora.dev>
+ * Copyright © 2024 ThinkingStudio
  *
- * This file is part of SpruceUI.
+ * This file is part of ObsidianUI.
  *
  * Licensed under the MIT license. For more information,
  * see the LICENSE file.
  */
 
-package org.thinkingstudio.obsidianui.test.fabric;
+package org.thinkingstudio.obsidianui.test.neoforge;
 
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.common.Mod;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.SpruceTexts;
 import org.thinkingstudio.obsidianui.option.*;
@@ -16,7 +19,6 @@ import org.thinkingstudio.obsidianui.widget.SpruceButtonWidget;
 import org.thinkingstudio.obsidianui.widget.container.SpruceContainerWidget;
 import org.thinkingstudio.obsidianui.widget.container.SpruceOptionListWidget;
 import org.thinkingstudio.obsidianui.widget.text.SpruceTextAreaWidget;
-import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.text.Text;
@@ -26,12 +28,13 @@ import java.util.Arrays;
 import java.util.function.Consumer;
 
 /**
- * Represents the SpruceUI test mod.
+ * Represents the ObsidianUI test mod on NeoForge.
  *
- * @author LambdAurora
+ * @author TexTrue, LambdAurora
  */
-public class ObsidianUITest implements ClientModInitializer {
-	private static ObsidianUITest INSTANCE;
+@Mod(value = "obsidianui_test", dist = Dist.CLIENT)
+public class ObsidianUITestNeoForge {
+	private static ObsidianUITestNeoForge INSTANCE;
 
 	private final SpruceOption booleanOption;
 	private final SpruceOption checkboxOption;
@@ -55,7 +58,9 @@ public class ObsidianUITest implements ClientModInitializer {
 
 	public Consumer<SpruceButtonWidget> resetConsumer;
 
-	public ObsidianUITest() {
+	public ObsidianUITestNeoForge() {
+		INSTANCE = this;
+
 		this.booleanOption = new SpruceBooleanOption("obsidianui_test.option.boolean",
 				() -> this.aBoolean,
 				newValue -> this.aBoolean = newValue,
@@ -130,11 +135,6 @@ public class ObsidianUITest implements ClientModInitializer {
 				+ "You have to manage screen re-initialization and reset logic yourself."));
 	}
 
-	@Override
-	public void onInitializeClient() {
-		INSTANCE = this;
-	}
-
 	public SpruceOptionListWidget buildOptionList(Position position, int width, int height) {
 		var list = new SpruceOptionListWidget(position, width, height);
 
@@ -203,7 +203,7 @@ public class ObsidianUITest implements ClientModInitializer {
 		return container;
 	}
 
-	public static ObsidianUITest get() {
+	public static ObsidianUITestNeoForge get() {
 		return INSTANCE;
 	}
 }

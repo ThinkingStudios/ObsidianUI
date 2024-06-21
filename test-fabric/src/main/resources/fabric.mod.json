@@ -17,7 +17,7 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "org.thinkingstudio.obsidianui.test.fabric.ObsidianUITest"
+      "org.thinkingstudio.obsidianui.test.fabric.ObsidianUITestFabric"
     ]
   },
   "mixins": [
