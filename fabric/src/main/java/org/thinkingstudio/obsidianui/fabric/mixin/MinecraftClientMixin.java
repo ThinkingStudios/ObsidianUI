@@ -29,17 +29,17 @@ import org.thinkingstudio.obsidianui.fabric.event.ResolutionChangeCallback;
 @Mixin(MinecraftClient.class)
 public class MinecraftClientMixin {
 	@Inject(method = "setScreen", at = @At("HEAD"))
-	private void onScreenPre(Screen screen, CallbackInfo ci) {
+	private void obsidianui_onScreenPre(Screen screen, CallbackInfo ci) {
 		OpenScreenCallback.PRE.invoker().apply((MinecraftClient) (Object) this, screen);
 	}
 
 	@Inject(method = "setScreen", at = @At("RETURN"))
-	private void onScreenChange(Screen screen, CallbackInfo ci) {
+	private void obsidianui_onScreenChange(Screen screen, CallbackInfo ci) {
 		OpenScreenCallback.POST.invoker().apply((MinecraftClient) (Object) this, screen);
 	}
 
 	@Inject(method = "onResolutionChanged", at = @At("RETURN"))
-	private void onResolutionChanged(CallbackInfo ci) {
+	private void obsidianui_onResolutionChanged(CallbackInfo ci) {
 		ResolutionChangeCallback.EVENT.invoker().apply((MinecraftClient) (Object) this);
 	}
 }
