@@ -11,7 +11,6 @@
 package org.thinkingstudio.obsidianui.widget.container;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -24,12 +23,13 @@ import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.background.Background;
-import org.thinkingstudio.obsidianui.background.DirtTexturedBackground;
+import org.thinkingstudio.obsidianui.background.TransparentBackground;
 import org.thinkingstudio.obsidianui.border.Border;
 import org.thinkingstudio.obsidianui.border.EmptyBorder;
 import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
@@ -41,6 +41,11 @@ import org.thinkingstudio.obsidianui.widget.WithBorder;
 import java.util.AbstractList;
 import java.util.Collection;
 import java.util.List;
+
+import static net.minecraft.client.gui.screen.Screen.HEADER_SEPARATOR_TEXTURE;
+import static net.minecraft.client.gui.screen.Screen.FOOTER_SEPARATOR_TEXTURE;
+import static net.minecraft.client.gui.screen.Screen.INWORLD_HEADER_SEPARATOR_TEXTURE;
+import static net.minecraft.client.gui.screen.Screen.INWORLD_FOOTER_SEPARATOR_TEXTURE;
 
 /**
  * Represents an entry list.
@@ -56,7 +61,7 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 	private final List<E> entries = new Entries();
 	private final int anchorYOffset;
 	private double scrollAmount;
-	private Background background = DirtTexturedBackground.DARKENED;
+	private Background background = TransparentBackground.DARKENED;
 	private boolean renderTransition = true;
 	private Border border = EmptyBorder.EMPTY_BORDER;
 	private boolean scrolling = false;
@@ -328,6 +333,12 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 		this.getBackground().render(drawContext, this, 0, mouseX, mouseY, delta);
 	}
 
+	protected Identifier getSeparatorTexture(boolean header) {
+		boolean isIngame = this.client.world != null;
+		if (header) return isIngame ? INWORLD_HEADER_SEPARATOR_TEXTURE : HEADER_SEPARATOR_TEXTURE;
+		else return isIngame ? INWORLD_FOOTER_SEPARATOR_TEXTURE : FOOTER_SEPARATOR_TEXTURE;
+	}
+
 	@Override
 	protected void renderWidget(DrawContext drawContext, int mouseX, int mouseY, float delta) {
 		int scrollbarPositionX = this.getScrollbarPositionX();
@@ -341,43 +352,25 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 		this.entries.forEach(e -> e.render(drawContext, mouseX, mouseY, delta));
 		ScissorManager.pop();
 
-		var tessellator = Tessellator.getInstance();
-		var buffer = tessellator.getBuffer();
+		RenderSystem.enableBlend();
+
 		// Render the transition thingy.
 		if (this.shouldRenderTransition()) {
-			RenderSystem.enableBlend();
-			RenderSystem.blendFuncSeparate(
-					GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA,
-					GlStateManager.SrcFactor.ZERO, GlStateManager.DstFactor.ONE
-			);
-			RenderSystem.setShader(GameRenderer::getPositionColorProgram);
-			buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-			// TOP
-			buffer.vertex(left, top + 4, 0).color(0, 0, 0, 0).next();
-			buffer.vertex(right, top + 4, 0).color(0, 0, 0, 0).next();
-			buffer.vertex(right, top, 0).color(0, 0, 0, 255).next();
-			buffer.vertex(left, top, 0).color(0, 0, 0, 255).next();
-			// RIGHT
-			buffer.vertex(right - 4, bottom, 0).color(0, 0, 0, 0).next();
-			buffer.vertex(right, bottom, 0).color(0, 0, 0, 255).next();
-			buffer.vertex(right, top, 0).color(0, 0, 0, 255).next();
-			buffer.vertex(right - 4, top, 0).color(0, 0, 0, 0).next();
-			// BOTTOM
-			buffer.vertex(left, bottom, 0).color(0, 0, 0, 255).next();
-			buffer.vertex(right, bottom, 0).color(0, 0, 0, 255).next();
-			buffer.vertex(right, bottom - 4, 0).color(0, 0, 0, 0).next();
-			buffer.vertex(left, bottom - 4, 0).color(0, 0, 0, 0).next();
-			// LEFT
-			buffer.vertex(left, bottom, 0).color(0, 0, 0, 255).next();
-			buffer.vertex(left + 4, bottom, 0).color(0, 0, 0, 0).next();
-			buffer.vertex(left + 4, top, 0).color(0, 0, 0, 0).next();
-			buffer.vertex(left, top, 0).color(0, 0, 0, 255).next();
-			tessellator.draw();
+			Identifier topTexture = getSeparatorTexture(true);
+			Identifier bottomTexture = getSeparatorTexture(false);
+
+			drawContext.drawTexture(topTexture, left, top - 2, 0.0F, 0.0F, this.getWidth(), 2, 32, 2);
+			drawContext.drawTexture(bottomTexture, left, bottom, 0.0F, 0.0F, this.getWidth(), 2, 32, 2);
+			// The following code is absolutely cursed, but works surprisingly well to create side borders
+			int screenWidth = client.getWindow().getScaledWidth();
+			if (left > 0) drawContext.drawTexture(topTexture, left-1, top - 1, 0.0F, 0.0F, 1, this.getHeight() + 2, 1, (this.getHeight() + 2) * 2);
+			if (right < screenWidth) drawContext.drawTexture(topTexture, right, top - 1, 0.0F, 0.0F, 1, this.getHeight() + 2, 1, (this.getHeight() + 2) * 2);
 		}
 
 		// Scrollbar
 		int maxScroll = this.getMaxScroll();
 		if (maxScroll > 0) {
+			var tessellator = Tessellator.getInstance();
 			int scrollbarHeight = (int) ((float) ((this.getHeight()) * (this.getHeight())) / (float) this.getMaxPosition());
 			scrollbarHeight = MathHelper.clamp(scrollbarHeight, 32, this.getHeight() - 8);
 			int scrollbarY = (int) this.getScrollAmount() * (this.getHeight() - scrollbarHeight) / maxScroll + this.getY();
@@ -385,7 +378,7 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 				scrollbarY = this.getY();
 			}
 
-			this.renderScrollbar(tessellator, buffer, scrollbarPositionX, scrollBarEnd, scrollbarY, scrollbarHeight);
+			this.renderScrollbar(tessellator, tessellator.getBuffer(), scrollbarPositionX, scrollBarEnd, scrollbarY, scrollbarHeight);
 		}
 
 		this.getBorder().render(drawContext, this, mouseX, mouseY, delta);

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "obsidianui_test",
+  "name": "ObsidianUI - Test mod",
+  "version": "0.1.0",
+  "description": "Test mod for ObsidianUI.",
+  "authors": [
+    "TexTrue, ThinkingStudio, LambdAurora"
+  ],
+  "contact": {
+    "homepage": "https://github.com/ThinkingStudios/ObsidianUI",
+    "sources": "https://github.com/ThinkingStudios/ObsidianUI",
+    "issues": "https://github.com/ThinkingStudios/ObsidianUI/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/obsidianui_test/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "org.thinkingstudio.obsidianui.test.neoforge.ObsidianUITestFabric"
+    ]
+  },
+  "mixins": [
+    "obsidianui.test.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "minecraft": "*",
+    "obsidianui": "*"
+  }
+}

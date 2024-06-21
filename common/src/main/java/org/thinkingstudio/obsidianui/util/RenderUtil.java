@@ -11,7 +11,7 @@
 package org.thinkingstudio.obsidianui.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormat;
@@ -23,6 +23,10 @@ public final class RenderUtil {
 	 * The dirt background texture used in 1.20.5 and above versions.
 	 */
 	public static final Identifier DIRT_BACKGROUND_TEXTURE = new Identifier("obsidianui", "textures/gui/dirt_background.png");
+
+	private static final Identifier MENU_LIST_BACKGROUND_TEXTURE = new Identifier("textures/gui/menu_list_background.png");
+	private static final Identifier INWORLD_MENU_LIST_BACKGROUND_TEXTURE = new Identifier("textures/gui/inworld_menu_list_background.png");
+	private static final MinecraftClient client = MinecraftClient.getInstance();
 
 	private RenderUtil() {
 		throw new IllegalStateException("RenderUtil only contains static-definitions.");
@@ -61,12 +65,14 @@ public final class RenderUtil {
 		var bufferBuilder = tessellator.getBuffer();
 		RenderSystem.setShader(GameRenderer::getPositionTexColorProgram);
 		RenderSystem.setShaderColor(1.f, 1.f, 1.f, 1.f);
-		RenderSystem.setShaderTexture(0, Screen.MENU_BACKGROUND_TEXTURE);
+		RenderSystem.setShaderTexture(0, getListBackgroundTexture());
 
 		int right = x + width;
 		int bottom = y + height;
 
 		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
+
+		RenderSystem.enableBlend();
 		bufferBuilder.vertex(x, bottom, 0)
 				.texture(0, bottom / 32.f + vOffset)
 				.color(red, green, blue, alpha).next();
@@ -80,6 +86,11 @@ public final class RenderUtil {
 				.texture(0, y / 32.f + vOffset)
 				.color(red, green, blue, alpha).next();
 		tessellator.draw();
+		RenderSystem.disableBlend();
+	}
+
+	public static Identifier getListBackgroundTexture() {
+		return client.world == null ? MENU_LIST_BACKGROUND_TEXTURE : INWORLD_MENU_LIST_BACKGROUND_TEXTURE;
 	}
 
 	/**
