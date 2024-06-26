@@ -11,6 +11,7 @@
 package org.thinkingstudio.obsidianui.hud;
 
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.thinkingstudio.obsidianui.util.Identifiable;
@@ -67,7 +68,7 @@ public abstract class HudComponent implements Identifiable {
 	 * @param tickDelta Progress for linearly interpolating between the previous and current game state.
 	 * @see #isEnabled()
 	 */
-	public abstract void render(DrawContext drawContext, float tickDelta);
+	public abstract void render(DrawContext drawContext, RenderTickCounter tickDelta);
 
 	/**
 	 * Updates the HUD each tick if enabled and has tick updates.

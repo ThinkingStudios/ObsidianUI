@@ -12,6 +12,7 @@ package org.thinkingstudio.obsidianui.hud.component;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.thinkingstudio.obsidianui.hud.HudComponent;
@@ -76,7 +77,7 @@ public class TextHudComponent extends HudComponent {
 	}
 
 	@Override
-	public void render(DrawContext drawContext, float tickDelta) {
+	public void render(DrawContext drawContext, RenderTickCounter tickDelta) {
 		drawContext.drawTextWithShadow(this.client.textRenderer, this.text, this.x, this.y, this.color);
 	}
 }

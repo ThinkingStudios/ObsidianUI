@@ -12,6 +12,7 @@ package org.thinkingstudio.obsidianui.neoforge;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderTickCounter;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -31,8 +32,8 @@ public class ObsidianUINeoForge {
 
         if (FMLLoader.getDist().isClient()) {
             forgeEventBus.addListener(EventPriority.HIGHEST, RenderGuiEvent.Post.class, event -> {
-                DrawContext drawContext = event.getGuiGraphics();
-                float tickDelta = event.getPartialTick().getTickDelta(true);
+                var drawContext = event.getGuiGraphics();
+                var tickDelta = event.getPartialTick();
 
                 HudManager.HUDS.forEach((id, hud) -> {
                     if (hud.isEnabled() && hud.isVisible())
