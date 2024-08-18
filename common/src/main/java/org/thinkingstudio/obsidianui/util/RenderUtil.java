@@ -96,6 +96,7 @@ public final class RenderUtil {
 	 * @param vOffset the v offset
 	 * @see #renderDirtBackgroundTexture(int, int, int, int, float, int, int, int, int)
 	 */
+	@Deprecated(since = "1.20.5")
 	public static void renderDirtBackgroundTexture(int x, int y, int width, int height, float vOffset) {
 		renderDirtBackgroundTexture(x, y, width, height, vOffset, 64, 64, 64, 255);
 	}
@@ -113,6 +114,7 @@ public final class RenderUtil {
 	 * @param blue the blue-component color value
 	 * @param alpha the alpha-component alpha value
 	 */
+	@Deprecated(since = "1.20.5")
 	public static void renderDirtBackgroundTexture(int x, int y, int width, int height, float vOffset,
 	                                           int red, int green, int blue, int alpha) {
 		var tessellator = Tessellator.getInstance();

@@ -1,2 +1,2 @@
 ## Changelog
-- fix HUD part
+- update to 1.21.1

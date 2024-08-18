@@ -11,8 +11,7 @@
 package org.thinkingstudio.obsidianui.neoforge;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.RenderTickCounter;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -25,7 +24,7 @@ import org.thinkingstudio.obsidianui.hud.HudManager;
 import org.thinkingstudio.obsidianui.neoforge.event.OpenScreenCallbackEvent;
 import org.thinkingstudio.obsidianui.neoforge.event.ResolutionChangeCallbackEvent;
 
-@Mod(ObsidianUI.MODID)
+@Mod(value = ObsidianUI.MODID, dist = Dist.CLIENT)
 public class ObsidianUINeoForge {
     public ObsidianUINeoForge() {
         IEventBus forgeEventBus = NeoForge.EVENT_BUS;
