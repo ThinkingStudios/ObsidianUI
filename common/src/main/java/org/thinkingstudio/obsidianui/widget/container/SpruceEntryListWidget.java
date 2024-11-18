@@ -28,6 +28,7 @@ import org.thinkingstudio.obsidianui.background.Background;
 import org.thinkingstudio.obsidianui.background.TransparentBackground;
 import org.thinkingstudio.obsidianui.border.Border;
 import org.thinkingstudio.obsidianui.border.EmptyBorder;
+import org.thinkingstudio.obsidianui.mixin.DrawContextAccessor;
 import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
 import org.thinkingstudio.obsidianui.util.ScissorManager;
 import org.thinkingstudio.obsidianui.widget.AbstractSpruceWidget;
@@ -354,18 +355,17 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 			Identifier topTexture = getSeparatorTexture(true);
 			Identifier bottomTexture = getSeparatorTexture(false);
 
-			drawContext.drawTexture(topTexture, left, top - 2, 0.0F, 0.0F, this.getWidth(), 2, 32, 2);
-			drawContext.drawTexture(bottomTexture, left, bottom, 0.0F, 0.0F, this.getWidth(), 2, 32, 2);
+			drawContext.drawTexture(RenderLayer::getGuiTextured, topTexture, left, top - 2, 0.0F, 0.0F, this.getWidth(), 2, 32, 2);
+			drawContext.drawTexture(RenderLayer::getGuiTextured, bottomTexture, left, bottom, 0.0F, 0.0F, this.getWidth(), 2, 32, 2);
 			// The following code is absolutely cursed, but works surprisingly well to create side borders
 			int screenWidth = client.getWindow().getScaledWidth();
-			if (left > 0) drawContext.drawTexture(topTexture, left-1, top - 1, 0.0F, 0.0F, 1, this.getHeight() + 2, 1, (this.getHeight() + 2) * 2);
-			if (right < screenWidth) drawContext.drawTexture(topTexture, right, top - 1, 0.0F, 0.0F, 1, this.getHeight() + 2, 1, (this.getHeight() + 2) * 2);
+			if (left > 0) drawContext.drawTexture(RenderLayer::getGuiTextured, topTexture, left-1, top - 1, 0.0F, 0.0F, 1, this.getHeight() + 2, 1, (this.getHeight() + 2) * 2);
+			if (right < screenWidth) drawContext.drawTexture(RenderLayer::getGuiTextured, topTexture, right, top - 1, 0.0F, 0.0F, 1, this.getHeight() + 2, 1, (this.getHeight() + 2) * 2);
 		}
 
 		// Scrollbar
 		int maxScroll = this.getMaxScroll();
 		if (maxScroll > 0) {
-			var tessellator = Tessellator.getInstance();
 			int scrollbarHeight = (int) ((float) ((this.getHeight()) * (this.getHeight())) / (float) this.getMaxPosition());
 			scrollbarHeight = MathHelper.clamp(scrollbarHeight, 32, this.getHeight() - 8);
 			int scrollbarY = (int) this.getScrollAmount() * (this.getHeight() - scrollbarHeight) / maxScroll + this.getY();
@@ -373,7 +373,7 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 				scrollbarY = this.getY();
 			}
 
-			this.renderScrollbar(tessellator, scrollbarPositionX, scrollBarEnd, scrollbarY, scrollbarHeight);
+			this.renderScrollbar(drawContext, scrollbarPositionX, scrollBarEnd, scrollbarY, scrollbarHeight);
 		}
 
 		this.getBorder().render(drawContext, this, mouseX, mouseY, delta);
@@ -381,23 +381,23 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 		RenderSystem.disableBlend();
 	}
 
-	protected void renderScrollbar(Tessellator tessellator, int scrollbarX, int scrollbarEndX, int scrollbarY, int scrollbarHeight) {
-		RenderSystem.setShader(GameRenderer::getPositionColorProgram);
+	protected void renderScrollbar(DrawContext drawContext, int scrollbarX, int scrollbarEndX, int scrollbarY, int scrollbarHeight) {
+		RenderLayer renderLayer = RenderLayer.getGui();
+		VertexConsumer vertexConsumer = ((DrawContextAccessor)drawContext).getVertexConsumers().getBuffer(renderLayer);
 
-		BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-		buffer.vertex(scrollbarX, this.getY() + this.getHeight(), 0).color(0, 0, 0, 255);
-		buffer.vertex(scrollbarEndX, this.getY() + this.getHeight(), 0).color(0, 0, 0, 255);
-		buffer.vertex(scrollbarEndX, this.getY(), 0).color(0, 0, 0, 255);
-		buffer.vertex(scrollbarX, this.getY(), 0).color(0, 0, 0, 255);
-		buffer.vertex(scrollbarX, scrollbarY + scrollbarHeight, 0).color(128, 128, 128, 255);
-		buffer.vertex(scrollbarEndX, scrollbarY + scrollbarHeight, 0).color(128, 128, 128, 255);
-		buffer.vertex(scrollbarEndX, scrollbarY, 0).color(128, 128, 128, 255);
-		buffer.vertex(scrollbarX, scrollbarY, 0).color(128, 128, 128, 255);
-		buffer.vertex(scrollbarX, scrollbarY + scrollbarHeight - 1, 0).color(192, 192, 192, 255);
-		buffer.vertex(scrollbarEndX - 1, scrollbarY + scrollbarHeight - 1, 0).color(192, 192, 192, 255);
-		buffer.vertex(scrollbarEndX - 1, scrollbarY, 0).color(192, 192, 192, 255);
-		buffer.vertex(scrollbarX, scrollbarY, 0).color(192, 192, 192, 255);
-		BufferRenderer.drawWithGlobalProgram(buffer.end());
+		vertexConsumer.vertex(scrollbarX, this.getY() + this.getHeight(), 0).color(0, 0, 0, 255);
+		vertexConsumer.vertex(scrollbarEndX, this.getY() + this.getHeight(), 0).color(0, 0, 0, 255);
+		vertexConsumer.vertex(scrollbarEndX, this.getY(), 0).color(0, 0, 0, 255);
+		vertexConsumer.vertex(scrollbarX, this.getY(), 0).color(0, 0, 0, 255);
+		vertexConsumer.vertex(scrollbarX, scrollbarY + scrollbarHeight, 0).color(128, 128, 128, 255);
+		vertexConsumer.vertex(scrollbarEndX, scrollbarY + scrollbarHeight, 0).color(128, 128, 128, 255);
+		vertexConsumer.vertex(scrollbarEndX, scrollbarY, 0).color(128, 128, 128, 255);
+		vertexConsumer.vertex(scrollbarX, scrollbarY, 0).color(128, 128, 128, 255);
+		vertexConsumer.vertex(scrollbarX, scrollbarY + scrollbarHeight - 1, 0).color(192, 192, 192, 255);
+		vertexConsumer.vertex(scrollbarEndX - 1, scrollbarY + scrollbarHeight - 1, 0).color(192, 192, 192, 255);
+		vertexConsumer.vertex(scrollbarEndX - 1, scrollbarY, 0).color(192, 192, 192, 255);
+		vertexConsumer.vertex(scrollbarX, scrollbarY, 0).color(192, 192, 192, 255);
+		drawContext.draw();
 	}
 
 	/* Narration */

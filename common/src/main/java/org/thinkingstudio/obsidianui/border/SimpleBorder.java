@@ -13,6 +13,8 @@ package org.thinkingstudio.obsidianui.border;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.*;
+import net.minecraft.util.math.ColorHelper;
+import org.thinkingstudio.obsidianui.mixin.DrawContextAccessor;
 import org.thinkingstudio.obsidianui.util.ColorUtil;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 
@@ -54,41 +56,40 @@ public final class SimpleBorder implements Border {
 
 	@Override
 	public void render(DrawContext drawContext, SpruceWidget widget, int mouseX, int mouseY, float delta) {
-		var tessellator = Tessellator.getInstance();
-		var buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-		RenderSystem.setShader(GameRenderer::getPositionColorProgram);
+		RenderLayer renderLayer = RenderLayer.getGui();
+		VertexConsumer vertexConsumer = ((DrawContextAccessor)drawContext).getVertexConsumers().getBuffer(renderLayer);
 		int x = widget.getX();
 		int y = widget.getY();
 		int right = x + widget.getWidth();
 		int bottom = y + widget.getHeight();
 		boolean focused = widget.isFocused();
 		// Top border
-		this.vertex(buffer, x, y + this.thickness, focused);
-		this.vertex(buffer, right, y + this.thickness, focused);
-		this.vertex(buffer, right, y, focused);
-		this.vertex(buffer, x, y, focused);
+		this.vertex(vertexConsumer, x, y + this.thickness, focused);
+		this.vertex(vertexConsumer, right, y + this.thickness, focused);
+		this.vertex(vertexConsumer, right, y, focused);
+		this.vertex(vertexConsumer, x, y, focused);
 		// Right border
-		this.vertex(buffer, right - this.thickness, bottom, focused);
-		this.vertex(buffer, right, bottom, focused);
-		this.vertex(buffer, right, y, focused);
-		this.vertex(buffer, right - this.thickness, y, focused);
+		this.vertex(vertexConsumer, right - this.thickness, bottom, focused);
+		this.vertex(vertexConsumer, right, bottom, focused);
+		this.vertex(vertexConsumer, right, y, focused);
+		this.vertex(vertexConsumer, right - this.thickness, y, focused);
 		// Bottom
-		this.vertex(buffer, x, bottom, focused);
-		this.vertex(buffer, right, bottom, focused);
-		this.vertex(buffer, right, bottom - this.thickness, focused);
-		this.vertex(buffer, x, bottom - this.thickness, focused);
+		this.vertex(vertexConsumer, x, bottom, focused);
+		this.vertex(vertexConsumer, right, bottom, focused);
+		this.vertex(vertexConsumer, right, bottom - this.thickness, focused);
+		this.vertex(vertexConsumer, x, bottom - this.thickness, focused);
 		// Left border
-		this.vertex(buffer, x, bottom, focused);
-		this.vertex(buffer, x + this.thickness, bottom, focused);
-		this.vertex(buffer, x + this.thickness, y, focused);
-		this.vertex(buffer, x, y, focused);
-		BufferRenderer.drawWithGlobalProgram(buffer.end());
+		this.vertex(vertexConsumer, x, bottom, focused);
+		this.vertex(vertexConsumer, x + this.thickness, bottom, focused);
+		this.vertex(vertexConsumer, x + this.thickness, y, focused);
+		this.vertex(vertexConsumer, x, y, focused);
+		drawContext.draw();
 
 	}
 
-	private void vertex(BufferBuilder buffer, int x, int y, boolean focused) {
+	private void vertex(VertexConsumer consumer, int x, int y, boolean focused) {
 		int[] color = focused ? this.focusedColor : this.color;
-		buffer.vertex(x, y, 0).color(color[0], color[1], color[2], color[3]);
+		consumer.vertex(x, y, 0).color(color[0], color[1], color[2], color[3]);
 	}
 
 	@Override

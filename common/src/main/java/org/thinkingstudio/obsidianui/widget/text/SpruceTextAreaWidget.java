@@ -19,11 +19,13 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.StringHelper;
+import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.border.Border;
+import org.thinkingstudio.obsidianui.mixin.DrawContextAccessor;
 import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
 import org.thinkingstudio.obsidianui.util.ColorUtil;
 import org.thinkingstudio.obsidianui.util.MultilineText;
@@ -509,18 +511,16 @@ public class SpruceTextAreaWidget extends AbstractSpruceTextInputWidget {
 		int x2 = x + this.textRenderer.getWidth(selected);
 		int y2 = lineY + this.textRenderer.fontHeight;
 
-		var tessellator = Tessellator.getInstance();
-		var buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
 		RenderSystem.enableColorLogicOp();
 		RenderSystem.logicOp(GlStateManager.LogicOp.OR_REVERSE);
-		RenderSystem.setShader(GameRenderer::getPositionProgram);
-		RenderSystem.setShaderColor(0.0f, 0.0f, 1.0f, 1.0f);
-		buffer.vertex(x, y2, 0);
-		buffer.vertex(x2, y2, 0);
-		buffer.vertex(x2, lineY, 0);
-		buffer.vertex(x, lineY, 0);
-		BufferRenderer.drawWithGlobalProgram(buffer.end());
-		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+		RenderLayer renderLayer = RenderLayer.getGui();
+		VertexConsumer vertexConsumer = ((DrawContextAccessor)drawContext).getVertexConsumers().getBuffer(renderLayer);
+		int color = ColorHelper.fromFloats(1.f, 0.f, 0.f, 1.f);
+		vertexConsumer.vertex(x, y2, 0).color(color);
+		vertexConsumer.vertex(x2, y2, 0).color(color);
+		vertexConsumer.vertex(x2, lineY, 0).color(color);
+		vertexConsumer.vertex(x, lineY, 0).color(color);
+		drawContext.draw();
 		RenderSystem.disableColorLogicOp();
 	}
 
