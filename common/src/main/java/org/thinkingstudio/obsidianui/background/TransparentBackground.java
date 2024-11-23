@@ -20,7 +20,7 @@ public record TransparentBackground(int red, int green, int blue, int alpha) imp
 
 	@Override
 	public void render(DrawContext drawContext, SpruceWidget widget, int vOffset, int mouseX, int mouseY, float delta) {
-		RenderUtil.renderTransparentBackgroundTexture(widget.getX(), widget.getY(), widget.getWidth(), widget.getHeight(),
+		RenderUtil.renderTransparentBackgroundTexture(drawContext, widget.getX(), widget.getY(), widget.getWidth(), widget.getHeight(),
 				vOffset / 32.f, this.red, this.green, this.blue, this.alpha);
 	}
 
