@@ -13,6 +13,7 @@ package org.thinkingstudio.obsidianui.widget;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Language;
@@ -58,7 +59,7 @@ public class SpruceToggleSwitch extends AbstractSpruceBooleanButtonWidget {
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
-		drawContext.drawTexture(TEXTURE, this.getX() + (this.getValue() ? 14 : 0), this.getY() + (this.getHeight() / 2 - 9),
+		drawContext.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.getX() + (this.getValue() ? 14 : 0), this.getY() + (this.getHeight() / 2 - 9),
 				this.getValue() ? 50.f : 32.f, this.isFocusedOrHovered() ? 18.f : 0.f,
 				18, 18, 68, 36);
 
@@ -79,7 +80,7 @@ public class SpruceToggleSwitch extends AbstractSpruceBooleanButtonWidget {
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
-		drawContext.drawTexture(TEXTURE, this.getX(), this.getY() + (this.getHeight() / 2 - 9),
+		drawContext.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.getX(), this.getY() + (this.getHeight() / 2 - 9),
 				0.f, this.isFocusedOrHovered() ? 18.f : 0.f, 32, 18, 68, 36);
 	}
 

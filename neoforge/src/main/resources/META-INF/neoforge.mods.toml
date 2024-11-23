@@ -17,6 +17,9 @@ Just a GUI library.
 logoFile = "icon.png"
 
 [[mixins]]
+config = "obsidianui.mixins.json"
+
+[[mixins]]
 config = "obsidianui.neoforge.mixins.json"
 
 [[dependencies.obsidianui]]
