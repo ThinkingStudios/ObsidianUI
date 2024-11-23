@@ -42,5 +42,5 @@ dependencies {
 And this to your `gradle.properties`:
 
 ```properties
-obsidianui_version=0.2.6+1.21
+obsidianui_version=0.2.8+1.21.1
 ```
