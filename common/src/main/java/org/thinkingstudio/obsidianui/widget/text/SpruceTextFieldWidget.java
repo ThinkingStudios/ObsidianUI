@@ -23,14 +23,12 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.StringHelper;
 import net.minecraft.util.Util;
-import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.Tooltip;
 import org.thinkingstudio.obsidianui.Tooltipable;
-import org.thinkingstudio.obsidianui.mixin.DrawContextAccessor;
 import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
 import org.thinkingstudio.obsidianui.util.ColorUtil;
 
@@ -442,17 +440,16 @@ public class SpruceTextFieldWidget extends AbstractSpruceTextInputWidget impleme
 
 		drawContext.drawTextWithShadow(this.client.textRenderer, this.renderTextProvider.apply(displayedText, this.firstCharacterIndex),
 				x, y, textColor);
-		this.drawSelection(drawContext, displayedText, y);
+		this.drawSelection(displayedText, y);
 	}
 
 	/**
 	 * Draws the selection over the text.
 	 *
-	 * @param drawContext the current draw context
 	 * @param line the current line
 	 * @param lineY the line Y-coordinates
 	 */
-	protected void drawSelection(DrawContext drawContext, String line, int lineY) {
+	protected void drawSelection(String line, int lineY) {
 		if (!this.isFocused() || !this.selection.active)
 			return;
 
@@ -468,16 +465,17 @@ public class SpruceTextFieldWidget extends AbstractSpruceTextInputWidget impleme
 		int x2 = x + this.client.textRenderer.getWidth(selected);
 		int y2 = lineY + this.client.textRenderer.fontHeight;
 
+		var tessellator = Tessellator.getInstance();
+		var buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
 		RenderSystem.enableColorLogicOp();
 		RenderSystem.logicOp(GlStateManager.LogicOp.OR_REVERSE);
-		RenderLayer renderLayer = RenderLayer.getGui();
-		VertexConsumer vertexConsumer = ((DrawContextAccessor)drawContext).getVertexConsumers().getBuffer(renderLayer);
-		int color = ColorHelper.fromFloats(255.f, 0.f, 0.f, 255.f);
-		vertexConsumer.vertex(x, y2, 0).color(color);
-		vertexConsumer.vertex(x2, y2, 0).color(color);
-		vertexConsumer.vertex(x2, lineY, 0).color(color);
-		vertexConsumer.vertex(x, lineY, 0).color(color);
-		drawContext.draw();
+		RenderSystem.setShader(GameRenderer::getPositionProgram);
+		RenderSystem.setShaderColor(0.f, 0.f, 255.f, 255.f);
+		buffer.vertex(x, y2, 0);
+		buffer.vertex(x2, y2, 0);
+		buffer.vertex(x2, lineY, 0);
+		buffer.vertex(x, lineY, 0);
+		BufferRenderer.drawWithGlobalProgram(buffer.end());
 		RenderSystem.disableColorLogicOp();
 	}
 

@@ -12,7 +12,6 @@ package org.thinkingstudio.obsidianui.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.thinkingstudio.obsidianui.Position;
@@ -78,7 +77,7 @@ public class SpruceTexturedButtonWidget extends SpruceButtonWidget {
 		RenderSystem.setShaderColor(1.f, 1.f, 1.f, this.getAlpha());
 		RenderSystem.setShaderTexture(0, this.texture);
 		RenderSystem.enableDepthTest();
-		drawContext.drawTexture(RenderLayer::getGuiTextured, this.texture,
+		drawContext.drawTexture(this.texture,
 				this.getX(), this.getY(),
 				this.u, v,
 				this.getWidth(), this.getHeight(),

@@ -20,7 +20,6 @@
     ]
   },
   "mixins": [
-    "obsidianui.mixins.json",
     "obsidianui.fabric.mixins.json"
   ],
   "depends": {
