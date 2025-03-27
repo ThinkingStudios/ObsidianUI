@@ -10,6 +10,7 @@
 
 package org.thinkingstudio.obsidianui.widget;
 
+import com.mojang.blaze3d.opengl.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ButtonTextures;
@@ -163,9 +164,8 @@ public abstract class AbstractSpruceButtonWidget extends AbstractSpruceWidget im
 	@Override
 	protected void renderBackground(DrawContext drawContext, int mouseX, int mouseY, float delta) {
 		RenderSystem.setShaderColor(1.f, 1.f, 1.f, this.getAlpha());
-		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
-		RenderSystem.enableDepthTest();
+		GlStateManager._enableBlend();
+		GlStateManager._enableDepthTest();
 		drawContext.drawGuiTexture(RenderLayer::getGuiTextured, this.getTexture(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
 	}
 
