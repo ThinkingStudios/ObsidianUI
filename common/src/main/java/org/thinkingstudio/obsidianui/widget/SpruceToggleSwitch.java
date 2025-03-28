@@ -10,7 +10,7 @@
 
 package org.thinkingstudio.obsidianui.widget;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.opengl.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
@@ -55,10 +55,8 @@ public class SpruceToggleSwitch extends AbstractSpruceBooleanButtonWidget {
 
 	@Override
 	protected void renderButton(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-		RenderSystem.enableDepthTest();
-		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
-		RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
+		GlStateManager._enableDepthTest();
+		GlStateManager._enableBlend();
 		drawContext.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.getX() + (this.getValue() ? 14 : 0), this.getY() + (this.getHeight() / 2 - 9),
 				this.getValue() ? 50.f : 32.f, this.isFocusedOrHovered() ? 18.f : 0.f,
 				18, 18, 68, 36);
@@ -74,12 +72,9 @@ public class SpruceToggleSwitch extends AbstractSpruceBooleanButtonWidget {
 
 	@Override
 	protected void renderBackground(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-		RenderSystem.enableDepthTest();
+		GlStateManager._enableDepthTest();
 		RenderSystem.setShaderColor(1.f, 1.f, 1.f, this.alpha);
-		RenderSystem.setShaderTexture(0, TEXTURE);
-		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
-		RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
+		GlStateManager._enableBlend();
 		drawContext.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.getX(), this.getY() + (this.getHeight() / 2 - 9),
 				0.f, this.isFocusedOrHovered() ? 18.f : 0.f, 32, 18, 68, 36);
 	}

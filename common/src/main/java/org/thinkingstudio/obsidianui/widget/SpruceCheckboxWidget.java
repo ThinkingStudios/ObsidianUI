@@ -10,12 +10,11 @@
 
 package org.thinkingstudio.obsidianui.widget;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.opengl.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -23,7 +22,6 @@ import net.minecraft.util.Language;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 import org.thinkingstudio.obsidianui.Position;
-import org.thinkingstudio.obsidianui.mixin.DrawContextAccessor;
 
 /**
  * Represents a checkbox widget.
@@ -93,10 +91,8 @@ public class SpruceCheckboxWidget extends AbstractSpruceBooleanButtonWidget {
 
 	@Override
 	protected void renderButton(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-		RenderSystem.enableDepthTest();
-		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
-		RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
+		GlStateManager._enableDepthTest();
+		GlStateManager._enableBlend();
 		float[] oldColor = RenderSystem.getShaderColor();
 		float oldRed = oldColor[0], oldGreen = oldColor[1], oldBlue = oldColor[2], oldAlpha = oldColor[3];
 
@@ -123,11 +119,9 @@ public class SpruceCheckboxWidget extends AbstractSpruceBooleanButtonWidget {
 
 	@Override
 	protected void renderBackground(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-		RenderSystem.enableDepthTest();
+		GlStateManager._enableDepthTest();
 		int color = ColorHelper.fromFloats(this.alpha, 1.f, 1.f, 1.f);
-		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
-		RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
+		GlStateManager._enableBlend();
 		drawContext.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.getX(), this.getY(), this.isFocusedOrHovered() ? 20.f : 0.f, 0.f, this.getHeight(), this.getHeight(), 64, 64, color);
 	}
 
