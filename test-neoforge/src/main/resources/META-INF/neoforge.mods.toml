@@ -20,14 +20,14 @@ config = "obsidianui.test.neoforge.mixins.json"
 [[dependencies.obsidianui_test]]
 modId = "neoforge"
 type = "required"
-versionRange = "[20,)"
+versionRange = "[21,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.obsidianui_test]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.20.5,)"
+versionRange = "[1.21,)"
 ordering = "NONE"
 side = "BOTH"
 
