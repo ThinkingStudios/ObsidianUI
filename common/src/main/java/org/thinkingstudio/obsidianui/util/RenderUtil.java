@@ -10,7 +10,6 @@
 
 package org.thinkingstudio.obsidianui.util;
 
-import com.mojang.blaze3d.opengl.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -69,7 +68,7 @@ public final class RenderUtil {
 		int right = x + width;
 		int bottom = y + height;
 
-		GlStateManager._enableBlend();
+		RenderSystem.enableBlend();
 		vertexConsumer.vertex(x, bottom, 0)
 				.texture(0, bottom / 32.f + vOffset)
 				.color(red, green, blue, alpha);
@@ -83,7 +82,7 @@ public final class RenderUtil {
 				.texture(0, y / 32.f + vOffset)
 				.color(red, green, blue, alpha);
 		drawContext.draw();
-		GlStateManager._disableBlend();
+		RenderSystem.disableBlend();
 	}
 	public static Identifier getListBackgroundTexture() {
 		return client.world == null ? MENU_LIST_BACKGROUND_TEXTURE : INWORLD_MENU_LIST_BACKGROUND_TEXTURE;
