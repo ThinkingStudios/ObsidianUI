@@ -11,7 +11,6 @@
 package org.thinkingstudio.obsidianui.widget.container;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.opengl.GlStateManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
@@ -348,7 +347,6 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 		drawContext.disableScissor();
 
 
-		GlStateManager._enableBlend();
 		// Render the transition thingy.
 		if (this.shouldRenderTransition()) {
 			Identifier topTexture = getSeparatorTexture(true);
@@ -376,8 +374,6 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 		}
 
 		this.getBorder().render(drawContext, this, mouseX, mouseY, delta);
-
-		GlStateManager._disableBlend();
 	}
 
 	protected void renderScrollbar(DrawContext drawContext, int scrollbarX, int scrollbarEndX, int scrollbarY, int scrollbarHeight) {

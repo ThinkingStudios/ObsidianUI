@@ -10,7 +10,6 @@
 
 package org.thinkingstudio.obsidianui.widget;
 
-import com.mojang.blaze3d.opengl.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -91,8 +90,6 @@ public class SpruceCheckboxWidget extends AbstractSpruceBooleanButtonWidget {
 
 	@Override
 	protected void renderButton(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-		GlStateManager._enableDepthTest();
-		GlStateManager._enableBlend();
 		float[] oldColor = RenderSystem.getShaderColor();
 		float oldRed = oldColor[0], oldGreen = oldColor[1], oldBlue = oldColor[2], oldAlpha = oldColor[3];
 
@@ -119,9 +116,7 @@ public class SpruceCheckboxWidget extends AbstractSpruceBooleanButtonWidget {
 
 	@Override
 	protected void renderBackground(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-		GlStateManager._enableDepthTest();
 		int color = ColorHelper.fromFloats(this.alpha, 1.f, 1.f, 1.f);
-		GlStateManager._enableBlend();
 		drawContext.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.getX(), this.getY(), this.isFocusedOrHovered() ? 20.f : 0.f, 0.f, this.getHeight(), this.getHeight(), 64, 64, color);
 	}
 

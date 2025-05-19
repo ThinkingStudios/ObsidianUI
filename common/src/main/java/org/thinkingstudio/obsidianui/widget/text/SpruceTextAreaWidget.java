@@ -10,8 +10,6 @@
 
 package org.thinkingstudio.obsidianui.widget.text;
 
-import com.mojang.blaze3d.opengl.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -511,8 +509,6 @@ public class SpruceTextAreaWidget extends AbstractSpruceTextInputWidget {
 		int x2 = x + this.textRenderer.getWidth(selected);
 		int y2 = lineY + this.textRenderer.fontHeight;
 
-		GlStateManager._enableColorLogicOp();
-		GlStateManager._logicOp(5387);
 		RenderLayer renderLayer = RenderLayer.getGui();
 		VertexConsumer vertexConsumer = ((DrawContextAccessor)drawContext).getVertexConsumers().getBuffer(renderLayer);
 		int color = ColorHelper.fromFloats(1.f, 0.f, 0.f, 1.f);
@@ -521,7 +517,6 @@ public class SpruceTextAreaWidget extends AbstractSpruceTextInputWidget {
 		vertexConsumer.vertex(x2, lineY, 0).color(color);
 		vertexConsumer.vertex(x, lineY, 0).color(color);
 		drawContext.draw();
-		GlStateManager._disableColorLogicOp();
 	}
 
 	/**

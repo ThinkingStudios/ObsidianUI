@@ -10,7 +10,6 @@
 
 package org.thinkingstudio.obsidianui.widget;
 
-import com.mojang.blaze3d.opengl.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
@@ -77,7 +76,6 @@ public class SpruceTexturedButtonWidget extends SpruceButtonWidget {
 		}
 
 		RenderSystem.setShaderColor(1.f, 1.f, 1.f, this.getAlpha());
-		GlStateManager._enableDepthTest();
 		drawContext.drawTexture(RenderLayer::getGuiTextured, this.texture,
 				this.getX(), this.getY(),
 				this.u, v,
