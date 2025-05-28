@@ -11,8 +11,6 @@
 package org.thinkingstudio.obsidianui.widget.container;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.opengl.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
@@ -31,7 +29,6 @@ import org.thinkingstudio.obsidianui.border.Border;
 import org.thinkingstudio.obsidianui.border.EmptyBorder;
 import org.thinkingstudio.obsidianui.mixin.DrawContextAccessor;
 import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
-import org.thinkingstudio.obsidianui.util.ScissorManager;
 import org.thinkingstudio.obsidianui.widget.AbstractSpruceWidget;
 import org.thinkingstudio.obsidianui.widget.WithBackground;
 import org.thinkingstudio.obsidianui.widget.WithBorder;
@@ -345,12 +342,11 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 		int top = this.getY();
 		int bottom = top + this.getHeight();
 
-		ScissorManager.push(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+		drawContext.enableScissor(left, top, right, bottom);
 		this.entries.forEach(e -> e.render(drawContext, mouseX, mouseY, delta));
-		ScissorManager.pop();
+		drawContext.disableScissor();
 
 
-		GlStateManager._enableBlend();
 		// Render the transition thingy.
 		if (this.shouldRenderTransition()) {
 			Identifier topTexture = getSeparatorTexture(true);
@@ -378,8 +374,6 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 		}
 
 		this.getBorder().render(drawContext, this, mouseX, mouseY, delta);
-
-		GlStateManager._disableBlend();
 	}
 
 	protected void renderScrollbar(DrawContext drawContext, int scrollbarX, int scrollbarEndX, int scrollbarY, int scrollbarHeight) {

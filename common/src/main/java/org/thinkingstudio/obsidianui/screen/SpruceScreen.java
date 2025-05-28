@@ -19,7 +19,6 @@ import org.lwjgl.glfw.GLFW;
 import org.thinkingstudio.obsidianui.SprucePositioned;
 import org.thinkingstudio.obsidianui.Tooltip;
 import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
-import org.thinkingstudio.obsidianui.util.ScissorManager;
 import org.thinkingstudio.obsidianui.widget.SpruceElement;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 import java.util.function.BooleanSupplier;
@@ -110,12 +109,10 @@ public abstract class SpruceScreen extends Screen implements SprucePositioned, S
 
 	@Override
 	public void render(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-		ScissorManager.pushScaleFactor(this.scaleFactor);
 		this.renderBackground(drawContext, mouseX, mouseY, delta);
 		this.renderWidgets(drawContext, mouseX, mouseY, delta);
 		this.renderTitle(drawContext, mouseX, mouseY, delta);
 		Tooltip.renderAll(drawContext);
-		ScissorManager.popScaleFactor();
 	}
 
 	public void renderTitle(DrawContext drawContext, int mouseX, int mouseY, float delta) {
