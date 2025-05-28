@@ -1,2 +1,2 @@
 ## Changelog
-- update neoforge & fapi version
+- Fix scissor & cleanup GlStateManager calls (#17 by @Motschen)
