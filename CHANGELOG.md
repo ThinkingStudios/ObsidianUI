@@ -1,2 +1,2 @@
 ## Changelog
-- update to 1.21.5 (#15 by @Motschen)
+- Fix scissor & cleanup GlStateManager calls (#17 by @Motschen)
