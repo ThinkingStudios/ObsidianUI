@@ -89,7 +89,7 @@ public class Tooltip implements SprucePositioned {
 	 * @param drawContext The GuiGraphics instance used to render.
 	 */
 	public void render(DrawContext drawContext) {
-		drawContext.drawTooltip(MinecraftClient.getInstance().textRenderer, this.tooltip, HoveredTooltipPositioner.INSTANCE, this.x, this.y);
+		drawContext.drawTooltip(MinecraftClient.getInstance().textRenderer, this.tooltip, HoveredTooltipPositioner.INSTANCE, this.x, this.y, true);
 	}
 
 	/**

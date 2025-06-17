@@ -176,7 +176,7 @@ public class SpruceLabelWidget extends AbstractSpruceWidget implements Tooltipab
 			var line = it.next();
 			int x = this.centered ? (this.getInnerX() + this.maxWidth / 2) - this.client.textRenderer.getWidth(line) / 2
 					: this.getInnerX();
-			drawContext.drawText(this.client.textRenderer, line, x, y, 10526880, true);
+			drawContext.drawText(this.client.textRenderer, line, x, y, 0xffffffff, true);
 		}
 
 		this.getBorder().render(drawContext, this, mouseX, mouseY, delta);

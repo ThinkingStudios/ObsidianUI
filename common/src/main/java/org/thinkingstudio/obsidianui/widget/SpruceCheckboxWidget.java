@@ -12,6 +12,7 @@ package org.thinkingstudio.obsidianui.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.text.OrderedText;
@@ -21,6 +22,7 @@ import net.minecraft.util.Language;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 import org.thinkingstudio.obsidianui.Position;
+import org.thinkingstudio.obsidianui.util.ColorUtil;
 
 /**
  * Represents a checkbox widget.
@@ -90,21 +92,16 @@ public class SpruceCheckboxWidget extends AbstractSpruceBooleanButtonWidget {
 
 	@Override
 	protected void renderButton(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-		float[] oldColor = RenderSystem.getShaderColor();
-		float oldRed = oldColor[0], oldGreen = oldColor[1], oldBlue = oldColor[2], oldAlpha = oldColor[3];
-
 		if (this.getValue()) {
+			int color = ColorUtil.WHITE;
 			if (this.colored)
-				RenderSystem.setShaderColor(0.f, 1.f, 0.f, this.alpha);
-			drawContext.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.getX(), this.getY(), 0.f, 40.f, this.getHeight(), this.getHeight(), 64, 64);
+				color = ColorHelper.fromFloats(this.alpha, 0.f, 1.f, 0.f);
+			drawContext.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY(), 0.f, 40.f, this.getHeight(), this.getHeight(), 64, 64, color);
 		} else if (this.showCross) {
+			int color = ColorUtil.WHITE;
 			if (this.colored)
-				RenderSystem.setShaderColor(1.f, 0.f, 0.f, this.alpha);
-			drawContext.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.getX(), this.getY(), 0.f, 20.f, this.getHeight(), this.getHeight(), 64, 64);
-		}
-
-		if (this.colored) {
-			RenderSystem.setShaderColor(oldRed, oldGreen, oldBlue, oldAlpha);
+				color = ColorHelper.fromFloats(this.alpha, 1.f, 0.f, 0.f);
+			drawContext.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY(), 0.f, 20.f, this.getHeight(), this.getHeight(), 64, 64, color);
 		}
 
 		if (this.showMessage) {
@@ -117,7 +114,7 @@ public class SpruceCheckboxWidget extends AbstractSpruceBooleanButtonWidget {
 	@Override
 	protected void renderBackground(DrawContext drawContext, int mouseX, int mouseY, float delta) {
 		int color = ColorHelper.fromFloats(this.alpha, 1.f, 1.f, 1.f);
-		drawContext.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.getX(), this.getY(), this.isFocusedOrHovered() ? 20.f : 0.f, 0.f, this.getHeight(), this.getHeight(), 64, 64, color);
+		drawContext.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY(), this.isFocusedOrHovered() ? 20.f : 0.f, 0.f, this.getHeight(), this.getHeight(), 64, 64, color);
 	}
 
 	/* Narration */

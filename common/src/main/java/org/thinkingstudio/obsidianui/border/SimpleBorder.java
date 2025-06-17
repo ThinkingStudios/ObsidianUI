@@ -10,11 +10,7 @@
 
 package org.thinkingstudio.obsidianui.border;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.*;
-import net.minecraft.util.math.ColorHelper;
-import org.thinkingstudio.obsidianui.mixin.DrawContextAccessor;
 import org.thinkingstudio.obsidianui.util.ColorUtil;
 import org.thinkingstudio.obsidianui.widget.SpruceWidget;
 
@@ -31,8 +27,8 @@ public final class SimpleBorder implements Border {
 	public static final SimpleBorder SIMPLE_BORDER = new SimpleBorder(1, 192, 192, 192, 255);
 
 	private final int thickness;
-	private final int[] color;
-	private final int[] focusedColor;
+	private final int color;
+	private final int focusedColor;
 
 	public SimpleBorder(int thickness, int color) {
 		this(thickness, color, color);
@@ -40,8 +36,8 @@ public final class SimpleBorder implements Border {
 
 	public SimpleBorder(int thickness, int color, int focusedColor) {
 		this.thickness = thickness;
-		this.color = ColorUtil.unpackARGBColor(color);
-		this.focusedColor = ColorUtil.unpackARGBColor(focusedColor);
+		this.color = color;
+		this.focusedColor = focusedColor;
 	}
 
 	public SimpleBorder(int thickness, int red, int green, int blue, int alpha) {
@@ -50,46 +46,26 @@ public final class SimpleBorder implements Border {
 
 	public SimpleBorder(int thickness, int red, int green, int blue, int alpha, int focusedRed, int focusedGreen, int focusedBlue, int focusedAlpha) {
 		this.thickness = thickness;
-		this.color = new int[]{red, green, blue, alpha};
-		this.focusedColor = new int[]{focusedRed, focusedGreen, focusedBlue, focusedAlpha};
+		this.color = ColorUtil.packARGBColor(red, green, blue, alpha);
+		this.focusedColor = ColorUtil.packARGBColor(focusedRed, focusedGreen, focusedBlue, focusedAlpha);
 	}
 
 	@Override
-	public void render(DrawContext drawContext, SpruceWidget widget, int mouseX, int mouseY, float delta) {
-		RenderLayer renderLayer = RenderLayer.getGui();
-		VertexConsumer vertexConsumer = ((DrawContextAccessor)drawContext).getVertexConsumers().getBuffer(renderLayer);
+	public void render(DrawContext context, SpruceWidget widget, int mouseX, int mouseY, float delta) {
 		int x = widget.getX();
 		int y = widget.getY();
 		int right = x + widget.getWidth();
 		int bottom = y + widget.getHeight();
 		boolean focused = widget.isFocused();
+		int color = focused ? this.focusedColor : this.color;
 		// Top border
-		this.vertex(vertexConsumer, x, y + this.thickness, focused);
-		this.vertex(vertexConsumer, right, y + this.thickness, focused);
-		this.vertex(vertexConsumer, right, y, focused);
-		this.vertex(vertexConsumer, x, y, focused);
+		context.fill(x, y, right, y + thickness, color);
 		// Right border
-		this.vertex(vertexConsumer, right - this.thickness, bottom, focused);
-		this.vertex(vertexConsumer, right, bottom, focused);
-		this.vertex(vertexConsumer, right, y, focused);
-		this.vertex(vertexConsumer, right - this.thickness, y, focused);
+		context.fill(right - thickness, y, right, bottom, color);
 		// Bottom
-		this.vertex(vertexConsumer, x, bottom, focused);
-		this.vertex(vertexConsumer, right, bottom, focused);
-		this.vertex(vertexConsumer, right, bottom - this.thickness, focused);
-		this.vertex(vertexConsumer, x, bottom - this.thickness, focused);
+		context.fill(x, bottom - thickness, right, bottom, color);
 		// Left border
-		this.vertex(vertexConsumer, x, bottom, focused);
-		this.vertex(vertexConsumer, x + this.thickness, bottom, focused);
-		this.vertex(vertexConsumer, x + this.thickness, y, focused);
-		this.vertex(vertexConsumer, x, y, focused);
-		drawContext.draw();
-
-	}
-
-	private void vertex(VertexConsumer consumer, int x, int y, boolean focused) {
-		int[] color = focused ? this.focusedColor : this.color;
-		consumer.vertex(x, y, 0).color(color[0], color[1], color[2], color[3]);
+		context.fill(x, y, x + thickness, bottom, color);
 	}
 
 	@Override
@@ -101,8 +77,8 @@ public final class SimpleBorder implements Border {
 	public String toString() {
 		return "SimpleBorder{" +
 				"thickness=" + this.thickness +
-				", color=" + Arrays.toString(this.color) +
-				", focusedColor=" + Arrays.toString(this.focusedColor) +
+				", color=" + Arrays.toString(ColorUtil.unpackARGBColor(this.color)) +
+				", focusedColor=" + Arrays.toString(ColorUtil.unpackARGBColor(this.focusedColor)) +
 				'}';
 	}
 }

@@ -257,13 +257,13 @@ public class SpruceTabbedWidget extends AbstractSpruceParentWidget<SpruceWidget>
 			int y = this.getY() + 4;
 			for (var it = this.title.iterator(); it.hasNext(); y += 9) {
 				var line = it.next();
-				drawContext.drawText(this.client.textRenderer, line, this.getX() + 4, y, 0xffffff, false);
+				drawContext.drawText(this.client.textRenderer, line, this.getX() + 4, y, 0xffffffff, true);
 			}
 			if (this.description != null) {
 				y += 4;
 				for (var it = this.description.iterator(); it.hasNext(); y += 9) {
 					var line = it.next();
-					drawContext.drawText(this.client.textRenderer, line, this.getX() + 8, y, 0xffffff, false);
+					drawContext.drawText(this.client.textRenderer, line, this.getX() + 8, y, 0xffffffff, false);
 				}
 			}
 		}

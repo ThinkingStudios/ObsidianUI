@@ -10,14 +10,11 @@
 
 package org.thinkingstudio.obsidianui.util;
 
-import com.mojang.blaze3d.opengl.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
-import org.thinkingstudio.obsidianui.mixin.DrawContextAccessor;
 
 public final class RenderUtil {
 	/**
@@ -50,7 +47,7 @@ public final class RenderUtil {
 	/**
 	 * Renders the vanilla's transparent background texture.
 	 *
-	 * @param drawContext the current draw context
+	 * @param context the current draw context
 	 * @param x the X-coordinate
 	 * @param y the Y-coordinate
 	 * @param width the width
@@ -61,29 +58,12 @@ public final class RenderUtil {
 	 * @param blue the blue-component color value
 	 * @param alpha the alpha-component alpha value
 	 */
-	public static void renderTransparentBackgroundTexture(DrawContext drawContext, int x, int y, int width, int height, float vOffset,
+	public static void renderTransparentBackgroundTexture(DrawContext context, int x, int y, int width, int height, float vOffset,
 														  int red, int green, int blue, int alpha) {
-		RenderLayer renderLayer = RenderLayer.getGuiTextured(getListBackgroundTexture());
-		VertexConsumer vertexConsumer = ((DrawContextAccessor)drawContext).getVertexConsumers().getBuffer(renderLayer);
-
 		int right = x + width;
 		int bottom = y + height;
 
-		GlStateManager._enableBlend();
-		vertexConsumer.vertex(x, bottom, 0)
-				.texture(0, bottom / 32.f + vOffset)
-				.color(red, green, blue, alpha);
-		vertexConsumer.vertex(right, bottom, 0)
-				.texture(right / 32.f, bottom / 32.f + vOffset)
-				.color(red, green, blue, alpha);
-		vertexConsumer.vertex(right, y, 0)
-				.texture(right / 32.f, y / 32.f + vOffset)
-				.color(red, green, blue, alpha);
-		vertexConsumer.vertex(x, y, 0)
-				.texture(0, y / 32.f + vOffset)
-				.color(red, green, blue, alpha);
-		drawContext.draw();
-		GlStateManager._disableBlend();
+		context.drawTexture(RenderPipelines.GUI_TEXTURED, getListBackgroundTexture(), x, y, x, y, width, height, (int) (right / 32.f), (int) (bottom / 32.f + vOffset), ColorUtil.packARGBColor(red, green, blue, alpha));
 	}
 	public static Identifier getListBackgroundTexture() {
 		return client.world == null ? MENU_LIST_BACKGROUND_TEXTURE : INWORLD_MENU_LIST_BACKGROUND_TEXTURE;
@@ -108,7 +88,7 @@ public final class RenderUtil {
 	/**
 	 * Renders the dirt background texture.
 	 *
-	 * @param drawContext the current draw context
+	 * @param context the current draw context
 	 * @param x the X-coordinate
 	 * @param y the Y-coordinate
 	 * @param width the width
@@ -120,33 +100,18 @@ public final class RenderUtil {
 	 * @param alpha the alpha-component alpha value
 	 */
 	@Deprecated(since = "1.20.5")
-	public static void renderDirtBackgroundTexture(DrawContext drawContext, int x, int y, int width, int height, float vOffset,
+	public static void renderDirtBackgroundTexture(DrawContext context, int x, int y, int width, int height, float vOffset,
 	                                           int red, int green, int blue, int alpha) {
-		RenderLayer renderLayer = RenderLayer.getGuiTextured(DIRT_BACKGROUND_TEXTURE);
-		VertexConsumer vertexConsumer = ((DrawContextAccessor)drawContext).getVertexConsumers().getBuffer(renderLayer);
-
 		int right = x + width;
 		int bottom = y + height;
 
-		vertexConsumer.vertex(x, bottom, 0)
-				.texture(0, bottom / 32.f + vOffset)
-				.color(red, green, blue, alpha);
-		vertexConsumer.vertex(right, bottom, 0)
-				.texture(right / 32.f, bottom / 32.f + vOffset)
-				.color(red, green, blue, alpha);
-		vertexConsumer.vertex(right, y, 0)
-				.texture(right / 32.f, y / 32.f + vOffset)
-				.color(red, green, blue, alpha);
-		vertexConsumer.vertex(x, y, 0)
-				.texture(0, y / 32.f + vOffset)
-				.color(red, green, blue, alpha);
-		drawContext.draw();
+		context.drawTexture(RenderPipelines.GUI_TEXTURED, DIRT_BACKGROUND_TEXTURE, x, y, x, y, width, height, (int) (right / 32.f), (int) (bottom / 32.f + vOffset), ColorUtil.packARGBColor(red, green, blue, alpha));
 	}
 
 	/**
 	 * Renders a selection box as background.
 	 *
-	 * @param drawContext the current draw context
+	 * @param context the current draw context
 	 * @param x the X-coordinate of the selection box
 	 * @param y the Y-coordinate of the selection box
 	 * @param width the width of the selection box
@@ -156,22 +121,13 @@ public final class RenderUtil {
 	 * @param blue the blue-component color value of the outer border
 	 * @param alpha the alpha-component color value of the outer border
 	 */
-	public static void renderSelectionBox(DrawContext drawContext, int x, int y, int width, int height, int red, int green, int blue, int alpha) {
+	public static void renderSelectionBox(DrawContext context, int x, int y, int width, int height, int red, int green, int blue, int alpha) {
 		int top = y + height;
 		int right = x + width;
 
-		RenderLayer renderLayer = RenderLayer.getGui();
-		VertexConsumer vertexConsumer = ((DrawContextAccessor)drawContext).getVertexConsumers().getBuffer(renderLayer);
 		int argb = ColorHelper.getArgb(alpha, red, green, blue);
-		vertexConsumer.vertex(x, top, 0).color(argb);
-		vertexConsumer.vertex(right, top, 0).color(argb);
-		vertexConsumer.vertex(right, y, 0).color(argb);
-		vertexConsumer.vertex(x, y, 0).color(argb);
+		context.fill(x, top, right, y, argb);
 		int dark = ColorHelper.getArgb(0, 0, 0);
-		vertexConsumer.vertex(x + 1, top - 1, 0).color(dark);
-		vertexConsumer.vertex(right - 1, top - 1, 0).color(dark);
-		vertexConsumer.vertex(right - 1, y + 1, 0).color(dark);
-		vertexConsumer.vertex(x + 1, y + 1, 0).color(dark);
-		drawContext.draw();
+		context.fill(x, top, right, y, dark);
 	}
 }

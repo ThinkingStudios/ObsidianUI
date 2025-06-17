@@ -15,7 +15,6 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
-import net.minecraft.client.render.*;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -28,7 +27,6 @@ import org.lwjgl.glfw.GLFW;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.Tooltip;
 import org.thinkingstudio.obsidianui.Tooltipable;
-import org.thinkingstudio.obsidianui.mixin.DrawContextAccessor;
 import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
 import org.thinkingstudio.obsidianui.util.ColorUtil;
 
@@ -438,19 +436,19 @@ public class SpruceTextFieldWidget extends AbstractSpruceTextInputWidget impleme
 		var displayedText = this.client.textRenderer.trimToWidth(this.text.substring(this.firstCharacterIndex),
 				this.getInnerWidth());
 
+		this.drawSelection(drawContext, displayedText, y);
 		drawContext.drawTextWithShadow(this.client.textRenderer, this.renderTextProvider.apply(displayedText, this.firstCharacterIndex),
 				x, y, textColor);
-		this.drawSelection(drawContext, displayedText, y);
 	}
 
 	/**
 	 * Draws the selection over the text.
 	 *
-	 * @param drawContext the current draw context
+	 * @param context the current draw context
 	 * @param line the current line
 	 * @param lineY the line Y-coordinates
 	 */
-	protected void drawSelection(DrawContext drawContext, String line, int lineY) {
+	protected void drawSelection(DrawContext context, String line, int lineY) {
 		if (!this.isFocused() || !this.selection.active)
 			return;
 
@@ -466,14 +464,8 @@ public class SpruceTextFieldWidget extends AbstractSpruceTextInputWidget impleme
 		int x2 = x + this.client.textRenderer.getWidth(selected);
 		int y2 = lineY + this.client.textRenderer.fontHeight;
 
-		RenderLayer renderLayer = RenderLayer.getGui();
-		VertexConsumer vertexConsumer = ((DrawContextAccessor)drawContext).getVertexConsumers().getBuffer(renderLayer);
 		int color = ColorHelper.fromFloats(255.f, 0.f, 0.f, 255.f);
-		vertexConsumer.vertex(x, y2, 0).color(color);
-		vertexConsumer.vertex(x2, y2, 0).color(color);
-		vertexConsumer.vertex(x2, lineY, 0).color(color);
-		vertexConsumer.vertex(x, lineY, 0).color(color);
-		drawContext.draw();
+		context.fill(x, lineY, x2, y2, color);
 	}
 
 	/**
