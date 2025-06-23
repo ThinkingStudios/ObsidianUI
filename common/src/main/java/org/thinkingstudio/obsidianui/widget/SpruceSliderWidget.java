@@ -11,10 +11,12 @@
 package org.thinkingstudio.obsidianui.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.Tooltipable;
@@ -172,10 +174,8 @@ public class SpruceSliderWidget extends AbstractSpruceButtonWidget implements To
 
 	@Override
 	protected void renderButton(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-		RenderSystem.setShaderColor(1.f, 1.f, 1.f, 1.f);
-
 		final Identifier texture = this.isFocusedOrHovered() ? SLIDER_HANDLE_HIGHLIGHTED : SLIDER_HANDLE;
-		drawContext.drawGuiTexture(RenderLayer::getGuiTextured, texture, this.getX() + (int) (this.value * (double) (this.getWidth() - 8)), this.getY(), 8, 20);
+		drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, texture, this.getX() + (int) (this.value * (double) (this.getWidth() - 8)), this.getY(), 8, 20);
 
 		if (!this.isMouseHovered() && this.inUse) {
 			this.inUse = false;

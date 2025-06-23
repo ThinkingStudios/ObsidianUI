@@ -11,10 +11,12 @@
 package org.thinkingstudio.obsidianui.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ColorHelper;
 import org.thinkingstudio.obsidianui.Position;
 
 /**
@@ -75,12 +77,12 @@ public class SpruceTexturedButtonWidget extends SpruceButtonWidget {
 			v += this.hoveredVOffset;
 		}
 
-		RenderSystem.setShaderColor(1.f, 1.f, 1.f, this.getAlpha());
-		drawContext.drawTexture(RenderLayer::getGuiTextured, this.texture,
+		drawContext.drawTexture(RenderPipelines.GUI_TEXTURED, this.texture,
 				this.getX(), this.getY(),
 				this.u, v,
 				this.getWidth(), this.getHeight(),
-				this.textureWidth, this.textureHeight
+				this.textureWidth, this.textureHeight,
+				ColorHelper.fromFloats(this.getAlpha(), 1.f, 1.f, 1.f)
 		);
 	}
 

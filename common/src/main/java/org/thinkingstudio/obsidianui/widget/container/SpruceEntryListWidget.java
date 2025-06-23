@@ -13,10 +13,10 @@ package org.thinkingstudio.obsidianui.widget.container;
 import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
-import net.minecraft.client.render.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -27,8 +27,8 @@ import org.thinkingstudio.obsidianui.background.Background;
 import org.thinkingstudio.obsidianui.background.TransparentBackground;
 import org.thinkingstudio.obsidianui.border.Border;
 import org.thinkingstudio.obsidianui.border.EmptyBorder;
-import org.thinkingstudio.obsidianui.mixin.DrawContextAccessor;
 import org.thinkingstudio.obsidianui.navigation.NavigationDirection;
+import org.thinkingstudio.obsidianui.util.ColorUtil;
 import org.thinkingstudio.obsidianui.widget.AbstractSpruceWidget;
 import org.thinkingstudio.obsidianui.widget.WithBackground;
 import org.thinkingstudio.obsidianui.widget.WithBorder;
@@ -352,12 +352,12 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 			Identifier topTexture = getSeparatorTexture(true);
 			Identifier bottomTexture = getSeparatorTexture(false);
 
-			drawContext.drawTexture(RenderLayer::getGuiTextured, topTexture, left, top - 2, 0.0F, 0.0F, this.getWidth(), 2, 32, 2);
-			drawContext.drawTexture(RenderLayer::getGuiTextured, bottomTexture, left, bottom, 0.0F, 0.0F, this.getWidth(), 2, 32, 2);
+			drawContext.drawTexture(RenderPipelines.GUI_TEXTURED, topTexture, left, top - 2, 0.0F, 0.0F, this.getWidth(), 2, 32, 2);
+			drawContext.drawTexture(RenderPipelines.GUI_TEXTURED, bottomTexture, left, bottom, 0.0F, 0.0F, this.getWidth(), 2, 32, 2);
 			// The following code is absolutely cursed, but works surprisingly well to create side borders
 			int screenWidth = client.getWindow().getScaledWidth();
-			if (left > 0) drawContext.drawTexture(RenderLayer::getGuiTextured, topTexture, left-1, top - 1, 0.0F, 0.0F, 1, this.getHeight() + 2, 1, (this.getHeight() + 2) * 2);
-			if (right < screenWidth) drawContext.drawTexture(RenderLayer::getGuiTextured, topTexture, right, top - 1, 0.0F, 0.0F, 1, this.getHeight() + 2, 1, (this.getHeight() + 2) * 2);
+			if (left > 0) drawContext.drawTexture(RenderPipelines.GUI_TEXTURED, topTexture, left-1, top - 1, 0.0F, 0.0F, 1, this.getHeight() + 2, 1, (this.getHeight() + 2) * 2);
+			if (right < screenWidth) drawContext.drawTexture(RenderPipelines.GUI_TEXTURED, topTexture, right, top - 1, 0.0F, 0.0F, 1, this.getHeight() + 2, 1, (this.getHeight() + 2) * 2);
 		}
 
 		// Scrollbar
@@ -376,23 +376,10 @@ public abstract class SpruceEntryListWidget<E extends SpruceEntryListWidget.Entr
 		this.getBorder().render(drawContext, this, mouseX, mouseY, delta);
 	}
 
-	protected void renderScrollbar(DrawContext drawContext, int scrollbarX, int scrollbarEndX, int scrollbarY, int scrollbarHeight) {
-		RenderLayer renderLayer = RenderLayer.getGui();
-		VertexConsumer vertexConsumer = ((DrawContextAccessor)drawContext).getVertexConsumers().getBuffer(renderLayer);
-
-		vertexConsumer.vertex(scrollbarX, this.getY() + this.getHeight(), 0).color(0, 0, 0, 255);
-		vertexConsumer.vertex(scrollbarEndX, this.getY() + this.getHeight(), 0).color(0, 0, 0, 255);
-		vertexConsumer.vertex(scrollbarEndX, this.getY(), 0).color(0, 0, 0, 255);
-		vertexConsumer.vertex(scrollbarX, this.getY(), 0).color(0, 0, 0, 255);
-		vertexConsumer.vertex(scrollbarX, scrollbarY + scrollbarHeight, 0).color(128, 128, 128, 255);
-		vertexConsumer.vertex(scrollbarEndX, scrollbarY + scrollbarHeight, 0).color(128, 128, 128, 255);
-		vertexConsumer.vertex(scrollbarEndX, scrollbarY, 0).color(128, 128, 128, 255);
-		vertexConsumer.vertex(scrollbarX, scrollbarY, 0).color(128, 128, 128, 255);
-		vertexConsumer.vertex(scrollbarX, scrollbarY + scrollbarHeight - 1, 0).color(192, 192, 192, 255);
-		vertexConsumer.vertex(scrollbarEndX - 1, scrollbarY + scrollbarHeight - 1, 0).color(192, 192, 192, 255);
-		vertexConsumer.vertex(scrollbarEndX - 1, scrollbarY, 0).color(192, 192, 192, 255);
-		vertexConsumer.vertex(scrollbarX, scrollbarY, 0).color(192, 192, 192, 255);
-		drawContext.draw();
+	protected void renderScrollbar(DrawContext context, int scrollbarX, int scrollbarEndX, int scrollbarY, int scrollbarHeight) {
+		context.fill(scrollbarX, this.getY(), scrollbarEndX, this.getY() + this.getHeight(), ColorUtil.packARGBColor(0, 0, 0, 255));
+		context.fill(scrollbarX, this.getY(), scrollbarEndX, scrollbarY + scrollbarHeight, ColorUtil.packARGBColor(128, 128, 128, 255));
+		context.fill(scrollbarX, this.getY(), scrollbarEndX - 1, scrollbarY + scrollbarHeight - 1, ColorUtil.packARGBColor(192, 192, 192, 255));
 	}
 
 	/* Narration */

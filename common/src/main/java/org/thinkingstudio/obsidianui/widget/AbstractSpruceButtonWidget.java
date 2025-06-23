@@ -11,6 +11,7 @@
 package org.thinkingstudio.obsidianui.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ButtonTextures;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
@@ -18,12 +19,14 @@ import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 import org.thinkingstudio.obsidianui.Position;
 import org.thinkingstudio.obsidianui.Tooltip;
 import org.thinkingstudio.obsidianui.Tooltipable;
+import org.thinkingstudio.obsidianui.util.ColorUtil;
 import org.thinkingstudio.obsidianui.wrapper.VanillaButtonWrapper;
 
 import java.util.Optional;
@@ -162,8 +165,7 @@ public abstract class AbstractSpruceButtonWidget extends AbstractSpruceWidget im
 
 	@Override
 	protected void renderBackground(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-		RenderSystem.setShaderColor(1.f, 1.f, 1.f, this.getAlpha());
-		drawContext.drawGuiTexture(RenderLayer::getGuiTextured, this.getTexture(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
+		drawContext.drawGuiTexture(RenderPipelines.GUI_TEXTURED, this.getTexture(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), ColorHelper.fromFloats(this.getAlpha(), 1.f, 1.f, 1.f));
 	}
 
 	/* Narration */

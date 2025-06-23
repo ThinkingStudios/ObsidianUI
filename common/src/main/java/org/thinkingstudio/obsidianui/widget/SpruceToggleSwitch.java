@@ -11,11 +11,13 @@
 package org.thinkingstudio.obsidianui.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Language;
+import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 import org.thinkingstudio.obsidianui.Position;
@@ -54,7 +56,7 @@ public class SpruceToggleSwitch extends AbstractSpruceBooleanButtonWidget {
 
 	@Override
 	protected void renderButton(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-		drawContext.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.getX() + (this.getValue() ? 14 : 0), this.getY() + (this.getHeight() / 2 - 9),
+		drawContext.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX() + (this.getValue() ? 14 : 0), this.getY() + (this.getHeight() / 2 - 9),
 				this.getValue() ? 50.f : 32.f, this.isFocusedOrHovered() ? 18.f : 0.f,
 				18, 18, 68, 36);
 
@@ -69,9 +71,8 @@ public class SpruceToggleSwitch extends AbstractSpruceBooleanButtonWidget {
 
 	@Override
 	protected void renderBackground(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-		RenderSystem.setShaderColor(1.f, 1.f, 1.f, this.alpha);
-		drawContext.drawTexture(RenderLayer::getGuiTextured, TEXTURE, this.getX(), this.getY() + (this.getHeight() / 2 - 9),
-				0.f, this.isFocusedOrHovered() ? 18.f : 0.f, 32, 18, 68, 36);
+		drawContext.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY() + (this.getHeight() / 2 - 9),
+				0.f, this.isFocusedOrHovered() ? 18.f : 0.f, 32, 18, 68, 36, ColorHelper.fromFloats(this.getAlpha(), 1.f, 1.f, 1.f));
 	}
 
 	/* Narration */
